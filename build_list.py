@@ -35,7 +35,7 @@ GOOD_STREAMS = [
 # Opciones del reproductor (referrer y user-agent) que el stream necesita.
 # Se aplican a ambas calidades. Si no las necesita, deja la lista vacia: GOOD_OPTS = []
 GOOD_OPTS = [
-    "#EXTVLCOPT:http-referrer=https://telemicro.com.do/players/13tv/index_pc.php",
+    "#EXTVLCOPT:http-referrer=https://telemicro.com.do/telecentro-en-vivo/",
     "#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
 ]
 
