@@ -16,7 +16,7 @@ import sys
 SOURCE_URL = "https://iptv-org.github.io/iptv/languages/spa.m3u"
 
 # ID del canal que queremos arreglar (tal como aparece en tvg-id)
-TARGET_TVG_ID = "Telecentro.do"
+TARGET_TVG_ID = "Telecentro.do@SD"
 
 # Enlaces BUENOS que queremos dejar para Telecentro.
 # Se generan dos entradas (1080p y 720p) que comparten el mismo tvg-id
