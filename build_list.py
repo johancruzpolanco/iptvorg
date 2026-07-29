@@ -24,19 +24,19 @@ TARGET_TVG_ID = "Telecentro.do@SD"
 GOOD_STREAMS = [
     {
         "name": "Telecentro 13 (1080p)",
-        "url": "https://live2.telemicro.com.do/live/telecentrocast_1080p/playlist.m3u8",
+        "url": "https://live2.telemicro.com.do/live/telecentrocast_1080p/playlist.m3u8|Referer=https://telemicro.com.do/telecentro-en-vivo/&User-Agent=Mozilla/5.0",
     },
     {
         "name": "Telecentro 13 (720p)",
-        "url": "https://live4.telemicro.com.do/live/13/playlist.m3u8",
+        "url": "https://live4.telemicro.com.do/live/13/playlist.m3u8|Referer=https://telemicro.com.do/telecentro-en-vivo/&User-Agent=Mozilla/5.0",
     },
 ]
 
 # Opciones del reproductor (referrer y user-agent) que el stream necesita.
-# Se aplican a ambas calidades. Si no las necesita, deja la lista vacia: GOOD_OPTS = []
+# Se mantienen para VLC en PC, pero las apps móviles usarán los parámetros en la URL (arriba).
 GOOD_OPTS = [
     "#EXTVLCOPT:http-referrer=https://telemicro.com.do/telecentro-en-vivo/",
-    "#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+    "#EXTVLCOPT:http-user-agent=Mozilla/5.0",
 ]
 
 OUTPUT_FILE = "lista.m3u"
