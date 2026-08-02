@@ -51,6 +51,8 @@ OWN_IDS = {
     "telesistema11.do",
     "telemicro.do",
     "digital15.do",
+    # Colorvision ya no esta entre los canales propios, pero se sigue filtrando
+    # de la lista base para que no reaparezca por la puerta de atras.
     "colorvision.do",
 }
 
@@ -87,11 +89,6 @@ CHANNELS = [
         "url": "https://live4.telemicro.com.do/live/digital15cast_1080p/playlist.m3u8",
         "proxy_path": "/live/digital15cast_1080p/playlist.m3u8",
         "logo": "https://i.imgur.com/v3mkmZa.png",
-    },
-    {
-        "name": "Colorvision 9",
-        "url": "https://cdn3.wind.do/streams/colorvision/colorvision_master.m3u8",
-        "logo": "",
     },
     # El master de teleuniverso anuncia 1080/720/640 pero solo existe la de
     # 720; las otras dan 404 y el reproductor puede colgarse con la que no esta.
