@@ -29,11 +29,16 @@ puede devolver 200 mientras los segmentos fallan.
 
 ## El proxy
 
-Telecentro no se puede enlazar directo. Telemicro exige cabecera `Referer` en
-el playlist **y** en cada segmento, e IPTV Smarters no manda cabeceras propias:
-ignora las lineas `#EXTVLCOPT` y tampoco entiende el sufijo `|Referer=...` en
-la URL. Por eso Telecentro pasa por un Cloudflare Worker (`worker.js`) que
-anade la cabecera, y la entrada de la lista queda limpia.
+Los canales de Telemicro (Telecentro, Telemicro 5 y Digital 15) no se pueden
+enlazar directo. El servidor exige cabecera `Referer` en el playlist **y** en
+cada segmento, e IPTV Smarters no manda cabeceras propias: ignora las lineas
+`#EXTVLCOPT` y tampoco entiende el sufijo `|Referer=...` en la URL. Por eso
+pasan por un Cloudflare Worker (`worker.js`) que anade la cabecera, y las
+entradas de la lista quedan limpias.
+
+Los demas canales (Telesistema por Dailymotion, Colorvision y Teleuniverso por
+`cdn3.wind.do`) no necesitan cabeceras y van directos, sin gastar cuota del
+Worker.
 
 `worker.js` esta aqui solo como copia de seguridad del codigo desplegado en
 Cloudflare. No se despliega desde este repo.
@@ -42,8 +47,17 @@ Cloudflare. No se despliega desde este repo.
 
 - **Usar `live4.telemicro.com.do`, no `live2`.** `live2` reparte las peticiones
   entre dos backends: la sesion (`nimblesessionid`) se crea en uno y el
-  segmento se pide al otro, dando 403/404 intermitentes. Medido: `live4` 5/5,
-  `live2/live/13` 0/5.
+  segmento se pide al otro, dando 403/404 intermitentes. Medido sobre 5
+  intentos de descargar un segmento real:
+
+  | Endpoint | live2 | live4 |
+  | --- | --- | --- |
+  | `/live/13` | 0/5 | 5/5 |
+  | `/live/55` | 2/5 | 5/5 |
+  | `/live/digital15cast_1080p` | 4/5 | 5/5 |
+
+  Los dos servidores sirven las mismas rutas, asi que da igual con cual te
+  encuentres por ahi: en este repo todos van por `live4`.
 - **El master de Teleuniverso miente.** Anuncia 1080/720/640 pero solo existe
   la de 720; por eso la lista apunta directo a la variante.
 - **El enlace de Telesistema por Dailymotion lleva un token** (`sec2(...)`) que
