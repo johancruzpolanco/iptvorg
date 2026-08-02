@@ -1,37 +1,50 @@
+# Copiar a .github/workflows/iptv.yml en tu repo.
 name: Actualizar lista IPTV
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
-  workflow_dispatch:
+    # 06:00 UTC = 02:00 en Republica Dominicana
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}   # permite lanzarlo a mano desde la pestana Actions
   push:
-    branches: [ main ]
     paths:
-      - "build_list.py"
-      - ".github/workflows/update.yml"
+      - build_list.py
+      - .github/workflows/iptv.yml
 
 permissions:
-  contents: write
+  contents: write   # necesario para que el bot pueda commitear la lista
+
+concurrency:
+  group: iptv
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
-      - name: Descargar el repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configurar Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.12"
 
-      - name: Generar la lista
-        run: python build_list.py
+      # Sin --strict a proposito: los runners salen por IPs de datacenter y
+      # estos CDNs dominicanos pueden bloquearlas aunque el canal funcione
+      # bien desde casa. El --check deja el diagnostico en el Summary del job
+      # como aviso, sin tumbar el build por un falso negativo.
+      - name: Generar lista
+        run: python build_list.py --check --output lista.m3u
 
-      - name: Guardar la lista actualizada (commit)
+      - name: Commitear si cambio
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add lista.m3u
-          git diff --staged --quiet || git commit -m "Actualizacion automatica de la lista"
-          git push
+          if git diff --staged --quiet; then
+            echo "Sin cambios en la lista."
+          else
+            git commit -m "Actualizar lista IPTV ($(date -u +%Y-%m-%d))"
+            git push
+          fi
