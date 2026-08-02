@@ -68,14 +68,14 @@ CHANNELS = [
         "proxy_path": "/live/telecentrocast_1080p/playlist.m3u8",
         "logo": "https://i.imgur.com/F17zNXh.png",
     },
+    # NO usar los enlaces de dmcdn.net (Dailymotion) para este canal: llevan un
+    # token de sesion `sec2(...)` que caduca en horas y deja la entrada muerta
+    # con 403. Los reproductores web los renuevan a cada carga de pagina, cosa
+    # que una lista estatica no puede hacer. Este enlace no lleva token ni
+    # necesita cabeceras. Medido: 5/5 descargas de segmento correctas.
     {
         "name": "Telesistema 11",
-        "url": (
-            "https://live2.eu-north-1b.cf.dmcdn.net/sec2(UltzauhveZAlBafG4CTb_"
-            "oOKxk7aIVTMKxqNIIKVDoPCPImCpEbDgvEICc7KG0cJsqGIe4k8gZLPOoK1zl61C_"
-            "Iu1zsFtE2z4-oDpqE84-vgE9DwRxCci80_s_a5_aVv)/cloud/3/x80ac48/d/"
-            "live-480.m3u8"
-        ),
+        "url": "https://hls.tvabierta.net/hls/011.m3u8",
         "logo": "",
     },
     {
@@ -209,7 +209,11 @@ def check_stream(channel):
     if not lines:
         return False, "playlist vacia (canal fuera del aire?)"
 
-    target = urllib.parse.urljoin(channel["url"].rsplit("/", 1)[0] + "/", lines[0])
+    # Si es un master, lines[0] es una variante; si es una media playlist
+    # directa (sin master), es un segmento y vale el ultimo por lo mismo de
+    # la ventana deslizante.
+    primera = lines[0] if ".m3u8" in lines[0] else lines[-1]
+    target = urllib.parse.urljoin(channel["url"].rsplit("/", 1)[0] + "/", primera)
 
     if ".m3u8" in target:
         try:
@@ -219,7 +223,11 @@ def check_stream(channel):
         segs = [l.strip() for l in media.splitlines() if l.strip() and not l.startswith("#")]
         if not segs:
             return False, "sin segmentos (canal fuera del aire?)"
-        target = urllib.parse.urljoin(target.rsplit("/", 1)[0] + "/", segs[0])
+        # El ULTIMO, no el primero: en un directo la playlist es una ventana
+        # deslizante y el segmento mas antiguo puede haber expirado ya cuando
+        # lo pedimos, dando un 404 que no significa que el canal este caido.
+        # Un reproductor real tira del final de la lista.
+        target = urllib.parse.urljoin(target.rsplit("/", 1)[0] + "/", segs[-1])
 
     try:
         data = http_get(target, timeout=30)
