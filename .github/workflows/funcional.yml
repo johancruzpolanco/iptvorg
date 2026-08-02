@@ -1,0 +1,54 @@
+# Copiar a .github/workflows/funcional.yml
+name: Actualizar lista funcional
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths:
+      - "funcional.py"
+      - ".github/workflows/funcional.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: funcional
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v5
+
+      - name: Configurar Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      # Sin --strict ni --drop-broken a proposito: los runners salen por IPs
+      # de datacenter y estos CDNs pueden bloquearlas aunque el canal funcione
+      # desde casa. El --check deja el diagnostico en el Summary del job sin
+      # tumbar el build ni borrar canales por un falso negativo.
+      - name: Generar la lista
+        env:
+          PROXY_BASE: ${{ vars.PROXY_BASE }}
+        run: python funcional.py --check
+
+      - name: Guardar la lista actualizada (commit)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add funcional.m3u
+          if git diff --staged --quiet; then
+            echo "Sin cambios en la lista."
+          else
+            git commit -m "Actualizacion automatica de la lista funcional"
+            git push
+          fi
