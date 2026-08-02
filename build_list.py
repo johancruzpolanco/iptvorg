@@ -57,11 +57,6 @@ CHANNELS = [
     },
     {
         "name": "Telesistema 11",
-        "url": "https://cdn3.wind.do/streams/telesistema/telesistema_master.m3u8",
-        "logo": "",
-    },
-    {
-        "name": "Telesistema 11 (480p)",
         "url": (
             "https://live2.eu-north-1b.cf.dmcdn.net/sec2(UltzauhveZAlBafG4CTb_"
             "oOKxk7aIVTMKxqNIIKVDoPCPImCpEbDgvEICc7KG0cJsqGIe4k8gZLPOoK1zl61C_"
@@ -71,19 +66,21 @@ CHANNELS = [
         "logo": "",
     },
     {
-        "name": "Colorvision 9",
-        "url": "https://cdn3.wind.do/streams/colorvision/colorvision_master.m3u8",
-        "logo": "",
-    },
-    {
         "name": "Telemicro 5",
-        "url": "https://cdn3.wind.do/streams/telemicro/telemicro_master.m3u8",
+        "url": "https://live4.telemicro.com.do/live/55/playlist.m3u8",
+        "proxy_path": "/live/55/playlist.m3u8",
         "logo": "https://i.imgur.com/WhgySAk.png",
     },
     {
         "name": "Digital 15",
-        "url": "https://cdn3.wind.do/streams/digital15/digital15_master.m3u8",
+        "url": "https://live4.telemicro.com.do/live/digital15cast_1080p/playlist.m3u8",
+        "proxy_path": "/live/digital15cast_1080p/playlist.m3u8",
         "logo": "https://i.imgur.com/v3mkmZa.png",
+    },
+    {
+        "name": "Colorvision 9",
+        "url": "https://cdn3.wind.do/streams/colorvision/colorvision_master.m3u8",
+        "logo": "",
     },
     # El master de teleuniverso anuncia 1080/720/640 pero solo existe la de
     # 720; las otras dan 404 y el reproductor puede colgarse con la que no esta.
