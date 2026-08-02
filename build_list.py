@@ -34,8 +34,25 @@ BROWSER_UA = (
     "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 )
 
-GROUP = "Republica Dominicana"
+# Los canales propios van en su propio grupo y de PRIMEROS en el archivo:
+# no existe en M3U un atributo de "categoria por defecto", asi que lo unico
+# que se puede controlar es el orden de aparicion.
+GROUP = "DOMINICANOS"
 DEFAULT_OUTPUT = "lista.m3u"
+
+# Lista base que se anade despues de los canales propios.
+SOURCE_URL = "https://iptv-org.github.io/iptv/languages/spa.m3u"
+
+# tvg-id (sin el sufijo @SD/@HD) de los canales propios, para borrarlos de la
+# lista base y que no salgan duplicados. iptv-org cambio el formato una vez
+# ("Telecentro.do" paso a "Telecentro.do@SD"), por eso se compara normalizado.
+OWN_IDS = {
+    "telecentro.do",
+    "telesistema11.do",
+    "telemicro.do",
+    "digital15.do",
+    "colorvision.do",
+}
 
 # Va en el codigo a proposito: cuando dependia de una variable del repo, la
 # lista se publicaba sin proxy y Telecentro no cargaba en Smarters.
@@ -47,12 +64,6 @@ CHANNELS = [
         "name": "Telecentro 13",
         "url": "https://live4.telemicro.com.do/live/telecentrocast_1080p/playlist.m3u8",
         "proxy_path": "/live/telecentrocast_1080p/playlist.m3u8",
-        "logo": "https://i.imgur.com/F17zNXh.png",
-    },
-    {
-        "name": "Telecentro 13 (respaldo)",
-        "url": "https://live4.telemicro.com.do/live/13/playlist.m3u8",
-        "proxy_path": "/live/13/playlist.m3u8",
         "logo": "https://i.imgur.com/F17zNXh.png",
     },
     {
@@ -145,6 +156,48 @@ def build_block(channel):
     return ["#EXTINF:-1 %s,%s" % (" ".join(attrs), channel["name"]), channel["url"]]
 
 
+def parse_blocks(text):
+    """Divide la lista en (cabecera, bloques); cada bloque empieza en #EXTINF."""
+    header, blocks, current, started = [], [], [], False
+
+    for line in text.splitlines():
+        if line.startswith("#EXTINF"):
+            if current:
+                blocks.append(current)
+            current = [line]
+            started = True
+        elif not started:
+            header.append(line)
+        else:
+            current.append(line)
+
+    if current:
+        blocks.append(current)
+
+    return header, blocks
+
+
+def normalize_id(tvg_id):
+    """'Telecentro.do@SD' -> 'telecentro.do'."""
+    if not tvg_id:
+        return None
+    return tvg_id.split("@", 1)[0].strip().lower()
+
+
+def block_tvg_id(block):
+    """Extrae el tvg-id normalizado de un bloque."""
+    extinf = block[0]
+    marker = 'tvg-id="'
+    i = extinf.find(marker)
+    if i == -1:
+        return None
+    i += len(marker)
+    j = extinf.find('"', i)
+    if j == -1:
+        return None
+    return normalize_id(extinf[i:j])
+
+
 def check_stream(channel):
     """master playlist -> variante -> segmento .ts. Devuelve (ok, mensaje)."""
     try:
@@ -195,6 +248,11 @@ def main():
         "--strict", action="store_true", help="con --check, sale con codigo 2 si algo falla"
     )
     ap.add_argument("--proxy", default=PROXY_BASE, help="base del proxy (o env PROXY_BASE)")
+    ap.add_argument(
+        "--no-base",
+        action="store_true",
+        help="genera solo los canales propios, sin la lista de iptv-org",
+    )
     args = ap.parse_args()
 
     proxy = (args.proxy or "").rstrip("/")
@@ -225,9 +283,34 @@ def main():
                     incluidos.append(ch)
         log("")
 
+    # Los propios van primero, en el grupo DOMINICANOS.
     out_lines = ["#EXTM3U"]
     for ch in incluidos:
         out_lines.extend(build_block(ch))
+
+    base_total = descartados = 0
+    if not args.no_base:
+        log("Descargando lista base de iptv-org (espanol)...")
+        try:
+            text = http_get(SOURCE_URL, timeout=60).decode("utf-8", "replace")
+        except RuntimeError as e:
+            error("no se pudo descargar la lista base: %s" % e)
+            return 1
+
+        _, blocks = parse_blocks(text)
+        base_total = len(blocks)
+
+        for block in blocks:
+            if block_tvg_id(block) in OWN_IDS:
+                descartados += 1  # ya lo tenemos arriba, con mejor enlace
+            else:
+                out_lines.extend(block)
+
+        log("Lista base: %d canales, %d descartados por duplicados"
+            % (base_total, descartados))
+        if descartados == 0:
+            warn("no se descarto ninguno: revisa si los tvg-id cambiaron en "
+                 "iptv-org. IDs buscados: %s" % sorted(OWN_IDS))
 
     try:
         destino = os.path.abspath(args.output)
