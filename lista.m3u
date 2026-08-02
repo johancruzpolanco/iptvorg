@@ -7,8 +7,6 @@ https://live2.eu-north-1b.cf.dmcdn.net/sec2(UltzauhveZAlBafG4CTb_oOKxk7aIVTMKxqN
 https://tc13.johanecruzpolanco.workers.dev/live/55/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/v3mkmZa.png" group-title="DOMINICANOS",Digital 15
 https://tc13.johanecruzpolanco.workers.dev/live/digital15cast_1080p/playlist.m3u8
-#EXTINF:-1 group-title="DOMINICANOS",Colorvision 9
-https://cdn3.wind.do/streams/colorvision/colorvision_master.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Teleuniverso 29
 https://cdn3.wind.do/streams/teleuniverso/teleuniverso_720.m3u8
 #EXTINF:-1 tvg-id="3ABNLatino.us@SD" tvg-logo="https://i.imgur.com/Ugb4AFo.png" group-title="Religious",3ABN Latino
