@@ -1,0 +1,57 @@
+name: Actualizar lista IPTV
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+    paths:
+      - "build_list.py"
+      - ".github/workflows/update.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lista
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v5
+
+      - name: Configurar Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      # Sin --strict ni --drop-broken a proposito: los runners salen por IPs de
+      # datacenter y estos CDNs pueden bloquearlas aunque el canal funcione
+      # desde casa. El --check deja el diagnostico en el Summary del job sin
+      # tumbar el build ni borrar canales por un falso negativo.
+      - name: Generar la lista
+        run: python build_list.py --check
+
+      - name: Guardar la lista actualizada
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add lista.m3u
+          if git diff --staged --quiet; then
+            echo "Sin cambios en la lista."
+          else
+            git commit -m "Actualizacion automatica de la lista"
+            git push
+          fi
+
+      # jsDelivr cachea hasta 7 dias en el cliente. Sin purgar, seguirias
+      # viendo la lista vieja aunque el repo ya este actualizado.
+      - name: Purgar cache de jsDelivr
+        run: |
+          curl -s "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/lista.m3u" || true
