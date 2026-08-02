@@ -1,103 +1,111 @@
 #!/usr/bin/env python3
 """
-Genera lista.m3u con los canales dominicanos verificados, para IPTV Smarters.
+Genera lista.m3u para IPTV Smarters:
+
+  1. Grupo DOMINICANOS: los canales de la categoria RD de la API de tvabierta,
+     ordenados por numero de canal, mas los enlaces propios que sustituyen a
+     los de la API cuando tenemos uno mejor (los de Telemicro, que van por
+     nuestro proxy).
+  2. Detras, la lista en espanol de iptv-org, sin los canales que ya salen
+     arriba para que no haya duplicados.
 
     python build_list.py                  genera lista.m3u
     python build_list.py --check          verifica cada enlace (video real)
     python build_list.py --check --drop-broken   omite los que fallen
+    python build_list.py --no-base        solo el grupo DOMINICANOS
 
-Codigos de salida:  0 ok | 1 error al escribir | 2 --strict con fallos
+Codigos de salida:  0 ok | 1 error irrecuperable | 2 --strict con fallos
 
 NOTAS DE MANTENIMIENTO
-  - Telecentro pasa por un proxy (Cloudflare Worker, ver proxy/worker.js).
-    Telemicro exige cabecera Referer en el playlist Y en los segmentos .ts, e
-    IPTV Smarters no manda cabeceras propias: ignora las lineas #EXTVLCOPT y
-    tampoco entiende el sufijo "|Referer=..." en la URL. El proxy la anade por
-    nosotros, asi la entrada de la lista queda limpia.
-  - Usar live4.telemicro.com.do, NO live2: live2 reparte entre dos backends,
-    la sesion (nimblesessionid) se crea en uno y el segmento se pide al otro,
-    lo que da 403/404 intermitentes.
+  - Los canales de Telemicro (Telecentro, Telemicro 5, Digital 15) pasan por un
+    Cloudflare Worker (worker.js). El servidor exige cabecera Referer en el
+    playlist Y en cada segmento, e IPTV Smarters no manda cabeceras propias:
+    ignora los #EXTVLCOPT y no entiende el sufijo "|Referer=..." de la URL.
+  - Usar live4.telemicro.com.do, NO live2: live2 reparte entre dos backends, la
+    sesion (nimblesessionid) se crea en uno y el segmento se pide al otro, lo
+    que da 403/404 intermitentes.
+  - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
+    caduca en horas. Tampoco fijar los /memfs/<uuid> de tvabierta: son ids de
+    proceso que cambian si el canal reinicia. Por eso se resuelven por API.
   - Verificar solo el playlist no sirve: devuelve 200 aunque los segmentos
-    esten fallando. Por eso --check descarga un segmento .ts de verdad.
+    fallen. Y hay que pedir el ULTIMO segmento, no el primero: la playlist de
+    un directo es una ventana deslizante y el mas antiguo puede haber expirado.
 """
 
 import argparse
+import json
 import os
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 
 BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 )
 
-# Los canales propios van en su propio grupo y de PRIMEROS en el archivo:
-# no existe en M3U un atributo de "categoria por defecto", asi que lo unico
-# que se puede controlar es el orden de aparicion.
 GROUP = "DOMINICANOS"
 DEFAULT_OUTPUT = "lista.m3u"
 
-# Lista base que se anade despues de los canales propios.
 SOURCE_URL = "https://iptv-org.github.io/iptv/languages/spa.m3u"
-
-# tvg-id (sin el sufijo @SD/@HD) de los canales propios, para borrarlos de la
-# lista base y que no salgan duplicados. iptv-org cambio el formato una vez
-# ("Telecentro.do" paso a "Telecentro.do@SD"), por eso se compara normalizado.
-OWN_IDS = {
-    "telecentro.do",
-    "telesistema11.do",
-    "telemicro.do",
-    "digital15.do",
-    # Colorvision ya no esta entre los canales propios, pero se sigue filtrando
-    # de la lista base para que no reaparezca por la puerta de atras.
-    "colorvision.do",
-}
+TVABIERTA_API = "https://tvabierta.net/api/tv/channels.json"
+TVABIERTA_CATEGORY = "RD"
 
 # Va en el codigo a proposito: cuando dependia de una variable del repo, la
 # lista se publicaba sin proxy y Telecentro no cargaba en Smarters.
 DEFAULT_PROXY = "https://tc13.johanecruzpolanco.workers.dev"
 PROXY_BASE = os.environ.get("PROXY_BASE", DEFAULT_PROXY).rstrip("/")
 
+# Canales propios: sustituyen al de la API con el mismo "api_name" porque
+# tenemos un enlace mejor. El resto de la categoria RD se importa tal cual.
 CHANNELS = [
     {
         "name": "Telecentro 13",
+        "number": 13,
+        "api_name": "telecentro",
         "url": "https://live4.telemicro.com.do/live/telecentrocast_1080p/playlist.m3u8",
         "proxy_path": "/live/telecentrocast_1080p/playlist.m3u8",
         "logo": "https://i.imgur.com/F17zNXh.png",
     },
-    # NO usar los enlaces de dmcdn.net (Dailymotion) para este canal: llevan un
-    # token de sesion `sec2(...)` que caduca en horas y deja la entrada muerta
-    # con 403. Los reproductores web los renuevan a cada carga de pagina, cosa
-    # que una lista estatica no puede hacer. Este enlace no lleva token ni
-    # necesita cabeceras. Medido: 5/5 descargas de segmento correctas.
-    {
-        "name": "Telesistema 11",
-        "url": "https://hls.tvabierta.net/hls/011.m3u8",
-        "logo": "",
-    },
     {
         "name": "Telemicro 5",
+        "number": 5,
+        "api_name": "telemicro",
         "url": "https://live4.telemicro.com.do/live/55/playlist.m3u8",
         "proxy_path": "/live/55/playlist.m3u8",
         "logo": "https://i.imgur.com/WhgySAk.png",
     },
     {
         "name": "Digital 15",
+        "number": 15,
+        "api_name": "digital15",
         "url": "https://live4.telemicro.com.do/live/digital15cast_1080p/playlist.m3u8",
         "proxy_path": "/live/digital15cast_1080p/playlist.m3u8",
         "logo": "https://i.imgur.com/v3mkmZa.png",
     },
-    # El master de teleuniverso anuncia 1080/720/640 pero solo existe la de
-    # 720; las otras dan 404 y el reproductor puede colgarse con la que no esta.
     {
         "name": "Teleuniverso 29",
+        "number": 29,
+        "api_name": "teleuniversotv",
+        # El master de wind.do anuncia 1080/720/640 pero solo existe la de 720;
+        # las otras dan 404 y el reproductor puede colgarse con la que no esta.
         "url": "https://cdn3.wind.do/streams/teleuniverso/teleuniverso_720.m3u8",
         "logo": "",
     },
 ]
+
+# tvg-id (sin sufijo @SD/@HD) a eliminar de la lista de iptv-org por estar ya
+# en el grupo DOMINICANOS. iptv-org cambio el formato una vez ("Telecentro.do"
+# paso a "Telecentro.do@SD"), por eso se compara normalizado.
+OWN_IDS = {
+    "telecentro.do", "telesistema11.do", "telemicro.do", "digital15.do",
+    "colorvision.do", "teleantillas.do", "antena7.do", "rnn.do", "cdn.do",
+    "telefuturo.do", "teleunion.do", "acentotv.do", "telemax.do", "tvo.do",
+    "retv.do", "boreal.do", "televida.do", "cieltv.do", "ahoratv.do",
+}
 
 ON_CI = os.environ.get("GITHUB_ACTIONS") == "true"
 
@@ -130,7 +138,7 @@ def http_get(url, timeout=30, retries=3):
     last = None
     for intento in range(retries):
         if intento:
-            time.sleep(2 * intento)
+            time.sleep(1.5 * intento)
         try:
             req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA})
             with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -144,13 +152,70 @@ def http_get(url, timeout=30, retries=3):
     raise RuntimeError(last or "fallo desconocido")
 
 
+# ----------------------------------------------------------------------
+# Canales
+# ----------------------------------------------------------------------
+
+
+def bonito(nombre):
+    """'colorvision' -> 'Colorvision'; respeta los que ya vienen con mayusculas."""
+    nombre = (nombre or "").strip()
+    return nombre if nombre[:1].isupper() else nombre.capitalize()
+
+
+def cargar_canales():
+    """
+    Devuelve la lista final del grupo DOMINICANOS: los canales propios mas los
+    de la categoria RD de la API, ordenados por numero de canal.
+
+    Si la API no responde se sigue adelante solo con los propios: preferimos una
+    lista corta a no generar nada.
+    """
+    propios = {c["api_name"] for c in CHANNELS if c.get("api_name")}
+    canales = list(CHANNELS)
+
+    try:
+        data = json.loads(http_get(TVABIERTA_API, timeout=30).decode("utf-8", "replace"))
+    except (RuntimeError, ValueError) as e:
+        warn("no se pudo leer la API de tvabierta (%s); solo van los canales "
+             "propios" % e)
+        return sorted(canales, key=lambda c: c.get("number") or 999)
+
+    importados = 0
+    for c in data.get("channels", []):
+        if c.get("category") != TVABIERTA_CATEGORY or not c.get("enabled", True):
+            continue
+        nombre = (c.get("name") or "").strip()
+        stream = (c.get("stream") or "").strip()
+        if not nombre or not stream:
+            continue
+        if nombre.lower() in propios:
+            continue  # ya lo tenemos con un enlace mejor
+        canales.append({
+            "name": bonito(nombre),
+            "number": c.get("number") or 999,
+            "url": stream,
+            "logo": c.get("logo") or "",
+        })
+        importados += 1
+
+    log("API tvabierta: %d canales importados de la categoria %s"
+        % (importados, TVABIERTA_CATEGORY))
+    return sorted(canales, key=lambda c: c.get("number") or 999)
+
+
 def build_block(channel):
     """Bloque M3U. Ningun canal necesita cabeceras: la entrada queda limpia."""
     attrs = []
-    if channel["logo"]:
+    if channel.get("logo"):
         attrs.append('tvg-logo="%s"' % channel["logo"])
     attrs.append('group-title="%s"' % GROUP)
     return ["#EXTINF:-1 %s,%s" % (" ".join(attrs), channel["name"]), channel["url"]]
+
+
+# ----------------------------------------------------------------------
+# Lista base de iptv-org
+# ----------------------------------------------------------------------
 
 
 def parse_blocks(text):
@@ -195,10 +260,15 @@ def block_tvg_id(block):
     return normalize_id(extinf[i:j])
 
 
+# ----------------------------------------------------------------------
+# Verificacion
+# ----------------------------------------------------------------------
+
+
 def check_stream(channel):
     """master playlist -> variante -> segmento .ts. Devuelve (ok, mensaje)."""
     try:
-        master = http_get(channel["url"], timeout=20).decode("utf-8", "replace")
+        master = http_get(channel["url"], timeout=15, retries=2).decode("utf-8", "replace")
     except RuntimeError as e:
         return False, "playlist: %s" % e
 
@@ -210,27 +280,23 @@ def check_stream(channel):
         return False, "playlist vacia (canal fuera del aire?)"
 
     # Si es un master, lines[0] es una variante; si es una media playlist
-    # directa (sin master), es un segmento y vale el ultimo por lo mismo de
-    # la ventana deslizante.
-    primera = lines[0] if ".m3u8" in lines[0] else lines[-1]
-    target = urllib.parse.urljoin(channel["url"].rsplit("/", 1)[0] + "/", primera)
+    # directa, es un segmento y vale el ultimo (ventana deslizante).
+    primero = lines[0] if ".m3u8" in lines[0] else lines[-1]
+    target = urllib.parse.urljoin(channel["url"].rsplit("/", 1)[0] + "/", primero)
 
     if ".m3u8" in target:
         try:
-            media = http_get(target, timeout=20).decode("utf-8", "replace")
+            media = http_get(target, timeout=15, retries=2).decode("utf-8", "replace")
         except RuntimeError as e:
             return False, "variante: %s" % e
         segs = [l.strip() for l in media.splitlines() if l.strip() and not l.startswith("#")]
         if not segs:
             return False, "sin segmentos (canal fuera del aire?)"
-        # El ULTIMO, no el primero: en un directo la playlist es una ventana
-        # deslizante y el segmento mas antiguo puede haber expirado ya cuando
-        # lo pedimos, dando un 404 que no significa que el canal este caido.
-        # Un reproductor real tira del final de la lista.
+        # El ULTIMO, no el primero: el mas antiguo puede haber expirado ya.
         target = urllib.parse.urljoin(target.rsplit("/", 1)[0] + "/", segs[-1])
 
     try:
-        data = http_get(target, timeout=30)
+        data = http_get(target, timeout=25, retries=2)
     except RuntimeError as e:
         return False, "segmento: %s" % e
 
@@ -240,24 +306,41 @@ def check_stream(channel):
     return True, "%.1f KB de video" % (len(data) / 1024.0)
 
 
+def run_checks(canales):
+    """
+    Verifica en paralelo. Con ~95 canales en serie esto tardaria varios minutos
+    y se comeria el timeout del workflow; con hilos baja a menos de un minuto.
+    """
+    log("Verificando %d enlaces..." % len(canales))
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        resultados = list(pool.map(check_stream, canales))
+
+    ok, filas = [], []
+    for ch, (bien, msg) in zip(canales, resultados):
+        log("  [%s] %-24s %s" % ("OK  " if bien else "FALLA", ch["name"][:24], msg))
+        filas.append("| %s | %s | %s |" % ("OK" if bien else "FALLA", ch["name"], msg))
+        if bien:
+            ok.append(ch)
+
+    fallos = len(canales) - len(ok)
+    log("  -> %d OK, %d con fallos\n" % (len(ok), fallos))
+    return ok, filas, fallos
+
+
+# ----------------------------------------------------------------------
+
+
 def main():
     ap = argparse.ArgumentParser(description="Genera lista.m3u con canales de RD.")
     ap.add_argument("-o", "--output", default=DEFAULT_OUTPUT, help="archivo de salida")
     ap.add_argument("--check", action="store_true", help="verifica cada enlace")
-    ap.add_argument(
-        "--drop-broken",
-        action="store_true",
-        help="con --check, omite de la lista los canales que fallen",
-    )
-    ap.add_argument(
-        "--strict", action="store_true", help="con --check, sale con codigo 2 si algo falla"
-    )
+    ap.add_argument("--drop-broken", action="store_true",
+                    help="con --check, omite de la lista los que fallen")
+    ap.add_argument("--strict", action="store_true",
+                    help="con --check, sale con codigo 2 si algo falla")
     ap.add_argument("--proxy", default=PROXY_BASE, help="base del proxy (o env PROXY_BASE)")
-    ap.add_argument(
-        "--no-base",
-        action="store_true",
-        help="genera solo los canales propios, sin la lista de iptv-org",
-    )
+    ap.add_argument("--no-base", action="store_true",
+                    help="genera solo el grupo DOMINICANOS, sin iptv-org")
     args = ap.parse_args()
 
     proxy = (args.proxy or "").rstrip("/")
@@ -268,29 +351,18 @@ def main():
                 ch["url"] = proxy + ch["proxy_path"]
         log("Usando proxy para %d canal(es): %s" % (n, proxy))
     else:
-        warn("sin proxy: Telecentro no funcionara en IPTV Smarters (falta el Referer)")
+        warn("sin proxy: los canales de Telemicro no funcionaran en Smarters")
 
-    incluidos, filas, fallos = list(CHANNELS), [], 0
+    canales = cargar_canales()
 
+    filas, fallos = [], 0
     if args.check:
-        log("Verificando enlaces...")
-        incluidos = []
-        for ch in CHANNELS:
-            ok, msg = check_stream(ch)
-            log("  [%s] %-26s %s" % ("OK  " if ok else "FALLA", ch["name"], msg))
-            filas.append("| %s | %s | %s |" % ("OK" if ok else "FALLA", ch["name"], msg))
-            if ok:
-                incluidos.append(ch)
-            else:
-                fallos += 1
-                warn("%s: %s" % (ch["name"], msg))
-                if not args.drop_broken:
-                    incluidos.append(ch)
-        log("")
+        ok, filas, fallos = run_checks(canales)
+        if args.drop_broken:
+            canales = ok
 
-    # Los propios van primero, en el grupo DOMINICANOS.
     out_lines = ["#EXTM3U"]
-    for ch in incluidos:
+    for ch in canales:
         out_lines.extend(build_block(ch))
 
     base_total = descartados = 0
@@ -304,18 +376,13 @@ def main():
 
         _, blocks = parse_blocks(text)
         base_total = len(blocks)
-
         for block in blocks:
             if block_tvg_id(block) in OWN_IDS:
-                descartados += 1  # ya lo tenemos arriba, con mejor enlace
+                descartados += 1
             else:
                 out_lines.extend(block)
-
         log("Lista base: %d canales, %d descartados por duplicados"
             % (base_total, descartados))
-        if descartados == 0:
-            warn("no se descarto ninguno: revisa si los tvg-id cambiaron en "
-                 "iptv-org. IDs buscados: %s" % sorted(OWN_IDS))
 
     try:
         destino = os.path.abspath(args.output)
@@ -328,14 +395,18 @@ def main():
         error("no se pudo escribir %s: %s" % (args.output, e))
         return 1
 
-    log("Canales en la lista: %d de %d" % (len(incluidos), len(CHANNELS)))
+    total = len(canales) + (base_total - descartados)
+    log("Grupo %s: %d canales" % (GROUP, len(canales)))
+    log("Total en la lista: %d" % total)
     log("Lista generada: %s" % destino)
 
-    resumen = ["## Lista IPTV", "", "- Canales: **%d**" % len(incluidos),
-               "- Archivo: `%s`" % args.output]
+    resumen = ["## Lista IPTV", "",
+               "- Grupo `%s`: **%d** canales" % (GROUP, len(canales)),
+               "- iptv-org: **%d** (descartados %d duplicados)" % (base_total, descartados),
+               "- Total: **%d**" % total]
     if filas:
-        resumen += ["", "### Verificacion", "", "| Estado | Canal | Detalle |",
-                    "| --- | --- | --- |"] + filas
+        resumen += ["", "### Verificacion del grupo %s" % GROUP, "",
+                    "| Estado | Canal | Detalle |", "| --- | --- | --- |"] + filas
     summary(resumen)
 
     if fallos and args.strict:
