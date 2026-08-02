@@ -4,14 +4,12 @@ https://tc13.johanecruzpolanco.workers.dev/live/telecentrocast_1080p/playlist.m3
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="Republica Dominicana",Telecentro 13 (respaldo)
 https://tc13.johanecruzpolanco.workers.dev/live/13/playlist.m3u8
 #EXTINF:-1 group-title="Republica Dominicana",Telesistema 11
-https://cdn3.wind.do/streams/telesistema/telesistema_master.m3u8
-#EXTINF:-1 group-title="Republica Dominicana",Telesistema 11 (480p)
 https://live2.eu-north-1b.cf.dmcdn.net/sec2(UltzauhveZAlBafG4CTb_oOKxk7aIVTMKxqNIIKVDoPCPImCpEbDgvEICc7KG0cJsqGIe4k8gZLPOoK1zl61C_Iu1zsFtE2z4-oDpqE84-vgE9DwRxCci80_s_a5_aVv)/cloud/3/x80ac48/d/live-480.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/WhgySAk.png" group-title="Republica Dominicana",Telemicro 5
+https://tc13.johanecruzpolanco.workers.dev/live/55/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/v3mkmZa.png" group-title="Republica Dominicana",Digital 15
+https://tc13.johanecruzpolanco.workers.dev/live/digital15cast_1080p/playlist.m3u8
 #EXTINF:-1 group-title="Republica Dominicana",Colorvision 9
 https://cdn3.wind.do/streams/colorvision/colorvision_master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/WhgySAk.png" group-title="Republica Dominicana",Telemicro 5
-https://cdn3.wind.do/streams/telemicro/telemicro_master.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/v3mkmZa.png" group-title="Republica Dominicana",Digital 15
-https://cdn3.wind.do/streams/digital15/digital15_master.m3u8
 #EXTINF:-1 group-title="Republica Dominicana",Teleuniverso 29
 https://cdn3.wind.do/streams/teleuniverso/teleuniverso_720.m3u8
