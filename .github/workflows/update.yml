@@ -1,21 +1,21 @@
-# Copiar a .github/workflows/iptv.yml en tu repo.
-name: Actualizar lista IPTV
+# Copiar a .github/workflows/funcional.yml
+name: Actualizar lista funcional
 
 on:
   schedule:
-    # 06:00 UTC = 02:00 en Republica Dominicana
-    - cron: "0 6 * * *"
-  workflow_dispatch: {}   # permite lanzarlo a mano desde la pestana Actions
+    - cron: "0 */12 * * *"
+  workflow_dispatch: {}
   push:
+    branches: [ main ]
     paths:
-      - build_list.py
-      - .github/workflows/iptv.yml
+      - "funcional.py"
+      - ".github/workflows/funcional.yml"
 
 permissions:
-  contents: write   # necesario para que el bot pueda commitear la lista
+  contents: write
 
 concurrency:
-  group: iptv
+  group: funcional
   cancel-in-progress: true
 
 jobs:
@@ -24,27 +24,31 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Configurar Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.x"
 
-      # Sin --strict a proposito: los runners salen por IPs de datacenter y
-      # estos CDNs dominicanos pueden bloquearlas aunque el canal funcione
-      # bien desde casa. El --check deja el diagnostico en el Summary del job
-      # como aviso, sin tumbar el build por un falso negativo.
-      - name: Generar lista
-        run: python build_list.py --check --output lista.m3u
+      # Sin --strict ni --drop-broken a proposito: los runners salen por IPs
+      # de datacenter y estos CDNs pueden bloquearlas aunque el canal funcione
+      # desde casa. El --check deja el diagnostico en el Summary del job sin
+      # tumbar el build ni borrar canales por un falso negativo.
+      - name: Generar la lista
+        env:
+          PROXY_BASE: ${{ vars.PROXY_BASE }}
+        run: python funcional.py --check
 
-      - name: Commitear si cambio
+      - name: Guardar la lista actualizada (commit)
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add lista.m3u
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add funcional.m3u
           if git diff --staged --quiet; then
             echo "Sin cambios en la lista."
           else
-            git commit -m "Actualizar lista IPTV ($(date -u +%Y-%m-%d))"
+            git commit -m "Actualizacion automatica de la lista funcional"
             git push
           fi
