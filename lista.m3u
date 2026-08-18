@@ -1,8 +1,8 @@
 #EXTM3U
 #EXTINF:-1 tvg-logo="https://i.imgur.com/T1d9Dqc.png" group-title="DOMINICANOS",Bloomberg
 https://liveprodusphoenixeast.akamaized.net/USPhx-HD/Channel-TX-USPhx-AWS-virginia-1/Source-USPhx-16k-1-s6lk2-BP-07-02-81ykIWnsMsg_live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4hWGJjg.png" group-title="DOMINICANOS",Misioneltv
-https://hls.tvabierta.net/hls/misioneltv.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/NWVW9QV.png" group-title="DOMINICANOS",Cdn
+https://ds.tvabierta.net/memfs/85815c85-ea2a-4360-8c9a-cd35da29131d.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/1nn95v2.png" group-title="DOMINICANOS",Ahoratv
 https://hls.tvabierta.net/hls/003.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/gLYPLI4.png" group-title="DOMINICANOS",Rtvd
@@ -71,8 +71,6 @@ https://streaming.telecablecentral.com.do/ReadyTV/ReadyHD/playlist.m3u8
 https://streaming.telecablecentral.com.do/Vallevision/ValleHD/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/EbaRYyt.jpeg" group-title="DOMINICANOS",Cdndeportes
 https://hls.tvabierta.net/hls/036.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NWVW9QV.png" group-title="DOMINICANOS",Cdn37
-https://ds.tvabierta.net/memfs/85815c85-ea2a-4360-8c9a-cd35da29131d.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/xkzbit6.png" group-title="DOMINICANOS",Acentotv
 https://hls.tvabierta.net/hls/038.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/vshjA7l.png" group-title="DOMINICANOS",Coral39
@@ -241,6 +239,8 @@ https://edge.essastream.com/cntmas/tracks-v1a1/mono.m3u8
 https://ss2.tvrdomi.com:1936/colometv/colometv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://imgur.com/Z1K1tyl.jpg" group-title="DOMINICANOS",Delta TV
 https://fox.hostlagarto.com:8081/deltatv50/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/dMpJ0GH.png" group-title="DOMINICANOS",Vtv32
+https://edge.livestreaminggroup.info/vtv32live/index.m3u8
 #EXTINF:-1 tvg-id="3ABNLatino.us@SD" tvg-logo="https://i.imgur.com/Ugb4AFo.png" group-title="Religious",3ABN Latino
 https://3abn.bozztv.com/3abn2/Lat_live/smil:Lat_live.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="News",4DmásNoticias TV (1080p) [Not 24/7]
