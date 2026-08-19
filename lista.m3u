@@ -1,8 +1,8 @@
 #EXTM3U
 #EXTINF:-1 tvg-logo="https://i.imgur.com/T1d9Dqc.png" group-title="DOMINICANOS",Bloomberg
 https://liveprodusphoenixeast.akamaized.net/USPhx-HD/Channel-TX-USPhx-AWS-virginia-1/Source-USPhx-16k-1-s6lk2-BP-07-02-81ykIWnsMsg_live.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/NWVW9QV.png" group-title="DOMINICANOS",Cdn
-https://ds.tvabierta.net/memfs/85815c85-ea2a-4360-8c9a-cd35da29131d.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/4hWGJjg.png" group-title="DOMINICANOS",Misioneltv
+https://hls.tvabierta.net/hls/misioneltv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/1nn95v2.png" group-title="DOMINICANOS",Ahoratv
 https://hls.tvabierta.net/hls/003.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/gLYPLI4.png" group-title="DOMINICANOS",Rtvd
@@ -71,6 +71,8 @@ https://streaming.telecablecentral.com.do/ReadyTV/ReadyHD/playlist.m3u8
 https://streaming.telecablecentral.com.do/Vallevision/ValleHD/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/EbaRYyt.jpeg" group-title="DOMINICANOS",Cdndeportes
 https://hls.tvabierta.net/hls/036.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/NWVW9QV.png" group-title="DOMINICANOS",Cdn37
+https://ds.tvabierta.net/memfs/85815c85-ea2a-4360-8c9a-cd35da29131d.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/xkzbit6.png" group-title="DOMINICANOS",Acentotv
 https://hls.tvabierta.net/hls/038.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/vshjA7l.png" group-title="DOMINICANOS",Coral39
