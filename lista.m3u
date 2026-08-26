@@ -1,7 +1,7 @@
 #EXTM3U
 #EXTINF:-1 tvg-logo="https://tvabierta.net/bloomberg.png" group-title="DOMINICANOS",Bloomberg
 https://liveprodusphoenixeast.akamaized.net/USPhx-HD/Channel-TX-USPhx-AWS-virginia-1/Source-USPhx-16k-1-s6lk2-BP-07-02-81ykIWnsMsg_live.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/misioneltv.png" group-title="DOMINICANOS",Misioneltv
+#EXTINF:-1 tvg-logo="https://tvabierta.net/002.png" group-title="DOMINICANOS",Misioneltv
 https://hls.tvabierta.net/hls/misioneltv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/003.png" group-title="DOMINICANOS",Ahoratv
 https://hls.tvabierta.net/hls/003.m3u8
@@ -29,7 +29,7 @@ https://tc13.johanecruzpolanco.workers.dev/live/telecentrocast_1080p/playlist.m3
 https://stream.haislin.com/14tv/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/v3mkmZa.png" group-title="DOMINICANOS",Digital 15
 https://tc13.johanecruzpolanco.workers.dev/live/digital15cast_1080p/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SNfABoY.png" group-title="DOMINICANOS",Carivision
+#EXTINF:-1 tvg-logo="https://tvabierta.net/carivision.png" group-title="DOMINICANOS",Carivision
 https://ss2.tvrdomi.com:1936/carivision/carivision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/017.png" group-title="DOMINICANOS",Tvluz
 https://hls.tvabierta.net/hls/tvluz.m3u8
@@ -40,7 +40,7 @@ https://5790d294af2dc.streamlock.net/tvhdlive/tvhdlive/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/cielotv.png" group-title="DOMINICANOS",Cielotv
 https://hls.tvabierta.net/hls/020.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/021.png" group-title="DOMINICANOS",Antena21
-https://ds.tvabierta.net/memfs/29751bd8-306b-454a-893a-a0c1f0813924.m3u8
+https://hls.tvabierta.net/hls/021.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/022.png" group-title="DOMINICANOS",Multivision
 https://live20.bozztv.com/akamaissh101/ssh101/canalmulti24/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/023.png" group-title="DOMINICANOS",Telefuturo
@@ -103,29 +103,37 @@ https://eu1.servers10.com:8081/8128/index.m3u8
 https://hls.tvabierta.net/hls/052.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/lunatv.png" group-title="DOMINICANOS",Lunatv
 https://tv.wracanal10.com:3671/live/lunatvcanal53live.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/latinatvint.png" group-title="DOMINICANOS",Latinatvint
+#EXTINF:-1 tvg-logo="https://tvabierta.net/latinatvint.png" group-title="DOMINICANOS",Latinatvinternacional
 https://5790d294af2dc.streamlock.net/latinatv/latinatv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/radio67tv.jpg" group-title="DOMINICANOS",Radio67tv
 https://radio67tv.tvabierta.net/hls/stream.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/zfh2Vch.png" group-title="DOMINICANOS",La Reina
+#EXTINF:-1 tvg-logo="https://tvabierta.net/lareinatv.png" group-title="DOMINICANOS",Lareina
 https://cloud2.streaminglivehd.com/lareinatv/lareinatv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/eyAxc7T.png" group-title="DOMINICANOS",JimaníTV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/jimanitv.png" group-title="DOMINICANOS",Jimanitv
 https://cloud2.streaminglivehd.com:1936/8246/8246/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/s7RtfiM.png" group-title="DOMINICANOS",Hilandofino
+#EXTINF:-1 tvg-logo="https://tvabierta.net/hilandofino.png" group-title="DOMINICANOS",Hilandofino
 https://hilandofinotv.essastream.com/p/3606/live/canalhilandofinotvlive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/ENw9wgk.png" group-title="DOMINICANOS",Televida
+#EXTINF:-1 tvg-logo="https://tvabierta.net/televida.png" group-title="DOMINICANOS",Televida
 https://fox.hostlagarto.com:8081/televida/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/CmsN97v.jpg" group-title="DOMINICANOS",OEPM
+#EXTINF:-1 tvg-logo="https://tvabierta.net/canangatv.png" group-title="DOMINICANOS",Canangatv
+https://cdn.streamingcpanel.com:3545/live/canangatlive.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/oepm.jpeg" group-title="DOMINICANOS",Oepm
 https://cnn.hostlagarto.com/oepmtelevision/index.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/cocotv.png" group-title="DOMINICANOS",CocoTV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/cocotv.png" group-title="DOMINICANOS",Cocotv
 https://mlb.essastream.com:8081/canalcocotv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/QlpWOEQ.png" group-title="DOMINICANOS",Manaclartelevision
+#EXTINF:-1 tvg-logo="https://tvabierta.net/manaclartv.png" group-title="DOMINICANOS",Manaclartv
 https://5790d294af2dc.streamlock.net/manaclar/manaclar/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telesiglo.png" group-title="DOMINICANOS",Telesiglo
 https://cnn.hostlagarto.com/telesiglo/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/cFe3neu.png" group-title="DOMINICANOS",Miavision
+#EXTINF:-1 tvg-logo="https://tvabierta.net/palmartv.png" group-title="DOMINICANOS",Palmartv
+https://streamunoapp.com:3255/live/palmartvlive.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/canatv.png" group-title="DOMINICANOS",Canatv
+https://stream.hostuis.com:19360/canatvdigital/canatvdigital.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/ultimominutotv.png" group-title="DOMINICANOS",Deultimominutotv
+https://soportedvb.click:3620/live/deultimominutomedialive.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/miavision.png" group-title="DOMINICANOS",Miavision
 https://hls.tvabierta.net/hls/miavision.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fvm0V1D.png" group-title="DOMINICANOS",Radio Emanuel
+#EXTINF:-1 tvg-logo="https://tvabierta.net/emanuel.png" group-title="DOMINICANOS",Radioemanuel
 https://livetv.305streamhd.com:3868/live/bagogeublive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/extra86.png" group-title="DOMINICANOS",Extra86
 https://video.streamerr.co/hls/sc23910f2cd/live.m3u8
@@ -133,98 +141,100 @@ https://video.streamerr.co/hls/sc23910f2cd/live.m3u8
 https://mlb.essastream.com:8081/cntmas/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/portaldigital.png" group-title="DOMINICANOS",Portaldigitaltv
 https://mlb.essastream.com:8081/portaldigital/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/YCVl0RU.png" group-title="DOMINICANOS",Cromtv
+#EXTINF:-1 tvg-logo="https://tvabierta.net/cromtv.png" group-title="DOMINICANOS",Cromtv
 https://fox.hostlagarto.com:8081/cromtv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/fRYIMmd.png" group-title="DOMINICANOS",TVN
+#EXTINF:-1 tvg-logo="https://tvabierta.net/tvn.png" group-title="DOMINICANOS",Tvn
 https://fedora.b-cdn.net/frombroadcaster/streams/USl4YHAG9kiyD9Rl1085725777830461.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/xm70WY0.png" group-title="DOMINICANOS",Chinolatv
+#EXTINF:-1 tvg-logo="https://tvabierta.net/chinolatv.png" group-title="DOMINICANOS",Chinolatv
 https://tv.wracanal10.com:3300/live/chinolatvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/latinostvny.jpg" group-title="DOMINICANOS",Latinostvny
 https://5790d294af2dc.streamlock.net/latinostv/latinostv/.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/visionndv.png" group-title="DOMINICANOS",Visionndv
 https://soportedvb.click:3891/live/visionndvlive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/SKDwptY.png" group-title="DOMINICANOS",Hmtv
+#EXTINF:-1 tvg-logo="https://tvabierta.net/hmtv.png" group-title="DOMINICANOS",Hmtv
 https://fox.hostlagarto.com:8081/hmtv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4rVg54Y.png" group-title="DOMINICANOS",Telecanal12
+#EXTINF:-1 tvg-logo="https://tvabierta.net/telecanal12.png" group-title="DOMINICANOS",Telecanal12
 https://mlb.essastream.com:8081/telecanal12/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/vJx8ge5.png" group-title="DOMINICANOS",Televisiondeleste
+#EXTINF:-1 tvg-logo="https://tvabierta.net/televisiondeleste.png" group-title="DOMINICANOS",Televisiondeleste
 https://mlb.essastream.com:8081/televisiondeleste/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/D8RbUGm.png" group-title="DOMINICANOS",Hainavision
+#EXTINF:-1 tvg-logo="https://tvabierta.net/hainavision.png" group-title="DOMINICANOS",Hainavision
 https://cdn.streamingcpanel.com:3447/live/hainavisionlive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/p3u2iSf.png" group-title="DOMINICANOS",Santacruztv
+#EXTINF:-1 tvg-logo="https://tvabierta.net/santacruztv.png" group-title="DOMINICANOS",Santacruztv
 https://host.streamingnation.live/p/3345/hybrid/play.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/mqqAytI.png" group-title="DOMINICANOS",Boreal
+#EXTINF:-1 tvg-logo="https://tvabierta.net/boreal.png" group-title="DOMINICANOS",Boreal
 https://edge.essastream.com/borealtelevision/index.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Senal Digital
 https://soportedvb.click:3494/live/senaldigitaltvlive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/p6TlKbE.png" group-title="DOMINICANOS",Pulso Visión
+#EXTINF:-1 tvg-logo="https://tvabierta.net/pulsovision.png" group-title="DOMINICANOS",Pulso Visión
 https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/8IR82G7.png" group-title="DOMINICANOS",Super7
+#EXTINF:-1 tvg-logo="https://tvabierta.net/super7.png" group-title="DOMINICANOS",Super7
 https://stream.haislin.com/super7fm/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/azQGBm5.png" group-title="DOMINICANOS",Mocavisión
+#EXTINF:-1 tvg-logo="https://tvabierta.net/mocavision.png" group-title="DOMINICANOS",Mocavisión
 https://hls.tvabierta.net/hls/mocavision.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Realtv
 https://hls.tvabierta.net/hls/realtv.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Tv3
 https://hls.tvabierta.net/hls/tv3.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/orojw4M.png" group-title="DOMINICANOS",TNE58
+#EXTINF:-1 tvg-logo="https://tvabierta.net/tne58.png" group-title="DOMINICANOS",TNE58
 https://hls.tvabierta.net/hls/tne58.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/cRbV9X3.png" group-title="DOMINICANOS",Ghtelevision
+#EXTINF:-1 tvg-logo="https://tvabierta.net/ghtv.png" group-title="DOMINICANOS",Ghtelevision
 https://fox.hostlagarto.com:8081/ghtelevision/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/PwIK5uL.png" group-title="DOMINICANOS",AION
+#EXTINF:-1 tvg-logo="https://tvabierta.net/aion.png" group-title="DOMINICANOS",AION
 https://edge.essastream.com/aiontelevision/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/lvm.png" group-title="DOMINICANOS",LVM
 https://live.lavozdemaria.com:3436/live/lavozdemarialive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/zonavision.jpg" group-title="DOMINICANOS",Zona Vision
 https://ds.tvabierta.net/memfs/b295f254-7af9-45e4-bfc6-7e0bba41929d.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/snbcCWi.png" group-title="DOMINICANOS",Rumba
+#EXTINF:-1 tvg-logo="https://tvabierta.net/rumba.png" group-title="DOMINICANOS",Rumba
 https://hls.tvabierta.net/hls/rumba.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/VgguXoM.png" group-title="DOMINICANOS",Zol
+#EXTINF:-1 tvg-logo="https://tvabierta.net/zol.png" group-title="DOMINICANOS",Zol
 https://hls.tvabierta.net/hls/zol.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/canaldelsol.png" group-title="DOMINICANOS",Canaldelsol
+https://stream.canaldelsol.com/sol26/master.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telenord8.png" group-title="DOMINICANOS",Telenord 8
 https://cdnfox.hostlagarto.com/telenord8/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telenord10.png" group-title="DOMINICANOS",Telenord 10
 https://cdnfox.hostlagarto.com/telenord10/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telenord12.png" group-title="DOMINICANOS",Telenord 12
 https://cdnfox.hostlagarto.com/telenord12/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/l3Ft2D4.png" group-title="DOMINICANOS",Telecibao
+#EXTINF:-1 tvg-logo="https://tvabierta.net/telecibao.png" group-title="DOMINICANOS",Telecibao
 https://edge.essastream.com/telecibaotv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/oxitv.png" group-title="DOMINICANOS",OxiTV
 https://streamunoapp.com:3520/live/oxitvcanal36live.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/puntacanatv.png" group-title="DOMINICANOS",Punta Cana TV
 https://cdnfox.hostlagarto.com/puntacanatv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/c9rMZ2x.png" group-title="DOMINICANOS",A7TV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/a7tv.png" group-title="DOMINICANOS",A7TV
 https://183.bozztv.com/ssh101/ssh101/a7tvjarabacoa/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Gk9lRxI.png" group-title="DOMINICANOS",JarabacoaTV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/jarabacoatv.png" group-title="DOMINICANOS",JarabacoaTV
 https://streaming.jarabacoatv.com/Jarabacoa_tv/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/uU01KHz.png" group-title="DOMINICANOS",Adoram
+#EXTINF:-1 tvg-logo="https://tvabierta.net/adoramtv.png" group-title="DOMINICANOS",Adoram
 https://live20.bozztv.com/giatv/giatv-adoram/adoram/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.ibb.co/C3fdPYGs/Alcarrizo.jpg" group-title="DOMINICANOS",Alcarrizos TV
 https://5790d294af2dc.streamlock.net/alcarrizostv/alcarrizostv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/O6USO8r.png" group-title="DOMINICANOS",Alegre TV RD
+#EXTINF:-1 tvg-logo="https://tvabierta.net/alegretvrd.png" group-title="DOMINICANOS",Alegre TV RD
 https://streamunoapp.com:3149/live/alegretvlive.m3u8
 #EXTINF:-1 tvg-logo="https://www.banivision.com/wp-content/uploads/2023/04/Bani-Vision-Favicon.png" group-title="DOMINICANOS",Bani Vision
 https://videostream.shockmedia.com.ar/hls/banivision/banivision.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/npiRBPC.png" group-title="DOMINICANOS",Boca Chica TV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/bocachicatv.png" group-title="DOMINICANOS",Bocachicatv
 https://fox.hostlagarto.com:8081/bocachicatv/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/en1vCZB.png" group-title="DOMINICANOS",Bonaotv
+#EXTINF:-1 tvg-logo="https://tvabierta.net/bonaotv.png" group-title="DOMINICANOS",Bonaotv
 https://tele-stream.telecasa.net/live/st2/bonaotv-hd/index.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/Kp8x0NS.png" group-title="DOMINICANOS",Bonches Latinos TV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/boncheslatinostv.png" group-title="DOMINICANOS",Boncheslatinostv
 https://5790d294af2dc.streamlock.net/latinostv/latinostv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/3906-294x165-FFFFFF.jpg" group-title="DOMINICANOS",Caoba TV
 https://host.streamingnation.live:3940/live/caobatvlive.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/4uV90gw.png" group-title="DOMINICANOS",ConstanzaTV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/constanzatv.png" group-title="DOMINICANOS",ConstanzaTV
 https://live20.bozztv.com/akamaissh101/ssh101/ctv8hd/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/lUerWx0.png" group-title="DOMINICANOS",TVM
+#EXTINF:-1 tvg-logo="https://tvabierta.net/tvm.png" group-title="DOMINICANOS",TVM
 https://lbgo.bozztv.com/ssh101/ssh101/tvmontana10tv/chunks.m3u8
-#EXTINF:-1 group-title="DOMINICANOS",Canal sin nombre
-https://edge.essastream.com/cntmas/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://colometv.com/assets/images/logo.png" group-title="DOMINICANOS",Colome TV
-https://ss2.tvrdomi.com:1936/colometv/colometv/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://imgur.com/Z1K1tyl.jpg" group-title="DOMINICANOS",Delta TV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/deltatv.png" group-title="DOMINICANOS",Delta TV
 https://fox.hostlagarto.com:8081/deltatv50/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/dMpJ0GH.png" group-title="DOMINICANOS",Vtv32
+#EXTINF:-1 tvg-logo="https://tvabierta.net/vtv32.png" group-title="DOMINICANOS",Vtv32
 https://edge.livestreaminggroup.info/vtv32live/index.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/supertv.png" group-title="DOMINICANOS",Supertv
+https://ss2.tvrdomi.com:1936/supertv55/supertv55/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/telecontacto.png" group-title="DOMINICANOS",Telecontacto
+https://streaming.grupomediosdelnorte.com:19360/telecontacto/telecontacto.m3u8
 #EXTINF:-1 tvg-id="3ABNLatino.us@SD" tvg-logo="https://i.imgur.com/Ugb4AFo.png" group-title="Religious",3ABN Latino
 https://3abn.bozztv.com/3abn2/Lat_live/smil:Lat_live.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="News",4DmásNoticias TV (1080p) [Not 24/7]
