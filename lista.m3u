@@ -33,8 +33,6 @@ https://tc13.johanecruzpolanco.workers.dev/live/digital15cast_1080p/playlist.m3u
 https://ss2.tvrdomi.com:1936/carivision/carivision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/017.png" group-title="DOMINICANOS",Tvluz
 https://hls.tvabierta.net/hls/tvluz.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/012.png" group-title="DOMINICANOS",Ztv
-https://hls.tvabierta.net/hls/ztv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/018.png" group-title="DOMINICANOS",Canal 19
 https://5790d294af2dc.streamlock.net/tvhdlive/tvhdlive/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/cielotv.png" group-title="DOMINICANOS",Cielotv
@@ -235,6 +233,8 @@ https://edge.livestreaminggroup.info/vtv32live/index.m3u8
 https://ss2.tvrdomi.com:1936/supertv55/supertv55/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telecontacto.png" group-title="DOMINICANOS",Telecontacto
 https://streaming.grupomediosdelnorte.com:19360/telecontacto/telecontacto.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/latinatvinternacional.jpg" group-title="DOMINICANOS",Latinatvinternacional
+https://5790d294af2dc.streamlock.net/latinatv/latinatv/chunklist.m3u8
 #EXTINF:-1 tvg-id="3ABNLatino.us@SD" tvg-logo="https://i.imgur.com/Ugb4AFo.png" group-title="Religious",3ABN Latino
 https://3abn.bozztv.com/3abn2/Lat_live/smil:Lat_live.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="News",4DmásNoticias TV (1080p) [Not 24/7]
