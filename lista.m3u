@@ -95,8 +95,6 @@ https://stream.haislin.com/entelevision/index.m3u8
 https://stmv6.voxtvhd.com.br/vallenuevotv/vallenuevotv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/nexxotv.png" group-title="DOMINICANOS",Nexxotv
 https://hls.tvabierta.net/hls/nexxotv.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/cvvision.png" group-title="DOMINICANOS",Ccvdigital
-https://eu1.servers10.com:8081/8128/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleimpacto.png" group-title="DOMINICANOS",Teleimpacto
 https://hls.tvabierta.net/hls/052.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/lunatv.png" group-title="DOMINICANOS",Lunatv
@@ -113,6 +111,8 @@ https://cloud2.streaminglivehd.com:1936/8246/8246/playlist.m3u8
 https://hilandofinotv.essastream.com/p/3606/live/canalhilandofinotvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/televida.png" group-title="DOMINICANOS",Televida
 https://fox.hostlagarto.com:8081/televida/index.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/cvvision.png" group-title="DOMINICANOS",Cvvision
+https://eu1.servers10.com:8081/8128/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/canangatv.png" group-title="DOMINICANOS",Canangatv
 https://cdn.streamingcpanel.com:3545/live/canangatlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/oepm.jpeg" group-title="DOMINICANOS",Oepm
@@ -223,6 +223,8 @@ https://ss2.tvrdomi.com:1936/supertv55/supertv55/playlist.m3u8
 https://streaming.grupomediosdelnorte.com:19360/telecontacto/telecontacto.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/latinatvinternacional.jpg" group-title="DOMINICANOS",Latinatvinternacional
 https://5790d294af2dc.streamlock.net/latinatv/latinatv/chunklist.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/canalda.png" group-title="DOMINICANOS",Canalda
+https://canalda.rgradio.net:3084/live/canaldalive.m3u8
 #EXTINF:-1 tvg-id="3ABNLatino.us@SD" tvg-logo="https://i.imgur.com/Ugb4AFo.png" group-title="Religious",3ABN Latino
 https://3abn.bozztv.com/3abn2/Lat_live/smil:Lat_live.smil/playlist.m3u8
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="News",4DmásNoticias TV (1080p) [Not 24/7]
