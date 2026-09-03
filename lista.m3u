@@ -157,14 +157,12 @@ https://cdn.streamingcpanel.com:3447/live/hainavisionlive.m3u8
 https://host.streamingnation.live/p/3345/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/boreal.png" group-title="DOMINICANOS",Boreal
 https://edge.essastream.com/borealtelevision/index.m3u8
-#EXTINF:-1 group-title="DOMINICANOS",Senal Digital
+#EXTINF:-1 tvg-logo="https://tvabierta.net/senaldigitaltv.png" group-title="DOMINICANOS",Senal Digital
 https://soportedvb.click:3494/live/senaldigitaltvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/pulsovision.png" group-title="DOMINICANOS",Pulso Visión
 https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/mocavision.png" group-title="DOMINICANOS",Mocavisión
 https://hls.tvabierta.net/hls/mocavision.m3u8
-#EXTINF:-1 group-title="DOMINICANOS",Realtv
-https://hls.tvabierta.net/hls/realtv.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Tv3
 https://hls.tvabierta.net/hls/tv3.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tne58.png" group-title="DOMINICANOS",TNE58
@@ -187,8 +185,6 @@ https://cdnfox.hostlagarto.com/telenord10/index.m3u8
 https://cdnfox.hostlagarto.com/telenord12/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telecibao.png" group-title="DOMINICANOS",Telecibao
 https://edge.essastream.com/telecibaotv/index.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/oxitv.png" group-title="DOMINICANOS",OxiTV
-https://streamunoapp.com:3520/live/oxitvcanal36live.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/puntacanatv.png" group-title="DOMINICANOS",Punta Cana TV
 https://cdnfox.hostlagarto.com/puntacanatv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/a7tv.png" group-title="DOMINICANOS",A7TV
