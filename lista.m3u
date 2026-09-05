@@ -91,6 +91,8 @@ https://s.emisoras.tv:8081/dtv/index.m3u8
 https://videoserver.tmcreativos.com:19360/gkemzxrrmr/gkemzxrrmr.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/retv.png" group-title="DOMINICANOS",Retv
 https://cloud2.streaminglivehd.com/8072/8072/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/012.png" group-title="DOMINICANOS",Ztv
+https://hls.tvabierta.net/hls/ztv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/vallenuevotv.png" group-title="DOMINICANOS",Valle Nuevo TV
 https://stmv6.voxtvhd.com.br/vallenuevotv/vallenuevotv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/nexxotv.png" group-title="DOMINICANOS",Nexxotv
