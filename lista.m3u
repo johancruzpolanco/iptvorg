@@ -157,7 +157,7 @@ https://edge.essastream.com/borealtelevision/index.m3u8
 https://soportedvb.click:3494/live/senaldigitaltvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/pulsovision.png" group-title="DOMINICANOS",Pulso Visión
 https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/zonavision.jpg" group-title="DOMINICANOS",Zona Vision
+#EXTINF:-1 tvg-logo="https://tvabierta.net/zonavision.jpeg" group-title="DOMINICANOS",Zona Vision
 https://ds.tvabierta.net/memfs/b295f254-7af9-45e4-bfc6-7e0bba41929d.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/rumba.png" group-title="DOMINICANOS",Rumba
 https://hls.tvabierta.net/hls/rumba.m3u8
