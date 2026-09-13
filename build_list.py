@@ -4,8 +4,8 @@ Genera lista.m3u para IPTV Smarters:
 
   1. Grupo DOMINICANOS: los canales de la categoria RD de la API de tvabierta,
      ordenados por numero de canal, mas los enlaces propios que sustituyen a
-     los de la API cuando tenemos uno mejor (los de Telemicro, que van por
-     nuestro proxy).
+     los de la API cuando tenemos uno mejor (los de Telemicro y Teleantillas,
+     que van por nuestro proxy).
   2. Detras, la lista en espanol de iptv-org, sin los canales que ya salen
      arriba para que no haya duplicados.
 
@@ -24,6 +24,10 @@ NOTAS DE MANTENIMIENTO
   - Usar live4.telemicro.com.do, NO live2: live2 reparte entre dos backends, la
     sesion (nimblesessionid) se crea en uno y el segmento se pide al otro, lo
     que da 403/404 intermitentes.
+  - Teleantillas tambien pasa por el Worker, pero por otro motivo: su pagina
+    emite con un embed de Dailymotion y el Worker saca en cada momento el
+    enlace con token (/teleantillas/playlist.m3u8). Sin proxy se queda el
+    enlace de tvabierta.
   - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
     caduca en horas. Tampoco fijar los /memfs/<uuid> de tvabierta: son ids de
     proceso que cambian si el canal reinicia. Por eso se resuelven por API.
@@ -85,6 +89,16 @@ CHANNELS = [
         "url": "https://live4.telemicro.com.do/live/digital15cast_1080p/playlist.m3u8",
         "proxy_path": "/live/digital15cast_1080p/playlist.m3u8",
         "logo": "https://i.imgur.com/v3mkmZa.png",
+    },
+    {
+        "name": "Teleantillas",
+        "number": 10,
+        "api_name": "teleantillas",
+        # Sin proxy se queda el de tvabierta. Con proxy el Worker saca la senal
+        # de teleantillas.com.do (embed de Dailymotion con token que caduca).
+        "url": "https://hls.tvabierta.net/hls/010.m3u8",
+        "proxy_path": "/teleantillas/playlist.m3u8",
+        "logo": "https://tvabierta.net/010.png",
     },
     {
         "name": "Teleuniverso 29",
@@ -351,7 +365,8 @@ def main():
                 ch["url"] = proxy + ch["proxy_path"]
         log("Usando proxy para %d canal(es): %s" % (n, proxy))
     else:
-        warn("sin proxy: los canales de Telemicro no funcionaran en Smarters")
+        warn("sin proxy: los canales de Telemicro no funcionaran en Smarters y "
+             "Teleantillas usara el enlace de tvabierta")
 
     canales = cargar_canales()
 
