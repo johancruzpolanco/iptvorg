@@ -26,10 +26,11 @@ NOTAS DE MANTENIMIENTO
     que da 403/404 intermitentes.
   - Teleantillas NO va por el Worker. Su pagina emite con un embed de
     Dailymotion, pero Dailymotion bloquea a Cloudflare (403 E030) y desde el
-    Worker nunca sale la senal. Tampoco vale tvabierta como principal: su
-    retransmision se reinicia a menudo (MEDIA-SEQUENCE vuelve a 0; 3 veces en
-    2 horas el 13/09/2026) y Smarters se queda congelado en cada reinicio.
-    Se usa un Flussonic de iptv-org y tvabierta queda de alternativa.
+    Worker nunca sale la senal. Se usa tvabierta como principal (por peticion
+    del usuario) y el Flussonic de iptv-org queda como alternativa. Ojo: la
+    retransmision de tvabierta se reinicia a menudo (MEDIA-SEQUENCE vuelve a 0;
+    3 veces en 2 horas el 13/09/2026) y Smarters puede congelarse en cada
+    reinicio.
   - "alternatives": enlaces de repuesto. Con --check, si el principal falla se
     publica el primero de ellos que funcione.
   - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
@@ -98,10 +99,11 @@ CHANNELS = [
         "name": "Teleantillas",
         "number": 10,
         "api_name": "teleantillas",
-        # Flussonic de iptv-org (1080p, ventana de 24 s, sin reinicios). Solo
-        # http. tvabierta de repuesto: se reinicia y congela Smarters.
-        "url": "http://45.171.108.253:8888/TELEANTILLAS/index.m3u8",
-        "alternatives": ["https://hls.tvabierta.net/hls/010.m3u8"],
+        # tvabierta como principal (por peticion del usuario). Ojo: se reinicia
+        # con frecuencia y puede congelar Smarters. Flussonic de iptv-org de
+        # repuesto (1080p, ventana de 24 s, sin reinicios; solo http).
+        "url": "https://hls.tvabierta.net/hls/010.m3u8",
+        "alternatives": ["http://45.171.108.253:8888/TELEANTILLAS/index.m3u8"],
         "logo": "https://tvabierta.net/010.png",
     },
     {
@@ -451,3 +453,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+  
