@@ -31,6 +31,9 @@ NOTAS DE MANTENIMIENTO
     retransmision de tvabierta se reinicia a menudo (MEDIA-SEQUENCE vuelve a 0;
     3 veces en 2 horas el 13/09/2026) y Smarters puede congelarse en cada
     reinicio.
+  - Teleuniverso 29 viene de la API de tvabierta (por peticion del usuario).
+    Esta en RESPALDOS: si la API no lo trae (o no responde) se usa el enlace
+    fijo de hls.tvabierta.net.
   - "alternatives": enlaces de repuesto. Con --check, si el principal falla se
     publica el primero de ellos que funcione.
   - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
@@ -106,13 +109,17 @@ CHANNELS = [
         "alternatives": ["http://45.171.108.253:8888/TELEANTILLAS/index.m3u8"],
         "logo": "https://tvabierta.net/010.png",
     },
+]
+
+# Canales que se toman de la API. Aqui solo se fija el nombre con el que se
+# muestran y un enlace de respaldo que se usa SOLO si la API no trae el canal
+# (no esta, viene deshabilitado, sin stream, o la API no responde).
+RESPALDOS = [
     {
         "name": "Teleuniverso 29",
         "number": 29,
         "api_name": "teleuniversotv",
-        # El master de wind.do anuncia 1080/720/640 pero solo existe la de 720;
-        # las otras dan 404 y el reproductor puede colgarse con la que no esta.
-        "url": "https://cdn3.wind.do/streams/teleuniverso/teleuniverso_720.m3u8",
+        "url": "https://hls.tvabierta.net/hls/029.m3u8",
         "logo": "",
     },
 ]
@@ -183,25 +190,32 @@ def bonito(nombre):
     return nombre if nombre[:1].isupper() else nombre.capitalize()
 
 
+def ordenar(canales):
+    return sorted(canales, key=lambda c: c.get("number") or 999)
+
+
 def cargar_canales():
     """
     Devuelve la lista final del grupo DOMINICANOS: los canales propios mas los
-    de la categoria RD de la API, ordenados por numero de canal.
+    de la categoria RD de la API, ordenados por numero de canal. Los canales
+    de RESPALDOS que la API no traiga se anaden con su enlace fijo.
 
-    Si la API no responde se sigue adelante solo con los propios: preferimos una
-    lista corta a no generar nada.
+    Si la API no responde se sigue adelante con los propios y los respaldos:
+    preferimos una lista corta a no generar nada.
     """
     propios = {c["api_name"] for c in CHANNELS if c.get("api_name")}
-    canales = list(CHANNELS)
+    respaldos = {c["api_name"]: c for c in RESPALDOS}
+    canales = [dict(c) for c in CHANNELS]
 
     try:
         data = json.loads(http_get(TVABIERTA_API, timeout=30).decode("utf-8", "replace"))
     except (RuntimeError, ValueError) as e:
-        warn("no se pudo leer la API de tvabierta (%s); solo van los canales "
-             "propios" % e)
-        return sorted(canales, key=lambda c: c.get("number") or 999)
+        warn("no se pudo leer la API de tvabierta (%s); van los canales propios "
+             "y los enlaces de respaldo" % e)
+        return ordenar(canales + [dict(c) for c in RESPALDOS])
 
     importados = 0
+    vistos = set()
     for c in data.get("channels", []):
         if c.get("category") != TVABIERTA_CATEGORY or not c.get("enabled", True):
             continue
@@ -209,19 +223,38 @@ def cargar_canales():
         stream = (c.get("stream") or "").strip()
         if not nombre or not stream:
             continue
-        if nombre.lower() in propios:
+        clave = nombre.lower()
+        if clave in propios:
             continue  # ya lo tenemos con un enlace mejor
-        canales.append({
+
+        canal = {
             "name": bonito(nombre),
             "number": c.get("number") or 999,
             "url": stream,
             "logo": c.get("logo") or "",
-        })
+        }
+        # Canal con respaldo: enlace y logo de la API, nombre y numero nuestros.
+        if clave in respaldos:
+            ref = respaldos[clave]
+            canal["name"] = ref["name"]
+            canal["number"] = ref.get("number") or canal["number"]
+            canal["logo"] = canal["logo"] or ref.get("logo", "")
+            vistos.add(clave)
+        canales.append(canal)
         importados += 1
 
     log("API tvabierta: %d canales importados de la categoria %s"
         % (importados, TVABIERTA_CATEGORY))
-    return sorted(canales, key=lambda c: c.get("number") or 999)
+
+    for clave, ref in respaldos.items():
+        if clave in vistos:
+            log("  %s: enlace de la API" % ref["name"])
+        else:
+            warn("%s no esta en la API; se usa el respaldo %s"
+                 % (ref["name"], ref["url"]))
+            canales.append(dict(ref))
+
+    return ordenar(canales)
 
 
 def build_block(channel):
