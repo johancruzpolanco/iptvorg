@@ -55,10 +55,10 @@ https://2-fss-2.streamhoster.com/pl_138/206532-6829902-1/playlist.m3u8
 https://eu1.servers10.com:8081/8128/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/bellavision.png" group-title="DOMINICANOS",Bellavision
 https://cdnfox.hostlagarto.com/bellavision8hd/index.m3u8
-#EXTINF:-1 group-title="DOMINICANOS",Teleuniverso 29
-https://cdn3.wind.do/streams/teleuniverso/teleuniverso_720.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/lunatv.png" group-title="DOMINICANOS",Lunatv
 https://tv.wracanal10.com:3671/live/lunatvcanal53live.m3u8
+#EXTINF:-1 group-title="DOMINICANOS",Teleuniverso 29
+https://hls.tvabierta.net/hls/029.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/cotubanamatv.png" group-title="DOMINICANOS",Cotubanamatv
 https://hls.tvabierta.net/hls/cotubanamatv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/microvision.png" group-title="DOMINICANOS",Microvision
