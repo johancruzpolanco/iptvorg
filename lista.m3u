@@ -20,7 +20,7 @@ https://5790d294af2dc.streamlock.net/manaclar/manaclar/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/pulsovision.png" group-title="DOMINICANOS",Pulso Visión
 https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/010.png" group-title="DOMINICANOS",Teleantillas
-https://hls.tvabierta.net/hls/010.m3u8
+http://45.171.108.253:8888/TELEANTILLAS/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/019.png" group-title="DOMINICANOS",Canal 19
 https://5790d294af2dc.streamlock.net/tvhdlive/tvhdlive/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/elpuertotv.png" group-title="DOMINICANOS",Elpuertotv
