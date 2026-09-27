@@ -44,6 +44,34 @@
  * /teleantillas/estado dice cual de los dos se esta usando y por que.
  *
  * Uso:  https://<tu-worker>.workers.dev/teleantillas/playlist.m3u8
+ *
+ * ---------------------------------------------------------------------------
+ * CANALES CON CABECERAS (los de iptv-org con http-referrer / http-user-agent)
+ * ---------------------------------------------------------------------------
+ *
+ * Unos 70 canales de iptv-org solo funcionan si el reproductor manda un
+ * Referer o un User-Agent concreto (atributos http-referrer / http-user-agent
+ * del #EXTINF y lineas #EXTVLCOPT). Smarters no los manda, asi que al servir
+ * /lista.m3u el Worker cambia la URL de esos canales por una suya:
+ *
+ *   https://<tu-worker>.workers.dev/h/<token>/<ruta original>?<query original>
+ *
+ * El token lleva el origen (https://host:puerto) y las cabeceras, firmados
+ * con HMAC. Sin firma el Worker seria un proxy abierto: solo acepta tokens
+ * que haya emitido el mismo, y cada token sirve solo para su origen.
+ *
+ * Cada .m3u8 que pasa por aqui se reescribe: variantes, segmentos, claves
+ * (EXT-X-KEY) y EXT-X-MAP pasan tambien por el Worker con las mismas
+ * cabeceras, porque estos CDNs suelen pedir el Referer tambien en los .ts.
+ * Si el CDN manda a otro host (redireccion o URL absoluta) se firma un token
+ * para ese host.
+ *
+ * Requiere el secreto PROXY_KEY en el Worker (cualquier texto largo y
+ * aleatorio). Sin el, /lista.m3u se sirve sin tocar.
+ *
+ * No arregla canales con bloqueo geografico (el Worker sale por el centro de
+ * datos de Cloudflare mas cercano al que ve el canal) ni CDNs que bloqueen
+ * las IPs de Cloudflare.
  */
 
 // live4, NO live2: live2 reparte entre dos backends, la sesion
@@ -99,6 +127,14 @@ const TA_SEGMENT_HOST = /(^|\.)dmcdn\.net$/;
 // /teleantillas/playlist.m3u8 (master) y /teleantillas/v480.m3u8 (variantes).
 const TA_ROUTE = /^\/teleantillas\/([A-Za-z0-9_-]+)\.m3u8$/;
 
+// --- Canales con cabeceras ---
+
+// /h/<payload>.<firma>/<ruta del origen>
+const HDR_ROUTE = /^\/h\/([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+)(\/.*)$/;
+
+// Bytes de HMAC-SHA256 que se guardan en la URL (16 = 128 bits, de sobra).
+const HDR_SIG_BYTES = 16;
+
 // Cache en memoria del isolate. Si Cloudflare lo recicla se vuelve a resolver.
 let taVideo = { id: null, at: 0 };
 let taMaster = null;
@@ -112,8 +148,9 @@ const CORS = {
 };
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
+    const key = (env && env.PROXY_KEY) || "";
 
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS });
@@ -128,6 +165,8 @@ export default {
         "Proxy IPTV\n\n" +
           "Lista:  " + url.origin + "/lista.m3u\n" +
           "Canal:  " + url.origin + "/live/13/playlist.m3u8\n" +
+          "Canales con Referer/User-Agent: " +
+          (key ? "por el Worker (/h/...)" : "SIN PROXY (falta el secreto PROXY_KEY)") + "\n" +
           "Teleantillas:  " + url.origin + "/teleantillas/playlist.m3u8" +
           "  (estado: " + url.origin + "/teleantillas/estado)\n",
         { status: 200, headers: { "Content-Type": "text/plain", ...CORS } }
@@ -160,7 +199,11 @@ export default {
           headers: CORS,
         });
       }
-      return new Response(r.body, {
+      // Sin clave no se pueden firmar los enlaces: la lista va tal cual.
+      const body = key
+        ? await rewriteList(await r.text(), key, url.origin)
+        : r.body;
+      return new Response(body, {
         status: 200,
         headers: {
           "Content-Type": "audio/x-mpegurl",
@@ -212,6 +255,11 @@ export default {
       return proxy(request, target.href, {});
     }
 
+    const hdr = url.pathname.match(HDR_ROUTE);
+    if (hdr) {
+      return headerProxy(request, url, hdr, key);
+    }
+
     if (!ALLOWED_PATH.test(url.pathname)) {
       return new Response("Ruta no permitida", { status: 403, headers: CORS });
     }
@@ -225,6 +273,20 @@ export default {
 
 /** Reenvia la peticion al origen con las cabeceras dadas y devuelve el cuerpo tal cual. */
 async function proxy(request, target, extraHeaders) {
+  let upstream;
+  try {
+    upstream = await fetchUpstream(request, target, extraHeaders);
+  } catch (err) {
+    return new Response("Error contactando el origen: " + err, {
+      status: 502,
+      headers: CORS,
+    });
+  }
+  return passThrough(upstream, target);
+}
+
+/** Pide target al origen con UA de navegador, las cabeceras dadas y el Range del cliente. */
+function fetchUpstream(request, target, extraHeaders) {
   const headers = new Headers({
     "User-Agent": USER_AGENT,
     Accept: "*/*",
@@ -235,20 +297,15 @@ async function proxy(request, target, extraHeaders) {
   const range = request.headers.get("Range");
   if (range) headers.set("Range", range);
 
-  let upstream;
-  try {
-    upstream = await fetch(target, {
-      method: request.method,
-      headers,
-      redirect: "follow",
-    });
-  } catch (err) {
-    return new Response("Error contactando el origen: " + err, {
-      status: 502,
-      headers: CORS,
-    });
-  }
+  return fetch(target, {
+    method: request.method,
+    headers,
+    redirect: "follow",
+  });
+}
 
+/** Devuelve la respuesta del origen tal cual, con CORS y cache segun el tipo. */
+function passThrough(upstream, target) {
   const out = new Headers(CORS);
   const ctype = upstream.headers.get("Content-Type");
   if (ctype) out.set("Content-Type", ctype);
@@ -270,6 +327,256 @@ async function proxy(request, target, extraHeaders) {
     statusText: upstream.statusText,
     headers: out,
   });
+}
+
+// ---------------------------------------------------------------------------
+// Canales con cabeceras (Referer / User-Agent)
+// ---------------------------------------------------------------------------
+
+let hmacKey = { secret: null, key: null };
+
+/**
+ * /h/<payload>.<firma>/<ruta>: comprueba la firma, pide la ruta al origen del
+ * token con sus cabeceras y, si es un .m3u8, lo reescribe para que todo lo que
+ * cuelga de el (variantes, segmentos, claves) pase tambien por aqui.
+ */
+async function headerProxy(request, url, match, key) {
+  if (!key) {
+    return new Response("Falta el secreto PROXY_KEY en el Worker", {
+      status: 503,
+      headers: CORS,
+    });
+  }
+  const [, payload, sig, path] = match;
+  let origin, referer, ua;
+  try {
+    if (!(await verifySig(key, payload, sig))) throw new Error("firma");
+    [origin, referer, ua] = JSON.parse(b64urlDecode(payload));
+  } catch (err) {
+    return new Response("Token invalido", { status: 403, headers: CORS });
+  }
+
+  const target = origin + path + url.search;
+  const extra = {};
+  if (referer) {
+    extra.Referer = referer;
+    // Lo que manda el navegador cuando el reproductor de la web pide el video.
+    try {
+      extra.Origin = new URL(referer).origin;
+    } catch (err) {
+      // Referer raro: se manda solo el Referer.
+    }
+  }
+  if (ua) extra["User-Agent"] = ua;
+
+  let upstream;
+  try {
+    upstream = await fetchUpstream(request, target, extra);
+  } catch (err) {
+    return new Response("Error contactando el origen: " + err, {
+      status: 502,
+      headers: CORS,
+    });
+  }
+
+  // Tras una redireccion las rutas relativas se resuelven contra el destino.
+  const final = upstream.url || target;
+  const ctype = (upstream.headers.get("Content-Type") || "").toLowerCase();
+  const named = /mpegurl/.test(ctype) || /\.m3u8?$/i.test(new URL(final).pathname);
+  // Hay origenes que dan el .m3u8 como text/plain o sin extension.
+  const maybe = !ctype || ctype.startsWith("text/");
+  if (request.method === "HEAD" || !upstream.ok || !(named || maybe)) {
+    return passThrough(upstream, target);
+  }
+
+  const text = await upstream.text();
+  if (!text.trimStart().startsWith("#EXTM3U")) {
+    return new Response(text, {
+      status: upstream.status,
+      headers: { ...CORS, "Content-Type": ctype || "text/plain" },
+    });
+  }
+  return playlistResponse(
+    await rewritePlaylist(text, final, referer, ua, key, url.origin)
+  );
+}
+
+/** Cambia cada URL de un .m3u8 (lineas y URI="...") por su version /h/ del Worker. */
+async function rewritePlaylist(text, base, referer, ua, key, self) {
+  const tokens = new Map();
+  const wrap = async (u) => {
+    let abs;
+    try {
+      abs = new URL(u, base);
+    } catch (err) {
+      return u;
+    }
+    // skd://, data:... no se pueden (ni hace falta) pedir por aqui.
+    if (abs.protocol !== "http:" && abs.protocol !== "https:") return u;
+    return self + (await hdrPath(key, abs, referer, ua, tokens));
+  };
+
+  const out = [];
+  for (const line of text.split(/\r?\n/)) {
+    const t = line.trim();
+    if (!t) {
+      out.push(line);
+    } else if (t.startsWith("#")) {
+      // EXT-X-KEY, EXT-X-MAP, EXT-X-MEDIA, EXT-X-I-FRAME-STREAM-INF...
+      let rewritten = "";
+      let last = 0;
+      for (const m of line.matchAll(/URI="([^"]+)"/g)) {
+        rewritten += line.slice(last, m.index) + 'URI="' + (await wrap(m[1])) + '"';
+        last = m.index + m[0].length;
+      }
+      out.push(rewritten + line.slice(last));
+    } else {
+      out.push(await wrap(t));
+    }
+  }
+  return out.join("\n");
+}
+
+/**
+ * Pasa por el Worker los canales de la lista que piden Referer o User-Agent
+ * (atributos http-referrer / http-user-agent, lineas #EXTVLCOPT o sufijo
+ * "|Referer=..."). Quita esas cabeceras de la entrada: ya las pone el Worker.
+ */
+async function rewriteList(text, key, self) {
+  const tokens = new Map();
+  const out = [];
+  let entry = null; // lineas desde el #EXTINF hasta la URL
+  for (const line of text.split(/\r?\n/)) {
+    if (line.startsWith("#EXTINF")) {
+      if (entry) out.push(...entry);
+      entry = [line];
+    } else if (!entry) {
+      out.push(line);
+    } else if (!line.trim() || line.startsWith("#")) {
+      entry.push(line);
+    } else {
+      out.push(...(await rewriteEntry(entry, line.trim(), key, self, tokens)));
+      entry = null;
+    }
+  }
+  if (entry) out.push(...entry);
+  return out.join("\n");
+}
+
+async function rewriteEntry(lines, link, key, self, tokens) {
+  const extinf = lines[0];
+  let referer = extinfAttr(extinf, "http-referrer");
+  let ua = extinfAttr(extinf, "http-user-agent");
+
+  const rest = [];
+  for (const line of lines.slice(1)) {
+    const m = line.match(/^#EXTVLCOPT:http-(referrer|user-agent)=(.*)$/i);
+    if (!m) {
+      rest.push(line);
+    } else if (m[1].toLowerCase() === "referrer") {
+      referer = referer || m[2].trim();
+    } else {
+      ua = ua || m[2].trim();
+    }
+  }
+
+  // Sufijo estilo Kodi: https://...m3u8|Referer=...&User-Agent=...
+  let target = link;
+  const bar = link.indexOf("|");
+  if (bar !== -1) {
+    target = link.slice(0, bar);
+    for (const kv of link.slice(bar + 1).split("&")) {
+      const i = kv.indexOf("=");
+      if (i === -1) continue;
+      let v = kv.slice(i + 1);
+      try {
+        v = decodeURIComponent(v);
+      } catch (err) {
+        // Se usa tal cual.
+      }
+      const k = kv.slice(0, i).toLowerCase();
+      if (k === "referer" || k === "referrer") referer = referer || v;
+      else if (k === "user-agent") ua = ua || v;
+    }
+  }
+
+  let abs = null;
+  try {
+    abs = new URL(target);
+  } catch (err) {
+    // URL rara: se deja como venia.
+  }
+  if (
+    (!referer && !ua) ||
+    !abs ||
+    (abs.protocol !== "http:" && abs.protocol !== "https:")
+  ) {
+    return [...lines, link];
+  }
+
+  const clean = extinf.replace(/\s+http-(?:referrer|user-agent)="[^"]*"/g, "");
+  return [clean, ...rest, self + (await hdrPath(key, abs, referer, ua, tokens))];
+}
+
+function extinfAttr(extinf, name) {
+  const m = extinf.match(new RegExp("\\s" + name + '="([^"]*)"'));
+  return m ? m[1].trim() : "";
+}
+
+/** "/h/<token>/<ruta>?<query>" para pedir abs con esas cabeceras. */
+async function hdrPath(key, abs, referer, ua, cache) {
+  const id = abs.origin + "\n" + (referer || "") + "\n" + (ua || "");
+  let token = cache.get(id);
+  if (!token) {
+    const fields = ua ? [abs.origin, referer || "", ua] : [abs.origin, referer || ""];
+    const payload = b64urlEncode(new TextEncoder().encode(JSON.stringify(fields)));
+    token = payload + "." + (await hmacSig(key, payload));
+    cache.set(id, token);
+  }
+  return "/h/" + token + abs.pathname + abs.search;
+}
+
+async function hmacSig(secret, data) {
+  if (hmacKey.secret !== secret) {
+    hmacKey = {
+      secret,
+      key: await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(secret),
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign"]
+      ),
+    };
+  }
+  const mac = await crypto.subtle.sign(
+    "HMAC",
+    hmacKey.key,
+    new TextEncoder().encode(data)
+  );
+  return b64urlEncode(new Uint8Array(mac).slice(0, HDR_SIG_BYTES));
+}
+
+/** Compara la firma en tiempo constante. */
+async function verifySig(secret, payload, sig) {
+  const expected = await hmacSig(secret, payload);
+  if (expected.length !== sig.length) return false;
+  let diff = 0;
+  for (let i = 0; i < sig.length; i++) {
+    diff |= expected.charCodeAt(i) ^ sig.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+function b64urlEncode(bytes) {
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function b64urlDecode(s) {
+  const bin = atob(s.replace(/-/g, "+").replace(/_/g, "/"));
+  return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
 }
 
 // ---------------------------------------------------------------------------

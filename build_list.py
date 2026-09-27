@@ -7,7 +7,8 @@ Genera lista.m3u para IPTV Smarters:
      los de la API cuando tenemos uno mejor (los de Telemicro, que van por
      nuestro proxy).
   2. Detras, la lista en espanol de iptv-org, sin los canales que ya salen
-     arriba para que no haya duplicados.
+     arriba para que no haya duplicados, repartida en grupos en espanol
+     (Noticias, Deportes, Documentales... y Generales por pais).
 
     python build_list.py                  genera lista.m3u
     python build_list.py --check          verifica cada enlace (video real)
@@ -31,6 +32,13 @@ NOTAS DE MANTENIMIENTO
     retransmision de tvabierta se reinicia a menudo (MEDIA-SEQUENCE vuelve a 0;
     3 veces en 2 horas el 13/09/2026) y Smarters puede congelarse en cada
     reinicio.
+  - Los canales de iptv-org que piden Referer/User-Agent (http-referrer,
+    http-user-agent, #EXTVLCOPT, sufijo "|Referer=") se publican ya cambiados
+    por enlaces /h/<token>/... del Worker, que es quien pone esas cabeceras.
+    Asi funcionan tambien las pantallas que leen lista.m3u por jsDelivr. El
+    token va firmado con PROXY_KEY, que tiene que ser el MISMO secreto en el
+    repo (Settings > Secrets > Actions) y en el Worker. Sin el, esos canales
+    se publican como vienen (y solo funcionan en VLC y similares).
   - Teleuniverso 29 viene de la API de tvabierta (por peticion del usuario).
     Esta en RESPALDOS: si la API no lo trae (o no responde) se usa el enlace
     fijo de hls.tvabierta.net.
@@ -45,8 +53,12 @@ NOTAS DE MANTENIMIENTO
 """
 
 import argparse
+import base64
+import hashlib
+import hmac
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -70,6 +82,12 @@ TVABIERTA_CATEGORY = "RD"
 # lista se publicaba sin proxy y Telecentro no cargaba en Smarters.
 DEFAULT_PROXY = "https://tc13.johanecruzpolanco.workers.dev"
 PROXY_BASE = os.environ.get("PROXY_BASE", DEFAULT_PROXY).rstrip("/")
+
+# Secreto compartido con el Worker para firmar los enlaces /h/... (ver NOTAS).
+PROXY_KEY = os.environ.get("PROXY_KEY", "")
+
+# Igual que HDR_SIG_BYTES en worker.js.
+HDR_SIG_BYTES = 16
 
 # Canales propios: sustituyen al de la API con el mismo "api_name" porque
 # tenemos un enlace mejor. El resto de la categoria RD se importa tal cual.
@@ -133,6 +151,82 @@ OWN_IDS = {
     "telefuturo.do", "teleunion.do", "acentotv.do", "telemax.do", "tvo.do",
     "retv.do", "boreal.do", "televida.do", "cieltv.do", "ahoratv.do",
 }
+
+# --- Categorias de iptv-org en espanol ---
+#
+# iptv-org da categorias en ingles y a veces varias ("Documentary;Series").
+# Cada canal va a UN grupo: el de mayor prioridad entre sus categorias y las
+# palabras clave de su nombre (asi "Historia HD", que viene como
+# Entertainment, cae en Documentales). El orden de PRIORIDAD es tambien el
+# orden de los grupos en la lista, detras de DOMINICANOS.
+CATEGORIAS = {
+    "documentary": "Documentales", "science": "Documentales",
+    "travel": "Documentales", "outdoor": "Documentales",
+    "kids": "Infantiles", "animation": "Infantiles",
+    "sports": "Deportes",
+    "news": "Noticias", "weather": "Noticias", "business": "Noticias",
+    "movies": "Películas", "classic": "Películas",
+    "series": "Series",
+    "music": "Música",
+    "religious": "Religiosos",
+    "culture": "Cultura y educación", "education": "Cultura y educación",
+    "lifestyle": "Estilo de vida", "cooking": "Estilo de vida",
+    "auto": "Estilo de vida", "shop": "Estilo de vida",
+    "entertainment": "Entretenimiento", "comedy": "Entretenimiento",
+    "family": "Entretenimiento", "relax": "Entretenimiento",
+    "legislative": "Institucionales",
+    "general": "Generales", "public": "Generales", "undefined": "Generales",
+}
+
+GENERALES = "Generales"
+
+PRIORIDAD = [
+    "Infantiles", "Documentales", "Deportes", "Religiosos", "Noticias",
+    "Películas", "Series", "Música", "Cultura y educación", "Estilo de vida",
+    "Entretenimiento", "Institucionales", GENERALES,
+]
+
+# Orden en que salen los grupos en la lista.
+ORDEN_GRUPOS = [
+    "Noticias", "Deportes", "Películas", "Series", "Documentales", "Infantiles",
+    "Entretenimiento", "Música", "Cultura y educación", "Estilo de vida",
+    "Religiosos", "Institucionales",
+]
+
+# Palabras del nombre que delatan el tema aunque la categoria diga otra cosa.
+# Sin "MTV" ni "Hits": hoy son realities (MTV Catfish) o cine (HBO Hits).
+PALABRAS = [(g, re.compile(rx, re.I)) for g, rx in [
+    ("Infantiles", r"\bkids?\b|niñ[oa]s|infantil|cartoon|\btoons?\b|dibujos"
+                   r"|\bbaby\b|\bclan\b|disney|\bnick|anime"),
+    ("Documentales", r"discovery|nat ?geo|national geographic|\bhistory\b"
+                     r"|\bhistoria\b|documental|\bdocu|animal planet|naturaleza"
+                     r"|\bnature\b|\bwild\b|\bviajes?\b|\btravel\b|ciencia"
+                     r"|\bscience\b|odisea|curiosity"),
+    ("Deportes", r"\bsports?\b|\bdeportes?\b|f[uú]tbol|\bgol\b|\bespn|\btudn"
+                 r"|\btyc\b|\bdazn\b|\bgolf\b|\btenis\b|\bnba\b|\bnfl\b|\bmlb\b"
+                 r"|\bufc\b|boxeo|\bracing\b"),
+    ("Religiosos", r"iglesia|church|cristian|\bcristo\b|\bjes[uú]s\b|cat[oó]lic"
+                   r"|evang|\bdios\b|gospel|\bewtn\b|\benlace\b"
+                   r"|mar[ií]a ?visi[oó]n|\besne\b|adventist|\bhope\b|3abn"
+                   r"|biblia|bible|ministerio"),
+    ("Noticias", r"\bnews\b|noticia|\b24 ?h\b|24 horas|\bcnn\b|telediario"
+                 r"|informativ|euronews|\bdw\b|france 24"),
+    ("Películas", r"\bcine\b|cinema|\bmovies?\b|pel[ií]culas|\bfilms?\b|\btcm\b"),
+    ("Música", r"\bmusic|m[uú]sica|karaoke|reggaet|\bsalsa\b|bachata"),
+]]
+
+# Generales se parte por pais (sale del tvg-id: "Canal13.cl@SD"); si no, son
+# mas de mil canales en un solo grupo. Paises con menos canales van a "Otros".
+PAISES = {
+    "do": "República Dominicana", "ar": "Argentina", "bo": "Bolivia",
+    "cl": "Chile", "co": "Colombia", "cr": "Costa Rica", "cu": "Cuba",
+    "ec": "Ecuador", "es": "España", "gt": "Guatemala", "hn": "Honduras",
+    "mx": "México", "ni": "Nicaragua", "pa": "Panamá", "pe": "Perú",
+    "pr": "Puerto Rico", "py": "Paraguay", "sv": "El Salvador",
+    "us": "Estados Unidos", "uy": "Uruguay", "ve": "Venezuela",
+}
+MIN_POR_PAIS = 10
+OTROS_PAISES = "Otros países"
 
 ON_CI = os.environ.get("GITHUB_ACTIONS") == "true"
 
@@ -314,6 +408,153 @@ def block_tvg_id(block):
 
 
 # ----------------------------------------------------------------------
+# Canales con cabeceras -> Worker
+# ----------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------
+# Categorias
+# ----------------------------------------------------------------------
+
+
+def extinf_nombre(extinf):
+    """Nombre del canal: lo que va tras la coma que cierra los atributos."""
+    m = re.match(r'^#EXTINF:[^\s,]*(?:\s+[\w-]+="[^"]*")*\s*,(.*)$', extinf)
+    return (m.group(1) if m else extinf.rsplit(",", 1)[-1]).strip()
+
+
+def clasificar(extinf):
+    """Grupo en espanol: el de mas prioridad entre categorias y nombre."""
+    candidatos = {CATEGORIAS.get(c.strip().lower(), GENERALES)
+                  for c in extinf_attr(extinf, "group-title").split(";")}
+    nombre = extinf_nombre(extinf)
+    candidatos.update(g for g, rx in PALABRAS if rx.search(nombre))
+    return min(candidatos, key=PRIORIDAD.index)
+
+
+def pais(extinf):
+    """'Canal13.cl@SD' -> 'cl'."""
+    m = re.search(r"\.([a-z]{2})$", normalize_id(extinf_attr(extinf, "tvg-id")) or "")
+    return m.group(1) if m else ""
+
+
+def con_grupo(extinf, grupo):
+    if 'group-title="' in extinf:
+        return re.sub(r'group-title="[^"]*"', lambda _: 'group-title="%s"' % grupo,
+                      extinf, count=1)
+    return re.sub(r"^(#EXTINF:\S*)", lambda m: '%s group-title="%s"' % (m.group(1), grupo),
+                  extinf, count=1)
+
+
+def agrupar(blocks):
+    """
+    Pone a cada bloque su grupo en espanol y los devuelve ordenados por grupo
+    (ORDEN_GRUPOS y luego los Generales por pais), respetando el orden
+    original dentro de cada grupo. Devuelve (bloques, {grupo: cantidad}).
+    """
+    clasificados = []
+    por_pais = {}
+    for block in blocks:
+        grupo = clasificar(block[0])
+        cc = pais(block[0]) if grupo == GENERALES else ""
+        if grupo == GENERALES:
+            por_pais[cc] = por_pais.get(cc, 0) + 1
+        clasificados.append((grupo, cc, block))
+
+    def nombre_pais(cc):
+        if cc in PAISES and por_pais.get(cc, 0) >= MIN_POR_PAIS:
+            return PAISES[cc]
+        return OTROS_PAISES
+
+    # RD primero, el resto por orden alfabetico, "Otros" al final.
+    paises = sorted({nombre_pais(cc) for g, cc, _ in clasificados if g == GENERALES},
+                    key=lambda p: (p != PAISES["do"], p == OTROS_PAISES, p))
+    orden = ORDEN_GRUPOS + ["%s - %s" % (GENERALES, p) for p in paises]
+
+    salida = {g: [] for g in orden}
+    for grupo, cc, block in clasificados:
+        if grupo == GENERALES:
+            grupo = "%s - %s" % (GENERALES, nombre_pais(cc))
+        salida.setdefault(grupo, []).append([con_grupo(block[0], grupo)] + block[1:])
+
+    bloques = [b for g in salida for b in salida[g]]
+    return bloques, {g: len(v) for g, v in salida.items() if v}
+
+
+def b64url(data):
+    return base64.urlsafe_b64encode(data).decode("ascii").rstrip("=")
+
+
+def token_cabeceras(key, origen, referer, ua):
+    """Mismo token que hdrPath() de worker.js: <payload>.<firma HMAC>."""
+    campos = [origen, referer or ""] + ([ua] if ua else [])
+    payload = b64url(json.dumps(campos, separators=(",", ":")).encode("utf-8"))
+    firma = hmac.new(key.encode("utf-8"), payload.encode("ascii"), hashlib.sha256)
+    return payload + "." + b64url(firma.digest()[:HDR_SIG_BYTES])
+
+
+def extinf_attr(extinf, nombre):
+    m = re.search(r'\s%s="([^"]*)"' % re.escape(nombre), extinf)
+    return m.group(1).strip() if m else ""
+
+
+def proxificar_bloque(block, proxy, key):
+    """
+    Si el canal pide Referer/User-Agent, devuelve el bloque con la URL cambiada
+    por la del Worker y sin las cabeceras (ya las pone el Worker). Si no, o si
+    la URL no es http(s), devuelve el bloque tal cual. Mismo criterio que
+    rewriteEntry() de worker.js.
+    """
+    extinf = block[0]
+    referer = extinf_attr(extinf, "http-referrer")
+    ua = extinf_attr(extinf, "http-user-agent")
+
+    resto, enlace, despues = [], None, []
+    for line in block[1:]:
+        if enlace is not None:
+            despues.append(line)
+            continue
+        m = re.match(r"^#EXTVLCOPT:http-(referrer|user-agent)=(.*)$", line, re.I)
+        if m:
+            if m.group(1).lower() == "referrer":
+                referer = referer or m.group(2).strip()
+            else:
+                ua = ua or m.group(2).strip()
+        elif line.strip() and not line.startswith("#"):
+            enlace = line.strip()
+        else:
+            resto.append(line)
+
+    if enlace is None:
+        return block, False
+
+    # Sufijo estilo Kodi: https://...m3u8|Referer=...&User-Agent=...
+    destino = enlace
+    if "|" in enlace:
+        destino, opciones = enlace.split("|", 1)
+        for kv in opciones.split("&"):
+            k, sep, v = kv.partition("=")
+            if not sep:
+                continue
+            v = urllib.parse.unquote(v)
+            if k.lower() in ("referer", "referrer"):
+                referer = referer or v
+            elif k.lower() == "user-agent":
+                ua = ua or v
+
+    partes = urllib.parse.urlsplit(destino)
+    if (not referer and not ua) or partes.scheme.lower() not in ("http", "https") \
+            or not partes.netloc:
+        return block, False
+
+    origen = "%s://%s" % (partes.scheme.lower(), partes.netloc)
+    ruta = (partes.path or "/") + ("?" + partes.query if partes.query else "")
+    limpio = re.sub(r'\s+http-(?:referrer|user-agent)="[^"]*"', "", extinf)
+    nuevo = "%s/h/%s%s" % (proxy, token_cabeceras(key, origen, referer, ua), ruta)
+    return [limpio] + resto + [nuevo] + despues, True
+
+
+# ----------------------------------------------------------------------
 # Verificacion
 # ----------------------------------------------------------------------
 
@@ -434,7 +675,16 @@ def main():
     for ch in canales:
         out_lines.extend(build_block(ch))
 
-    base_total = descartados = 0
+    key = PROXY_KEY
+    if key and not proxy:
+        warn("hay PROXY_KEY pero no proxy: los canales con Referer van sin Worker")
+        key = ""
+    elif not key:
+        warn("sin PROXY_KEY: los canales de iptv-org que piden Referer/User-Agent "
+             "se publican sin Worker y no funcionaran en Smarters")
+
+    base_total = descartados = proxificados = 0
+    grupos = {}
     if not args.no_base:
         log("Descargando lista base de iptv-org (espanol)...")
         try:
@@ -445,13 +695,23 @@ def main():
 
         _, blocks = parse_blocks(text)
         base_total = len(blocks)
+        base = []
         for block in blocks:
             if block_tvg_id(block) in OWN_IDS:
                 descartados += 1
-            else:
-                out_lines.extend(block)
-        log("Lista base: %d canales, %d descartados por duplicados"
-            % (base_total, descartados))
+                continue
+            if key:
+                block, cambiado = proxificar_bloque(block, proxy, key)
+                proxificados += cambiado
+            base.append(block)
+        base, grupos = agrupar(base)
+        for block in base:
+            out_lines.extend(block)
+        log("Lista base: %d canales, %d descartados por duplicados, "
+            "%d con cabeceras pasados por el Worker"
+            % (base_total, descartados, proxificados))
+        for grupo, n in grupos.items():
+            log("  %5d  %s" % (n, grupo))
 
     try:
         destino = os.path.abspath(args.output)
@@ -472,7 +732,11 @@ def main():
     resumen = ["## Lista IPTV", "",
                "- Grupo `%s`: **%d** canales" % (GROUP, len(canales)),
                "- iptv-org: **%d** (descartados %d duplicados)" % (base_total, descartados),
+               "- Con Referer/User-Agent por el Worker: **%d**" % proxificados,
                "- Total: **%d**" % total]
+    if grupos:
+        resumen += ["", "### Grupos", "", "| Grupo | Canales |", "| --- | --- |"] + \
+                   ["| %s | %d |" % (g, n) for g, n in grupos.items()]
     if filas:
         resumen += ["", "### Verificacion del grupo %s" % GROUP, "",
                     "| Estado | Canal | Detalle |", "| --- | --- | --- |"] + filas
