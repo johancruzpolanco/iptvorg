@@ -35,7 +35,11 @@ jobs:
       # datacenter y estos CDNs pueden bloquearlas aunque el canal funcione
       # desde casa. El --check deja el diagnostico en el Summary del job sin
       # tumbar el build ni borrar canales por un falso negativo.
+      # PROXY_KEY: el mismo secreto que tiene el Worker. Con el, los canales
+      # que piden Referer/User-Agent salen ya apuntando al Worker.
       - name: Generar la lista
+        env:
+          PROXY_KEY: ${{ secrets.PROXY_KEY }}
         run: python build_list.py --check
 
       - name: Guardar la lista actualizada
