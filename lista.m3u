@@ -101,8 +101,6 @@ https://host.streamingnation.live/p/3345/hybrid/play.m3u8
 https://host.streamingnation.live:3940/live/caobatvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tvm.png" group-title="DOMINICANOS",TVM
 https://lbgo.bozztv.com/ssh101/ssh101/tvmontana10tv/chunks.m3u8
-#EXTINF:-1 tvg-logo="https://i.imgur.com/FO6176j.png" group-title="DOMINICANOS",LVM
-https://live.lavozdemaria.com:3436/live/lavozdemarialive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/026.png" group-title="DOMINICANOS",Makaotv
 https://live.obslivestream.com/makaomux/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/adoramtv.png" group-title="DOMINICANOS",Adoram
@@ -171,6 +169,8 @@ https://tv.wracanal10.com:3671/live/lunatvcanal53live.m3u8
 https://video.streamerr.co/hls/sc23910f2cd/live.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/042.png" group-title="DOMINICANOS",Romanatv
 https://videoserver.tmcreativos.com:19360/cvmhbyrcat/cvmhbyrcat.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/VgguXoM.png" group-title="DOMINICANOS",Zol
+https://hls.tvabierta.net/hls/zol.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tvo.png" group-title="DOMINICANOS",Tvo
 https://videoserver.tmcreativos.com:19360/gkemzxrrmr/gkemzxrrmr.m3u8
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="Noticias",4Dmas Noticias TV (1080p) [Not 24/7]
