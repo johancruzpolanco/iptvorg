@@ -42,6 +42,11 @@ NOTAS DE MANTENIMIENTO
   - Teleuniverso 29 viene de la API de tvabierta (por peticion del usuario).
     Esta en RESPALDOS: si la API no lo trae (o no responde) se usa el enlace
     fijo de hls.tvabierta.net.
+  - Antena 7 es canal propio: la API de tvabierta lo quito de RD (el 7 paso a
+    ser Pulso Vision, 29/09/2026). Su senal oficial no pide cabeceras, asi que
+    NO va por el Worker. El enlace se relee de "streamUrl" en su pagina en
+    cada build ("stream_page"); la pagina limita el reproductor a visitas de
+    RD, pero es solo en el navegador (ip-api): el CDN sirve desde cualquier pais.
   - "alternatives": enlaces de repuesto. Con --check, si el principal falla se
     publica el primero de ellos que funcione.
   - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
@@ -127,7 +132,23 @@ CHANNELS = [
         "alternatives": ["http://45.171.108.253:8888/TELEANTILLAS/index.m3u8"],
         "logo": "https://tvabierta.net/010.png",
     },
+    {
+        "name": "Antena 7",
+        "number": 7,
+        "api_name": "antena7",
+        # Senal oficial (OvenMediaEngine tras CloudFront, 720p/360p/236p, sin
+        # cabeceras ni token). La pagina la trae en "streamUrl"; se relee en
+        # cada build por si cambia y este enlace queda de respaldo.
+        "url": "https://d3gie3ig6argu.cloudfront.net/ts:abr.m3u8",
+        "stream_page": "https://www.antena7.com.do/envivo-canal-7/",
+        "alternatives": ["https://hls.tvabierta.net/hls/007.m3u8"],
+        "logo": "https://tvabierta.net/007.png",
+    },
 ]
+
+# "streamUrl" que las paginas WordPress de Mediatique (Antena 7) embeben en su
+# configuracion (wpApp.appModel.schedule), con las barras escapadas.
+STREAM_URL_RX = re.compile(r'"streamUrl":"(https?:[^"]+?\.m3u8[^"]*)"')
 
 # Canales que se toman de la API. Aqui solo se fija el nombre con el que se
 # muestran y un enlace de respaldo que se usa SOLO si la API no trae el canal
@@ -288,6 +309,25 @@ def ordenar(canales):
     return sorted(canales, key=lambda c: c.get("number") or 999)
 
 
+def resolver_desde_pagina(canal):
+    """Cambia canal["url"] por el streamUrl de su pagina; si no, deja el fijo."""
+    try:
+        html = http_get(canal["stream_page"], timeout=20, retries=2).decode("utf-8", "replace")
+    except RuntimeError as e:
+        warn("%s: no se pudo leer %s (%s); se usa el enlace fijo"
+             % (canal["name"], canal["stream_page"], e))
+        return
+    m = STREAM_URL_RX.search(html)
+    if not m:
+        warn("%s: la pagina no trae streamUrl; se usa el enlace fijo" % canal["name"])
+        return
+    url = m.group(1).replace("\\/", "/")
+    if url != canal["url"]:
+        warn("%s: la pagina da otro enlace (%s); se usa ese" % (canal["name"], url))
+        canal["alternatives"] = [canal["url"]] + canal.get("alternatives", [])
+        canal["url"] = url
+
+
 def cargar_canales():
     """
     Devuelve la lista final del grupo DOMINICANOS: los canales propios mas los
@@ -300,6 +340,9 @@ def cargar_canales():
     propios = {c["api_name"] for c in CHANNELS if c.get("api_name")}
     respaldos = {c["api_name"]: c for c in RESPALDOS}
     canales = [dict(c) for c in CHANNELS]
+    for c in canales:
+        if c.get("stream_page"):
+            resolver_desde_pagina(c)
 
     try:
         data = json.loads(http_get(TVABIERTA_API, timeout=30).decode("utf-8", "replace"))
