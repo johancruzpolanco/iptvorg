@@ -667,6 +667,10 @@ def check_with_alternatives(channel):
     for alt in channel.get("alternatives", []):
         ok_alt, msg_alt = check_stream({"name": channel["name"], "url": alt})
         if ok_alt:
+            # Como aviso para que salga en las anotaciones del workflow: el
+            # log del job pide login, las anotaciones se leen sin el.
+            warn("%s: el enlace principal fallo (%s); se publica la alternativa %s"
+                 % (channel["name"], msg, alt))
             channel["url"] = alt
             return True, "%s con la alternativa (principal: %s)" % (msg_alt, msg)
     return ok, msg
