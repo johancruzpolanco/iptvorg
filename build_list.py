@@ -66,6 +66,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -305,6 +306,13 @@ def bonito(nombre):
     return nombre if nombre[:1].isupper() else nombre.capitalize()
 
 
+def clave_nombre(nombre):
+    """'Antena 7 HD', 'antena-7', 'Antena7' -> 'antena7'."""
+    nombre = unicodedata.normalize("NFKD", nombre or "").encode("ascii", "ignore")
+    clave = re.sub(r"[^a-z0-9]", "", nombre.decode("ascii").lower())
+    return re.sub(r"(?<=.)(?:fhd|hd|sd)$", "", clave)
+
+
 def ordenar(canales):
     return sorted(canales, key=lambda c: c.get("number") or 999)
 
@@ -337,8 +345,13 @@ def cargar_canales():
     Si la API no responde se sigue adelante con los propios y los respaldos:
     preferimos una lista corta a no generar nada.
     """
-    propios = {c["api_name"] for c in CHANNELS if c.get("api_name")}
-    respaldos = {c["api_name"]: c for c in RESPALDOS}
+    # Un canal de la API es "nuestro" si coincide el nombre normalizado o si su
+    # enlace es uno de los nuestros (principal o alternativa): asi no sale dos
+    # veces aunque tvabierta lo renombre ("Antena7" -> "Antena 7 HD").
+    propios = {clave_nombre(c["api_name"]) for c in CHANNELS if c.get("api_name")}
+    enlaces_propios = {u for c in CHANNELS
+                       for u in [c["url"]] + c.get("alternatives", [])}
+    respaldos = {clave_nombre(c["api_name"]): c for c in RESPALDOS}
     canales = [dict(c) for c in CHANNELS]
     for c in canales:
         if c.get("stream_page"):
@@ -360,8 +373,8 @@ def cargar_canales():
         stream = (c.get("stream") or "").strip()
         if not nombre or not stream:
             continue
-        clave = nombre.lower()
-        if clave in propios:
+        clave = clave_nombre(nombre)
+        if clave in propios or stream in enlaces_propios:
             continue  # ya lo tenemos con un enlace mejor
 
         canal = {
