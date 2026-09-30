@@ -46,7 +46,10 @@ NOTAS DE MANTENIMIENTO
     ser Pulso Vision, 29/09/2026). Su senal oficial no pide cabeceras, asi que
     NO va por el Worker. El enlace se relee de "streamUrl" en su pagina en
     cada build ("stream_page"); la pagina limita el reproductor a visitas de
-    RD, pero es solo en el navegador (ip-api): el CDN sirve desde cualquier pais.
+    RD, pero es solo en el navegador (ip-api). El CDN SI da 403 a GitHub
+    Actions (30/09/2026; desde RD y desde otros servidores responde 200), asi
+    que con --check el 403 no cuenta como caida ("ignorar_403") y se publica
+    la senal oficial. Si falla de otra forma se pasa a tvabierta (007).
   - "alternatives": enlaces de repuesto. Con --check, si el principal falla se
     publica el primero de ellos que funcione.
   - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
@@ -143,6 +146,8 @@ CHANNELS = [
         "url": "https://d3gie3ig6argu.cloudfront.net/ts:abr.m3u8",
         "stream_page": "https://www.antena7.com.do/envivo-canal-7/",
         "alternatives": ["https://hls.tvabierta.net/hls/007.m3u8"],
+        # El CDN da 403 a GitHub Actions (y no a los usuarios): ver NOTAS.
+        "ignorar_403": True,
         "logo": "https://tvabierta.net/007.png",
     },
 ]
@@ -664,6 +669,10 @@ def check_with_alternatives(channel):
     ok, msg = check_stream(channel)
     if ok:
         return ok, msg
+    # 403 = el CDN bloquea al runner, no al canal: se publica el principal.
+    # Cualquier otro fallo (caido, 404, sin segmentos) sigue a la alternativa.
+    if channel.get("ignorar_403") and "HTTP 403" in msg:
+        return True, "sin verificar (%s: bloqueo a GitHub, se publica igual)" % msg
     for alt in channel.get("alternatives", []):
         ok_alt, msg_alt = check_stream({"name": channel["name"], "url": alt})
         if ok_alt:
