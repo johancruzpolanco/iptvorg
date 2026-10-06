@@ -72,6 +72,26 @@
  * No arregla canales con bloqueo geografico (el Worker sale por el centro de
  * datos de Cloudflare mas cercano al que ve el canal) ni CDNs que bloqueen
  * las IPs de Cloudflare.
+ *
+ * ---------------------------------------------------------------------------
+ * PLUTO TV
+ * ---------------------------------------------------------------------------
+ *
+ * Pluto solo da la senal real con un token de sesion (boot.pluto.tv) que
+ * dura 24 h, asi que no se puede fijar en la lista. Sin token el stitcher
+ * responde 200 con un video de relleno, y jmp2.uk/plu-... (el de iptv-org)
+ * da 403 "channel not permitted for partner" a los canales de Latinoamerica.
+ *
+ * /pluto/<id>.m3u8 pide un token (se guarda unas horas), y redirige al
+ * master del stitcher con el token puesto. El reproductor sigue la
+ * redireccion y pide variantes y segmentos directo a Pluto: cada canal que
+ * se abre gasta una sola peticion del Worker.
+ *
+ * El token se pide con X-Forwarded-For de Mexico para que la sesion sea de
+ * Latinoamerica aunque el Worker salga por un centro de datos de EE. UU. La
+ * IP con la que se pide el token no tiene que ser la del que mira.
+ *
+ * Uso:  https://<tu-worker>.workers.dev/pluto/5dcde437229eff00091b6c30.m3u8
  */
 
 // live4, NO live2: live2 reparte entre dos backends, la sesion
@@ -135,6 +155,21 @@ const HDR_ROUTE = /^\/h\/([A-Za-z0-9_-]+)\.([A-Za-z0-9_-]+)(\/.*)$/;
 // Bytes de HMAC-SHA256 que se guardan en la URL (16 = 128 bits, de sobra).
 const HDR_SIG_BYTES = 16;
 
+// --- Pluto TV ---
+
+// /pluto/<id del canal>.m3u8 (ids de 24 hex, como 5dcde437229eff00091b6c30).
+const PLUTO_ROUTE = /^\/pluto\/([0-9a-f]{24})\.m3u8$/;
+
+const PLUTO_BOOT = "https://boot.pluto.tv/v4/start";
+
+// IP de Mexico (la que usa i.mjh.nz para esa region): sesion de Latinoamerica.
+const PLUTO_XFF = "200.68.128.83";
+
+// El token dura 24 h; renovandolo cada 6 nunca caduca a mitad de una sesion.
+const PLUTO_TOKEN_TTL_MS = 6 * 60 * 60 * 1000;
+
+let plutoSession = null; // { at, token, stitcher, params }
+
 // Cache en memoria del isolate. Si Cloudflare lo recicla se vuelve a resolver.
 let taVideo = { id: null, at: 0 };
 let taMaster = null;
@@ -168,7 +203,8 @@ export default {
           "Canales con Referer/User-Agent: " +
           (key ? "por el Worker (/h/...)" : "SIN PROXY (falta el secreto PROXY_KEY)") + "\n" +
           "Teleantillas:  " + url.origin + "/teleantillas/playlist.m3u8" +
-          "  (estado: " + url.origin + "/teleantillas/estado)\n",
+          "  (estado: " + url.origin + "/teleantillas/estado)\n" +
+          "Pluto TV:  " + url.origin + "/pluto/<id>.m3u8\n",
         { status: 200, headers: { "Content-Type": "text/plain", ...CORS } }
       );
     }
@@ -258,6 +294,15 @@ export default {
     const hdr = url.pathname.match(HDR_ROUTE);
     if (hdr) {
       return headerProxy(request, url, hdr, key);
+    }
+
+    const pl = url.pathname.match(PLUTO_ROUTE);
+    if (pl) {
+      try {
+        return await pluto(pl[1]);
+      } catch (err) {
+        return new Response("Pluto TV: " + err.message, { status: 502, headers: CORS });
+      }
     }
 
     if (!ALLOWED_PATH.test(url.pathname)) {
@@ -577,6 +622,63 @@ function b64urlEncode(bytes) {
 function b64urlDecode(s) {
   const bin = atob(s.replace(/-/g, "+").replace(/_/g, "/"));
   return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
+}
+
+// ---------------------------------------------------------------------------
+// Pluto TV
+// ---------------------------------------------------------------------------
+
+/**
+ * 302 al master del canal con un token valido. Redireccion y no master
+ * reescrito: asi la sesion de video la abre el reproductor desde su IP, como
+ * hace jmp2.uk (que Smarters ya sigue bien).
+ */
+async function pluto(id) {
+  const s = await plutoToken();
+  const target =
+    s.stitcher + "/v2/stitch/hls/channel/" + id + "/master.m3u8?" + s.params +
+    "&jwt=" + encodeURIComponent(s.token) + "&masterJWTPassthrough=true";
+  return new Response(null, {
+    status: 302,
+    headers: { Location: target, "Cache-Control": "no-store", ...CORS },
+  });
+}
+
+/** Sesion de Pluto (token, stitcher y sus parametros), renovada cada 6 h. */
+async function plutoToken() {
+  if (plutoSession && Date.now() - plutoSession.at < PLUTO_TOKEN_TTL_MS) {
+    return plutoSession;
+  }
+  const q = new URLSearchParams({
+    appName: "web",
+    appVersion: "9.0.0",
+    deviceVersion: "126.0.0",
+    deviceModel: "web",
+    deviceMake: "chrome",
+    deviceType: "web",
+    clientID: crypto.randomUUID(),
+    clientModelNumber: "1.0.0",
+    serverSideAds: "false",
+  });
+  const r = await fetch(PLUTO_BOOT + "?" + q, {
+    headers: {
+      "User-Agent": USER_AGENT,
+      Accept: "application/json",
+      "X-Forwarded-For": PLUTO_XFF,
+    },
+  });
+  const data = await r.json().catch(() => null);
+  const stitcher = data && data.servers && data.servers.stitcher;
+  if (!r.ok || !data || !data.sessionToken || !stitcher) {
+    throw new Error("boot.pluto.tv no dio token (HTTP " + r.status + ")");
+  }
+  plutoSession = {
+    at: Date.now(),
+    token: data.sessionToken,
+    stitcher: stitcher.replace(/\/+$/, ""),
+    params: data.stitcherParams || "",
+  };
+  return plutoSession;
 }
 
 // ---------------------------------------------------------------------------
