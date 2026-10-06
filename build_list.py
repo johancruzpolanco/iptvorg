@@ -6,9 +6,12 @@ Genera lista.m3u para IPTV Smarters:
      ordenados por numero de canal, mas los enlaces propios que sustituyen a
      los de la API cuando tenemos uno mejor (los de Telemicro, que van por
      nuestro proxy).
-  2. Detras, la lista en espanol de iptv-org, sin los canales que ya salen
-     arriba para que no haya duplicados, repartida en grupos en espanol
-     (Noticias, Deportes, Documentales... y Generales por pais).
+  2. Detras, la lista en espanol de iptv-org, los canales hispanos de Free-TV
+     y otras categorias de tvabierta (HISPANOS, DEPORTES, MX, PE...), sin los
+     que ya salen antes para que no haya duplicados, repartidos en grupos en
+     espanol (Noticias, Deportes, Documentales... y Generales por pais).
+  3. Al final, los grupos "Pluto TV" (Latinoamerica, por el Worker) y
+     "Samsung TV Plus" (Espana).
 
     python build_list.py                  genera lista.m3u
     python build_list.py --check          verifica cada enlace (video real)
@@ -58,10 +61,32 @@ NOTAS DE MANTENIMIENTO
   - Verificar solo el playlist no sirve: devuelve 200 aunque los segmentos
     fallen. Y hay que pedir el ULTIMO segmento, no el primero: la playlist de
     un directo es una ventana deslizante y el mas antiguo puede haber expirado.
+  - Duplicados: un canal de iptv-org/Free-TV/tvabierta se descarta si ya esta
+    antes con el mismo tvg-id, el mismo enlace (host + ruta) o el mismo nombre
+    normalizado (clave_canal: "CV Vision TV (288p)" y "cvvision" -> "cvvision").
+    Contra DOMINICANOS solo se comparan los canales de RD (tvg-id .do): hay
+    nombres repetidos en otros paises (Telefuturo de Paraguay). Si el
+    duplicado trae otro enlace, queda como alternativa del canal de arriba.
+    Los que el nombre no delata van en ALIAS ("CDN" es "cdn37").
+  - Pluto TV: el enlace sin token (service-stitcher/stitch/hls) devuelve 200
+    pero es un video de relleno igual para todos los canales, y jmp2.uk/plu-
+    (el que trae iptv-org) da 403 "channel not permitted for partner" a los
+    canales de Latinoamerica. Hace falta un token de boot.pluto.tv, que dura
+    24 h: por eso cada canal apunta a /pluto/<id>.m3u8 del Worker, que pide el
+    token y redirige. Los Pluto de iptv-org se quitan para no tenerlos dos
+    veces (y rotos). No se verifican con --check: desde GitHub no da la senal
+    de Latinoamerica.
+  - Samsung TV Plus solo tiene Espana en la region hispana. Desde RD funcionan
+    unos 2 de cada 3 (06/10/2026); el resto da 403/400 por bloqueo a Espana.
+    Los que llevan DRM (license_url) se omiten: Smarters no los reproduce.
+  - Plex NO se usa: jmp2.uk lo sirve con un X-Plex-Token compartido que
+    devuelve 429 casi siempre, y los de Mexico dan 404 fuera de Mexico (de 60
+    probados desde RD funcionaron 11, el 06/10/2026).
 """
 
 import argparse
 import base64
+import gzip
 import hashlib
 import hmac
 import json
@@ -86,6 +111,47 @@ DEFAULT_OUTPUT = "lista.m3u"
 SOURCE_URL = "https://iptv-org.github.io/iptv/languages/spa.m3u"
 TVABIERTA_API = "https://tvabierta.net/api/tv/channels.json"
 TVABIERTA_CATEGORY = "RD"
+
+# Free-TV: lista revisada a mano. Su group-title es el pais; de ella solo se
+# toman estos grupos. "News (ES)" son noticias en espanol de varios paises.
+FREETV_URL = "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8"
+FREETV_GRUPOS = {
+    "Argentina", "Chile", "Costa Rica", "Dominican Republic", "Mexico",
+    "Paraguay", "Peru", "Spain", "Venezuela", "News (ES)",
+}
+
+# Otras categorias de tvabierta (ademas de RD): categoria -> (categoria al
+# estilo iptv-org para clasificar(), pais). No van US, LocalNow, BR, NEWS ni
+# CHRISTIAN: casi todo es en ingles, portugues, arabe o fines.
+TVABIERTA_EXTRA = {
+    "HISPANOS": ("General", ""), "DEPORTES": ("Sports", ""),
+    "PELICULAS": ("Movies", ""), "KIDS": ("Kids", ""), "MUSIC": ("Music", ""),
+    "CULTURA": ("Culture", ""),
+    "MX": ("General", "mx"), "PR": ("General", "pr"), "ES": ("General", "es"),
+    "AR": ("General", "ar"), "CL": ("General", "cl"), "CO": ("General", "co"),
+    "VE": ("General", "ve"), "HN": ("General", "hn"), "PE": ("General", "pe"),
+    "GT": ("General", "gt"), "EC": ("General", "ec"), "BO": ("General", "bo"),
+    "CR": ("General", "cr"), "PA": ("General", "pa"), "SV": ("General", "sv"),
+}
+
+# Canales que tvabierta mete en RD sin ser dominicanos: van con los demas,
+# en el grupo de esa categoria.
+NO_DOMINICANOS = {"bloomberg": "News"}
+
+# Canales gratis con anuncios. i.mjh.nz publica la parrilla de cada region
+# (id, nombre, logo, numero); ver NOTAS para Pluto, Samsung y Plex.
+PLUTO_CHANNELS = "https://i.mjh.nz/PlutoTV/.channels.json.gz"
+PLUTO_REGIONES = ["mx", "ar"]
+PLUTO_GROUP = "Pluto TV"
+SAMSUNG_CHANNELS = "https://i.mjh.nz/SamsungTVPlus/.channels.json.gz"
+SAMSUNG_REGION = "es"
+SAMSUNG_GROUP = "Samsung TV Plus"
+
+# Guias de programacion (EPG) que casan con los tvg-id de Pluto y Samsung.
+EPG_URLS = [
+    "https://i.mjh.nz/PlutoTV/mx.xml.gz",
+    "https://i.mjh.nz/SamsungTVPlus/es.xml.gz",
+]
 
 # Va en el codigo a proposito: cuando dependia de una variable del repo, la
 # lista se publicaba sin proxy y Telecentro no cargaba en Smarters.
@@ -169,15 +235,70 @@ RESPALDOS = [
     },
 ]
 
-# tvg-id (sin sufijo @SD/@HD) a eliminar de la lista de iptv-org por estar ya
-# en el grupo DOMINICANOS. iptv-org cambio el formato una vez ("Telecentro.do"
-# paso a "Telecentro.do@SD"), por eso se compara normalizado.
-OWN_IDS = {
-    "telecentro.do", "telesistema11.do", "telemicro.do", "digital15.do",
-    "colorvision.do", "teleantillas.do", "antena7.do", "rnn.do", "cdn.do",
-    "telefuturo.do", "teleunion.do", "acentotv.do", "telemax.do", "tvo.do",
-    "retv.do", "boreal.do", "televida.do", "cieltv.do", "ahoratv.do",
+# Nombre con el que se muestran los canales de tvabierta, que vienen como
+# "boncheslatinostv" o "cvvision". Clave: clave_nombre() del nombre de la API.
+# Los que no estan aqui pasan por bonito().
+NOMBRES = {
+    # RD
+    "a7tv": "A7 TV", "rnn": "RNN", "latinostvny": "Latinos TV NY",
+    "boncheslatinostv": "Bonches Latinos TV", "manaclartv": "Manaclar TV",
+    "canal19": "Cinevisión Canal 19", "elpuertotv": "El Puerto TV",
+    "multivision": "Multivisión", "canalda": "Canalda 26",
+    "hainavision": "Haina Visión", "bajotechotv": "Bajo Techo TV",
+    "bellavision": "Bellavisión", "retv": "R&E TV", "lareina": "La Reina TV",
+    "jimanitv": "Jimaní TV", "oepm": "OEPM TV", "colorvision": "Color Visión",
+    "zonavision": "Zona Visión", "telecibao": "Telecibao",
+    "cvvision": "CV Visión", "rtvd": "RTVD", "telesistema": "Telesistema 11",
+    "teleunion": "Teleunión", "cielotv": "Cielo TV", "antena21": "Antena 21",
+    "vtv32": "VTV 32", "cdn37": "CDN 37", "acentotv": "Acento TV",
+    "cotubanamatv": "Cotubanamá TV", "misioneltv": "Misión EL TV",
+    "tvluz": "TV Luz", "santacruztv": "Santa Cruz TV", "makaotv": "Makao TV",
+    "adoram": "Adoram TV", "radioemanuel": "Radio Emanuel TV",
+    "cocotv": "Coco TV", "cntmas": "CNT Más TV",
+    "portaldigitaltv": "Portal Digital TV", "telecanal12": "Telecanal 12",
+    "televisiondeleste": "Televisión del Este", "radio67tv": "Radio 67 TV",
+    "canaldtvlatino": "Canal DTV Latino", "senaldigital": "Señal Digital TV",
+    "visionndv": "Visión NDV", "carivision": "Carivisión",
+    "canaldelsol": "Canal del Sol", "elseis": "El Seis", "14tv": "Canal 14",
+    "ahoratv": "Ahora TV", "entelevision": "En Televisión",
+    "altantotv": "Al Tanto TV", "super7": "Super 7 TV",
+    "telecontacto": "Telecontacto", "jarabacoatv": "Jarabacoa TV",
+    "microvision": "Microvisión 10", "readytelevision": "Ready TV Canal 6",
+    "vallevision": "Vallevisión", "alegretvrd": "Alegre TV",
+    "palmartv": "Palmar TV", "bonaotv": "Bonao TV", "latora": "La Tora TV",
+    "chinolatv": "Chinola TV", "lunatv": "Luna TV Canal 53",
+    "extra86": "Extra 86 TV", "romanatv": "Romana TV Canal 42", "zol": "Zol TV",
+    "tvo": "TVO", "vegateve": "Vega Teve", "sitvrd": "SiTV",
+    "telemedios": "Telemedios Canal 8", "telefuturo": "Telefuturo",
+    "teleimpacto": "Teleimpacto", "tvm": "TV Montaña Canal 10",
+    "boreal": "Boreal TV",
+    # Otras categorias
+    "bloomberg": "Bloomberg", "cnne": "CNN en Español",
+    "f24e": "France 24 Español", "rte": "RT en Español", "kanald": "Kanal D",
+    "cn247": "CN 24/7", "ejtv": "EJTV", "daystar": "Daystar", "24h": "24 Horas",
+    "mpatv": "MPA TV", "tgn": "TGN", "bpskids": "BPS Kids", "ducktv": "Duck TV",
+    "sensical": "Sensical", "zoomoo": "Zoomoo", "sat": "SAT-7 Kids",
+    "canalsinnombre": "Extrema Kids", "energytvmusic": "Energy TV Music",
+    "djazz": "DJazz", "lxhome": "LX Home", "vconline": "VC Online",
+    "sealcolombia": "Señal Colombia", "tlt": "Tele Tuya", "willax": "Willax",
+    "panamericana": "Panamericana", "latinape": "Latina",
+    "canalantigua": "Canal Antigua", "penielfamiliar": "Peniel Familiar",
+    "ecuavisa1": "Ecuavisa", "aragontv": "Aragón TV", "startve": "Star TVE",
+    "monterrey": "Canal 6 Monterrey", "quierotv": "Quiero TV",
 }
+
+# Nombres de iptv-org/Free-TV -> clave del canal de tvabierta, para los
+# duplicados que ni el nombre (clave_canal) ni el enlace delatan.
+ALIAS = {"cdn": "cdn37", "elseis6": "elseis", "telesistema11": "telesistema"}
+
+# Cambios al nombre normalizado para comparar canales, en orden. Cada uno solo
+# se aplica si deja al menos 3 caracteres ("retv" no es "re"). "Canal 32" se
+# queda en "32" y no se borra: VTV Canal 32 y VTV Canal 17 son distintos.
+CAMBIOS_NOMBRE = [
+    (r"^canal(?=[a-z])", ""),
+    (r"canal(\d+)$", r"\1"),
+    (r"(?:television|teve|tv|rd|fm)$", ""),
+]
 
 # --- Categorias de iptv-org en espanol ---
 #
@@ -281,8 +402,11 @@ def summary(lines):
         warn("no se pudo escribir el summary: %s" % e)
 
 
-def http_get(url, timeout=30, retries=3):
-    """GET con User-Agent de navegador y reintentos con backoff."""
+def http_get(url, timeout=30, retries=3, con_url=False):
+    """
+    GET con User-Agent de navegador y reintentos con backoff. Con con_url
+    devuelve (cuerpo, URL final tras las redirecciones).
+    """
     last = None
     for intento in range(retries):
         if intento:
@@ -290,7 +414,7 @@ def http_get(url, timeout=30, retries=3):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA})
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                return resp.read()
+                return (resp.read(), resp.geturl()) if con_url else resp.read()
         except urllib.error.HTTPError as e:
             last = "HTTP %s" % e.code
             if e.code in (401, 403, 404, 410):
@@ -306,9 +430,19 @@ def http_get(url, timeout=30, retries=3):
 
 
 def bonito(nombre):
-    """'colorvision' -> 'Colorvision'; respeta los que ya vienen con mayusculas."""
+    """
+    Nombre para mostrar: el de NOMBRES si lo hay; si no, sin el "154 | " ni
+    los emojis que trae a veces la API y con la primera letra en mayuscula
+    ('colorvision' -> 'Colorvision'; respeta los que ya vienen en mayusculas).
+    """
     nombre = (nombre or "").strip()
-    return nombre if nombre[:1].isupper() else nombre.capitalize()
+    if clave_nombre(nombre) in NOMBRES:
+        return NOMBRES[clave_nombre(nombre)]
+    nombre = re.sub(r"^\d+\s*\|\s*", "", nombre)
+    nombre = "".join(ch for ch in nombre
+                     if unicodedata.category(ch)[0] in "LNPZ" or ch in "+&").strip()
+    # Sin capitalize(): pasaria "974 Qwest TV" a "974 qwest tv".
+    return nombre[:1].upper() + nombre[1:]
 
 
 def clave_nombre(nombre):
@@ -318,8 +452,51 @@ def clave_nombre(nombre):
     return re.sub(r"(?<=.)(?:fhd|hd|sd)$", "", clave)
 
 
+def clave_canal(nombre):
+    """
+    Clave para buscar duplicados entre fuentes: sin resolucion ni etiquetas,
+    con CAMBIOS_NOMBRE ("canal" delante, "TV" detras...) y pasada por ALIAS.
+    'CV Vision TV (288p) [Geo-blocked]' y 'cvvision' -> 'cvvision';
+    'Canal Multivision' y 'multivision' -> 'multivision'.
+    """
+    nombre = re.sub(r"\([^)]*\)|\[[^\]]*\]|^\d+\s*\|", "", nombre or "")
+    clave = clave_nombre(nombre)
+    for rx, por in CAMBIOS_NOMBRE:
+        corto = re.sub(rx, por, clave)
+        if len(corto) >= 3:
+            clave = corto
+    return ALIAS.get(clave, clave)
+
+
+def clave_enlace(url):
+    """
+    'https://Host:8081/a/b.m3u8?id=7|Referer=...' -> 'host/a/b.m3u8?id=7'.
+    Sin esquema ni puerto, pero con la query: hay servidores que reparten
+    varios canales por la misma ruta (hybrid/play.m3u8?id=..., ?network_id=).
+    """
+    partes = urllib.parse.urlsplit((url or "").split("|", 1)[0].strip())
+    clave = ((partes.hostname or "") + partes.path).lower()
+    return clave + ("?" + partes.query if partes.query else "")
+
+
+def numero_canal(c):
+    """
+    Numero del canal de la API. El "number" de tvabierta es solo la posicion
+    en su lista (Bloomberg es el 1); el numero real va en el nombre de sus
+    archivos: 004.png, hls/011.m3u8. None si no lo trae.
+    """
+    for campo in ("logo", "stream"):
+        m = re.search(r"/(\d{3})\.(?:png|jpe?g|m3u8)$", c.get(campo) or "")
+        if m:
+            return int(m.group(1))
+    return None
+
+
 def ordenar(canales):
-    return sorted(canales, key=lambda c: c.get("number") or 999)
+    """Primero los que tienen numero, por numero; luego el resto, por nombre."""
+    return sorted(canales, key=lambda c: (c.get("number") is None,
+                                          c.get("number") or 0,
+                                          c["name"].lower()))
 
 
 def resolver_desde_pagina(canal):
@@ -341,14 +518,24 @@ def resolver_desde_pagina(canal):
         canal["url"] = url
 
 
-def cargar_canales():
+def leer_tvabierta():
+    """El JSON de la API de tvabierta, o None si no responde."""
+    try:
+        return json.loads(http_get(TVABIERTA_API, timeout=30).decode("utf-8", "replace"))
+    except (RuntimeError, ValueError) as e:
+        warn("no se pudo leer la API de tvabierta (%s); van los canales propios "
+             "y los enlaces de respaldo" % e)
+        return None
+
+
+def cargar_canales(data):
     """
     Devuelve la lista final del grupo DOMINICANOS: los canales propios mas los
-    de la categoria RD de la API, ordenados por numero de canal. Los canales
-    de RESPALDOS que la API no traiga se anaden con su enlace fijo.
+    de la categoria RD de la API (data), ordenados por numero de canal. Los
+    canales de RESPALDOS que la API no traiga se anaden con su enlace fijo.
 
-    Si la API no responde se sigue adelante con los propios y los respaldos:
-    preferimos una lista corta a no generar nada.
+    Si la API no respondio (data None) se sigue adelante con los propios y los
+    respaldos: preferimos una lista corta a no generar nada.
     """
     # Un canal de la API es "nuestro" si coincide el nombre normalizado o si su
     # enlace es uno de los nuestros (principal o alternativa): asi no sale dos
@@ -362,11 +549,7 @@ def cargar_canales():
         if c.get("stream_page"):
             resolver_desde_pagina(c)
 
-    try:
-        data = json.loads(http_get(TVABIERTA_API, timeout=30).decode("utf-8", "replace"))
-    except (RuntimeError, ValueError) as e:
-        warn("no se pudo leer la API de tvabierta (%s); van los canales propios "
-             "y los enlaces de respaldo" % e)
+    if data is None:
         return ordenar(canales + [dict(c) for c in RESPALDOS])
 
     importados = 0
@@ -381,10 +564,13 @@ def cargar_canales():
         clave = clave_nombre(nombre)
         if clave in propios or stream in enlaces_propios:
             continue  # ya lo tenemos con un enlace mejor
+        if clave in NO_DOMINICANOS:
+            continue  # va con los demas: ver tvabierta_extra()
 
         canal = {
             "name": bonito(nombre),
-            "number": c.get("number") or 999,
+            "api_name": nombre,
+            "number": numero_canal(c),
             "url": stream,
             "logo": c.get("logo") or "",
         }
@@ -412,13 +598,22 @@ def cargar_canales():
     return ordenar(canales)
 
 
+def bloque(nombre, url, grupo, logo="", tvg_id="", pais=""):
+    """Bloque M3U sin cabeceras: #EXTINF + enlace."""
+    attrs = []
+    if tvg_id:
+        attrs.append('tvg-id="%s"' % tvg_id)
+    if logo:
+        attrs.append('tvg-logo="%s"' % logo)
+    if pais:
+        attrs.append('tvg-country="%s"' % pais.upper())
+    attrs.append('group-title="%s"' % grupo)
+    return ["#EXTINF:-1 %s,%s" % (" ".join(attrs), nombre), url]
+
+
 def build_block(channel):
     """Bloque M3U. Ningun canal necesita cabeceras: la entrada queda limpia."""
-    attrs = []
-    if channel.get("logo"):
-        attrs.append('tvg-logo="%s"' % channel["logo"])
-    attrs.append('group-title="%s"' % GROUP)
-    return ["#EXTINF:-1 %s,%s" % (" ".join(attrs), channel["name"]), channel["url"]]
+    return bloque(channel["name"], channel["url"], GROUP, channel.get("logo", ""))
 
 
 # ----------------------------------------------------------------------
@@ -468,6 +663,191 @@ def block_tvg_id(block):
     return normalize_id(extinf[i:j])
 
 
+def block_url(block):
+    """Enlace del bloque: la primera linea que no es comentario."""
+    return next((l.strip() for l in block[1:] if l.strip() and not l.startswith("#")), "")
+
+
+def necesita_cabeceras(block):
+    """El canal pide Referer/User-Agent (ver proxificar_bloque)."""
+    return bool(re.search(r'\shttp-(?:referrer|user-agent)="[^"]+"', block[0])
+                or any(l.upper().startswith("#EXTVLCOPT:HTTP-") for l in block[1:])
+                or "|" in block_url(block))
+
+
+def con_nombre(extinf, nombre):
+    """Cambia el nombre del canal (lo que va tras la coma de los atributos)."""
+    m = re.match(r'^(#EXTINF:[^\s,]*(?:\s+[\w-]+="[^"]*")*\s*,)', extinf)
+    return (m.group(1) if m else extinf.rsplit(",", 1)[0] + ",") + nombre
+
+
+# ----------------------------------------------------------------------
+# Otras fuentes
+# ----------------------------------------------------------------------
+
+
+def cargar_freetv():
+    """
+    Bloques de los grupos FREETV_GRUPOS de Free-TV, con la categoria al estilo
+    de iptv-org para que clasificar() los reparta igual. Sin los de YouTube
+    (Ⓨ: Smarters no los abre); Ⓖ pasa a "[Geo-blocked]" como en iptv-org.
+    """
+    try:
+        text = http_get(FREETV_URL, timeout=60).decode("utf-8", "replace")
+    except RuntimeError as e:
+        warn("no se pudo descargar Free-TV (%s); se sigue sin ella" % e)
+        return []
+    salida = []
+    for block in parse_blocks(text)[1]:
+        grupo = extinf_attr(block[0], "group-title")
+        if grupo not in FREETV_GRUPOS:
+            continue
+        nombre = extinf_nombre(block[0])
+        host = urllib.parse.urlsplit(block_url(block)).hostname or ""
+        if "Ⓨ" in nombre or re.search(r"(^|\.)(youtube\.com|youtu\.be)$", host):
+            continue
+        nombre = nombre.replace("Ⓢ", "").replace("Ⓖ", " [Geo-blocked]")
+        nombre = re.sub(r"\s+", " ", nombre).strip()
+        extinf = con_grupo(con_nombre(block[0], nombre),
+                           "News" if grupo.startswith("News") else "General")
+        salida.append([extinf] + block[1:])
+    return salida
+
+
+def tvabierta_extra(data):
+    """
+    Bloques de las categorias TVABIERTA_EXTRA de la API, mas los que la API
+    mete en RD sin ser dominicanos (NO_DOMINICANOS). Sin repetidos dentro de
+    la propia API (trae varios Stingray dos veces).
+    """
+    if data is None:
+        return []
+    salida, vistos = [], set()
+    for c in data.get("channels", []):
+        nombre = (c.get("name") or "").strip()
+        stream = (c.get("stream") or "").strip()
+        if not nombre or not stream or not c.get("enabled", True):
+            continue
+        if c.get("category") == TVABIERTA_CATEGORY:
+            categoria = NO_DOMINICANOS.get(clave_nombre(nombre))
+            if not categoria:
+                continue
+            cc = ""
+        elif c.get("category") in TVABIERTA_EXTRA:
+            categoria, cc = TVABIERTA_EXTRA[c["category"]]
+        else:
+            continue
+        nombre = bonito(nombre)
+        if clave_canal(nombre) in vistos or clave_enlace(stream) in vistos:
+            continue
+        vistos.update((clave_canal(nombre), clave_enlace(stream)))
+        salida.append(bloque(nombre, stream, categoria, c.get("logo") or "",
+                             (c.get("tvg_id") or "").strip(), cc))
+    return salida
+
+
+def leer_mjh(url):
+    """JSON comprimido de i.mjh.nz (.channels.json.gz), o None si falla."""
+    try:
+        return json.loads(gzip.decompress(http_get(url, timeout=60)).decode("utf-8"))
+    except (RuntimeError, ValueError, OSError) as e:
+        warn("no se pudo leer %s (%s); se sigue sin esos canales" % (url, e))
+        return None
+
+
+def cargar_pluto(proxy):
+    """Grupo Pluto TV: regiones PLUTO_REGIONES, cada canal por /pluto/ del Worker."""
+    if not proxy:
+        warn("sin proxy no hay Pluto TV: sus canales necesitan el Worker")
+        return []
+    data = leer_mjh(PLUTO_CHANNELS)
+    if not data:
+        return []
+    canales = {}
+    for i, region in enumerate(PLUTO_REGIONES):
+        for cid, c in data.get("regions", {}).get(region, {}).get("channels", {}).items():
+            if re.match(r"^[0-9a-f]{24}$", cid) and cid not in canales:
+                canales[cid] = (i, c.get("chno") or 9999, c)
+    orden = sorted(canales.items(), key=lambda kv: kv[1][:2])
+    return [bloque(c["name"], "%s/pluto/%s.m3u8" % (proxy, cid), PLUTO_GROUP,
+                   c.get("logo") or "", cid)
+            for cid, (_, _, c) in orden]
+
+
+def cargar_samsung():
+    """Grupo Samsung TV Plus (SAMSUNG_REGION), sin los canales con DRM."""
+    data = leer_mjh(SAMSUNG_CHANNELS)
+    if not data:
+        return []
+    slug = data.get("slug") or "stvp-{id}"
+    canales = data.get("regions", {}).get(SAMSUNG_REGION, {}).get("channels", {})
+    orden = sorted(canales.items(), key=lambda kv: kv[1].get("chno") or 9999)
+    return [bloque(c["name"], "https://jmp2.uk/" + slug.replace("{id}", cid),
+                   SAMSUNG_GROUP, c.get("logo") or "", cid, SAMSUNG_REGION)
+            for cid, c in orden if not c.get("license_url")]
+
+
+# ----------------------------------------------------------------------
+# Duplicados
+# ----------------------------------------------------------------------
+
+
+class Duplicados:
+    """
+    Recuerda los canales ya puestos en la lista para no repetirlos: los de
+    DOMINICANOS (por nombre, contra los de RD, y por enlace) y los de cada
+    fuente anterior (por tvg-id, enlace o nombre + pais). Una fuente no se
+    compara consigo misma: iptv-org trae a proposito varias versiones de un
+    canal (720p, 1080p, otra senal).
+    """
+
+    def __init__(self, dominicanos):
+        self.dom_clave, self.dom_enlace = {}, {}
+        for ch in dominicanos:
+            for n in (ch["name"], ch.get("api_name")):
+                if n:
+                    self.dom_clave.setdefault(clave_canal(n), ch)
+            for u in [ch["url"]] + ch.get("alternatives", []):
+                self.dom_enlace.setdefault(clave_enlace(u), ch)
+        self.ids, self.enlaces, self.nombres, self.nombres_pais = set(), set(), set(), set()
+        self._nuevos = []
+
+    def dominicano(self, block):
+        """Canal de DOMINICANOS del que el bloque es duplicado, o None."""
+        enlace = clave_enlace(block_url(block))
+        if enlace in self.dom_enlace:
+            return self.dom_enlace[enlace]
+        if pais(block[0]) == "do":
+            return self.dom_clave.get(clave_canal(extinf_nombre(block[0])))
+        return None
+
+    def repetido(self, block):
+        """Ya esta en una fuente anterior. Si no, lo apunta para las siguientes."""
+        tid = block_tvg_id(block)
+        enlace = clave_enlace(block_url(block))
+        clave = clave_canal(extinf_nombre(block[0]))
+        cc = pais(block[0])
+        # Con pais: igual nombre en ese pais o en uno sin pais (los de las
+        # categorias de tvabierta). Sin pais: igual nombre en cualquiera.
+        if (tid and tid in self.ids) or enlace in self.enlaces or (clave and (
+                (cc and ((clave, cc) in self.nombres_pais or (clave, "") in self.nombres_pais))
+                or (not cc and clave in self.nombres))):
+            return True
+        self._nuevos.append((tid, enlace, clave, cc))
+        return False
+
+    def fin_de_fuente(self):
+        """Lo visto en la fuente que acaba pasa a contar para las siguientes."""
+        for tid, enlace, clave, cc in self._nuevos:
+            if tid:
+                self.ids.add(tid)
+            self.enlaces.add(enlace)
+            if clave:
+                self.nombres.add(clave)
+                self.nombres_pais.add((clave, cc))
+        self._nuevos = []
+
+
 # ----------------------------------------------------------------------
 # Canales con cabeceras -> Worker
 # ----------------------------------------------------------------------
@@ -494,9 +874,12 @@ def clasificar(extinf):
 
 
 def pais(extinf):
-    """'Canal13.cl@SD' -> 'cl'."""
+    """'Canal13.cl@SD' -> 'cl'; si el tvg-id no lo dice, el tvg-country."""
     m = re.search(r"\.([a-z]{2})$", normalize_id(extinf_attr(extinf, "tvg-id")) or "")
-    return m.group(1) if m else ""
+    if m:
+        return m.group(1)
+    cc = extinf_attr(extinf, "tvg-country").lower()
+    return cc if re.match(r"^[a-z]{2}$", cc) else ""
 
 
 def con_grupo(extinf, grupo):
@@ -623,7 +1006,8 @@ def proxificar_bloque(block, proxy, key):
 def check_stream(channel):
     """master playlist -> variante -> segmento .ts. Devuelve (ok, mensaje)."""
     try:
-        master = http_get(channel["url"], timeout=15, retries=2).decode("utf-8", "replace")
+        master, base = http_get(channel["url"], timeout=15, retries=2, con_url=True)
+        master = master.decode("utf-8", "replace")
     except RuntimeError as e:
         return False, "playlist: %s" % e
 
@@ -636,19 +1020,22 @@ def check_stream(channel):
 
     # Si es un master, lines[0] es una variante; si es una media playlist
     # directa, es un segmento y vale el ultimo (ventana deslizante).
+    # Las rutas relativas van contra la URL final: tras una redireccion no es
+    # la de la lista.
     primero = lines[0] if ".m3u8" in lines[0] else lines[-1]
-    target = urllib.parse.urljoin(channel["url"].rsplit("/", 1)[0] + "/", primero)
+    target = urllib.parse.urljoin(base, primero)
 
     if ".m3u8" in target:
         try:
-            media = http_get(target, timeout=15, retries=2).decode("utf-8", "replace")
+            media, base = http_get(target, timeout=15, retries=2, con_url=True)
+            media = media.decode("utf-8", "replace")
         except RuntimeError as e:
             return False, "variante: %s" % e
         segs = [l.strip() for l in media.splitlines() if l.strip() and not l.startswith("#")]
         if not segs:
             return False, "sin segmentos (canal fuera del aire?)"
         # El ULTIMO, no el primero: el mas antiguo puede haber expirado ya.
-        target = urllib.parse.urljoin(target.rsplit("/", 1)[0] + "/", segs[-1])
+        target = urllib.parse.urljoin(base, segs[-1])
 
     try:
         data = http_get(target, timeout=25, retries=2)
@@ -659,6 +1046,22 @@ def check_stream(channel):
         return False, "segmento sospechosamente pequeno (%d bytes)" % len(data)
 
     return True, "%.1f KB de video" % (len(data) / 1024.0)
+
+
+def anadir_alternativa(ch, block, proxy, key):
+    """
+    Deja el enlace del bloque (un duplicado de otra fuente) como alternativa
+    del canal ch, si es otro enlace. Si pide cabeceras, solo con el Worker.
+    """
+    if necesita_cabeceras(block):
+        if not key:
+            return
+        block, _ = proxificar_bloque(block, proxy, key)
+    url = block_url(block)
+    actuales = [ch["url"]] + ch.get("alternatives", [])
+    if url and clave_enlace(url) not in {clave_enlace(u) for u in actuales}:
+        # Lista nueva: ch es una copia de CHANNELS que comparte la de alli.
+        ch["alternatives"] = ch.get("alternatives", []) + [url]
 
 
 def check_with_alternatives(channel):
@@ -732,17 +1135,8 @@ def main():
     else:
         warn("sin proxy: los canales de Telemicro no funcionaran en Smarters")
 
-    canales = cargar_canales()
-
-    filas, fallos = [], 0
-    if args.check:
-        ok, filas, fallos = run_checks(canales)
-        if args.drop_broken:
-            canales = ok
-
-    out_lines = ["#EXTM3U"]
-    for ch in canales:
-        out_lines.extend(build_block(ch))
+    data = leer_tvabierta()
+    canales = cargar_canales(data)
 
     key = PROXY_KEY
     if key and not proxy:
@@ -752,7 +1146,10 @@ def main():
         warn("sin PROXY_KEY: los canales de iptv-org que piden Referer/User-Agent "
              "se publican sin Worker y no funcionaran en Smarters")
 
-    base_total = descartados = proxificados = 0
+    # Antes de verificar: los duplicados de DOMINICANOS dejan su enlace como
+    # alternativa y el --check puede usarlo.
+    base, pluto, samsung, fuentes = [], [], [], []
+    proxificados = 0
     grupos = {}
     if not args.no_base:
         log("Descargando lista base de iptv-org (espanol)...")
@@ -761,26 +1158,59 @@ def main():
         except RuntimeError as e:
             error("no se pudo descargar la lista base: %s" % e)
             return 1
+        pluto = cargar_pluto(proxy)
 
-        _, blocks = parse_blocks(text)
-        base_total = len(blocks)
-        base = []
-        for block in blocks:
-            if block_tvg_id(block) in OWN_IDS:
-                descartados += 1
-                continue
-            if key:
-                block, cambiado = proxificar_bloque(block, proxy, key)
-                proxificados += cambiado
-            base.append(block)
+        dup = Duplicados(canales)
+        for nombre, blocks in [("iptv-org", parse_blocks(text)[1]),
+                               ("Free-TV", cargar_freetv()),
+                               ("tvabierta", tvabierta_extra(data))]:
+            n = {"total": len(blocks), "nuevos": 0, "rd": 0, "repetidos": 0, "pluto": 0}
+            for block in blocks:
+                if pluto and "jmp2.uk/plu-" in block_url(block):
+                    n["pluto"] += 1  # rotos; van en el grupo Pluto TV
+                    continue
+                ch = dup.dominicano(block)
+                if ch:
+                    n["rd"] += 1
+                    anadir_alternativa(ch, block, proxy, key)
+                    continue
+                if dup.repetido(block):
+                    n["repetidos"] += 1
+                    continue
+                if key:
+                    block, cambiado = proxificar_bloque(block, proxy, key)
+                    proxificados += cambiado
+                base.append(block)
+                n["nuevos"] += 1
+            dup.fin_de_fuente()
+            fuentes.append((nombre, n))
+            log("%s: %d canales, %d nuevos, %d ya en %s, %d repetidos%s"
+                % (nombre, n["total"], n["nuevos"], n["rd"], GROUP, n["repetidos"],
+                   ", %d de Pluto quitados" % n["pluto"] if n["pluto"] else ""))
+        samsung = [b for b in cargar_samsung() if not dup.repetido(b)]
+
         base, grupos = agrupar(base)
-        for block in base:
-            out_lines.extend(block)
-        log("Lista base: %d canales, %d descartados por duplicados, "
-            "%d con cabeceras pasados por el Worker"
-            % (base_total, descartados, proxificados))
-        for grupo, n in grupos.items():
-            log("  %5d  %s" % (n, grupo))
+        for grupo, lista in ((PLUTO_GROUP, pluto), (SAMSUNG_GROUP, samsung)):
+            if lista:
+                grupos[grupo] = len(lista)
+        log("Con cabeceras pasados por el Worker: %d" % proxificados)
+        for grupo, cuantos in grupos.items():
+            log("  %5d  %s" % (cuantos, grupo))
+
+    filas, fallos = [], 0
+    if args.check:
+        ok, filas, fallos = run_checks(canales)
+        if args.drop_broken:
+            canales = ok
+
+    if pluto or samsung:
+        out_lines = ['#EXTM3U x-tvg-url="%s"' % ",".join(EPG_URLS)]
+    else:
+        out_lines = ["#EXTM3U"]
+    for ch in canales:
+        out_lines.extend(build_block(ch))
+    for block in base + pluto + samsung:
+        out_lines.extend(block)
 
     try:
         destino = os.path.abspath(args.output)
@@ -793,16 +1223,21 @@ def main():
         error("no se pudo escribir %s: %s" % (args.output, e))
         return 1
 
-    total = len(canales) + (base_total - descartados)
+    total = len(canales) + len(base) + len(pluto) + len(samsung)
     log("Grupo %s: %d canales" % (GROUP, len(canales)))
     log("Total en la lista: %d" % total)
     log("Lista generada: %s" % destino)
 
     resumen = ["## Lista IPTV", "",
-               "- Grupo `%s`: **%d** canales" % (GROUP, len(canales)),
-               "- iptv-org: **%d** (descartados %d duplicados)" % (base_total, descartados),
-               "- Con Referer/User-Agent por el Worker: **%d**" % proxificados,
-               "- Total: **%d**" % total]
+               "- Grupo `%s`: **%d** canales" % (GROUP, len(canales))]
+    resumen += ["- %s: **%d** nuevos de %d (%d ya en %s, %d repetidos%s)"
+                % (nombre, n["nuevos"], n["total"], n["rd"], GROUP, n["repetidos"],
+                   ", %d de Pluto quitados" % n["pluto"] if n["pluto"] else "")
+                for nombre, n in fuentes]
+    resumen += ["- %s: **%d**" % (PLUTO_GROUP, len(pluto)),
+                "- %s: **%d**" % (SAMSUNG_GROUP, len(samsung)),
+                "- Con Referer/User-Agent por el Worker: **%d**" % proxificados,
+                "- Total: **%d**" % total]
     if grupos:
         resumen += ["", "### Grupos", "", "| Grupo | Canales |", "| --- | --- |"] + \
                    ["| %s | %d |" % (g, n) for g, n in grupos.items()]
