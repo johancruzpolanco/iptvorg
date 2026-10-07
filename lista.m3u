@@ -140,7 +140,7 @@ https://host.streamingnation.live/p/3345/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/senaldigitaltv.png" group-title="DOMINICANOS",Señal Digital TV
 https://soportedvb.click:3494/live/senaldigitaltvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/sitvrd.png" group-title="DOMINICANOS",SiTV
-https://hls.tvabierta.net/hls/sitvrd.m3u8
+http://190.122.104.210:5080/LiveApp/streams/sitv2.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/super7.png" group-title="DOMINICANOS",Super 7 TV
 https://stream.haislin.com/super7fm/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telecanal12.png" group-title="DOMINICANOS",Telecanal 12
@@ -5081,6 +5081,8 @@ https://jmp2.uk/stvp-ES2800002MM
 https://jmp2.uk/stvp-ES1400002CJ
 #EXTINF:-1 tvg-id="ES12000024R" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES12000024R_20260901T054105SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Historia y Vida
 https://jmp2.uk/stvp-ES12000024R
+#EXTINF:-1 tvg-id="ES1800005H2" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1800005H2_20261006T033919SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",BBC Historia
+https://jmp2.uk/stvp-ES1800005H2
 #EXTINF:-1 tvg-id="ESBD1400003QN" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD1400003QN_20260210T035856SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Royalworld - Nobleza y Dinastias
 https://jmp2.uk/stvp-ESBD1400003QN
 #EXTINF:-1 tvg-id="ES3200001F1" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES3200001F1_20260804T051214SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",BBC Earth
@@ -5179,7 +5181,7 @@ https://jmp2.uk/stvp-ES190000224
 https://jmp2.uk/stvp-ES1900003JT
 #EXTINF:-1 tvg-id="ES1800006ZS" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1800006ZS_20260528T055835SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Rainy Day Vibes
 https://jmp2.uk/stvp-ES1800006ZS
-#EXTINF:-1 tvg-id="ES1800009VX" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1800009VX_20261006T033907SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Spring Vibes
+#EXTINF:-1 tvg-id="ES1800009VX" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1800009VX_20261006T033907SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Fall Vibes
 https://jmp2.uk/stvp-ES1800009VX
 #EXTINF:-1 tvg-id="ES1800007GH" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1800007GH_20260528T055756SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Island Vibes
 https://jmp2.uk/stvp-ES1800007GH
