@@ -16,7 +16,7 @@ https://ds.tvabierta.net/memfs/2493e646-b24d-489b-8603-0879abb93123.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/010.png" group-title="DOMINICANOS",Teleantillas
 https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
-https://cdn4.wind.do/streams/telesistema/telesistema_master.m3u8
+https://hls.tvabierta.net/hls/011.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
 https://hls.tvabierta.net/hls/012.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="DOMINICANOS",Telecentro 13
