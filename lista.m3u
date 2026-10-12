@@ -16,7 +16,7 @@ https://ds.tvabierta.net/memfs/2493e646-b24d-489b-8603-0879abb93123.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/010.png" group-title="DOMINICANOS",Teleantillas
 https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
-https://hls.tvabierta.net/hls/011.m3u8
+https://cdn4.wind.do/streams/telesistema/telesistema_master.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
 https://hls.tvabierta.net/hls/012.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="DOMINICANOS",Telecentro 13
@@ -44,7 +44,7 @@ https://2-fss-2.streamhoster.com/pl_138/206532-6829902-1/playlist.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Teleuniverso 29
 https://hls.tvabierta.net/hls/029.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/vtv32.png" group-title="DOMINICANOS",VTV 32
-https://cnn.livestreaminggroup.info:3507/live/vtv32live.m3u8
+https://hls.tvabierta.net/hls/032.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/037.png" group-title="DOMINICANOS",CDN 37
 https://hls.tvabierta.net/hls/037.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/038.png" group-title="DOMINICANOS",Acento TV
@@ -485,6 +485,8 @@ http://38.187.7.252:8000/play/a03d/index.m3u8
 https://barinaslive1.boldmss.com/ESPN_2/ESPN_2.isml/ESPN_2.m3u8
 #EXTINF:-1 tvg-id="ESPN2LatinAmerica.us@Argentina" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="Deportes",ESPN 2 Latin America Argentina
 https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2JhbnRlbC1jZG4xLmlwdHZwZXJ1LnR2OjE5MzYiLCIiLCJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTU0LjAuMC4wIFNhZmFyaS81MzcuMzYgVkxDLzMuMC4xOCBMaWJWTEMvMy4wLjE4Il0.XIY4ZIKVYjPciWqQVTUErA/btnscrtn/espn2-mux/playlist.m3u8
+#EXTINF:-1 tvg-id="ESPN2LatinAmerica.us@Colombia" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png" group-title="Deportes",ESPN 2 Latin America Colombia (1080p)
+http://190.61.47.54:8000/play/a005/index.m3u8
 #EXTINF:-1 tvg-id="ESPN3LatinAmerica.us@South" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png" group-title="Deportes",ESPN 3 Latin America (1080p)
 https://barinaslive1.boldmss.com/ESPN_3/ESPN_3.isml/ESPN_3.m3u8
 #EXTINF:-1 tvg-id="ESPN3LatinAmerica.us@Argentina" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/ESPN3_Logo.png/960px-ESPN3_Logo.png" group-title="Deportes",ESPN 3 Latin America Argentina
@@ -505,6 +507,8 @@ https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2JhcmluYXNsaXZlMS5ib2x
 https://barinaslive1.boldmss.com/ESPN/ESPN.isml/ESPN.m3u8
 #EXTINF:-1 tvg-id="ESPNLatinAmerica.us@Argentina" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="Deportes",ESPN Latin America Argentina
 https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2JhbnRlbC1jZG4xLmlwdHZwZXJ1LnR2OjE5MzYiLCIiLCJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTU0LjAuMC4wIFNhZmFyaS81MzcuMzYgVkxDLzMuMC4xOCBMaWJWTEMvMy4wLjE4Il0.XIY4ZIKVYjPciWqQVTUErA/btnscrtn/espn-mux/chunks.m3u8
+#EXTINF:-1 tvg-id="ESPNLatinAmerica.us@Colombia" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png" group-title="Deportes",ESPN Latin America Colombia (1080p)
+http://190.61.47.54:8000/play/a004/index.m3u8
 #EXTINF:-1 tvg-id="ESPNPremium.ar@HD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="Deportes",ESPN Premium (Argentina) HD (1080p)
 http://190.128.214.97:64333/play/a02i/index.m3u8
 #EXTINF:-1 tvg-id="ESPNPremium.cl@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png" group-title="Deportes",ESPN Premium (Chile)
@@ -645,8 +649,8 @@ http://138.121.15.230:9002/AXN/index.m3u8
 http://181.78.8.199:8000/play/a0cu/index.m3u8
 #EXTINF:-1 tvg-id="AXNLatinAmerica.us@Mexico" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png" group-title="Películas",AXN Latin America Mexico
 http://190.11.225.124:5000/live/axn_hd/playlist.m3u8
-#EXTINF:-1 tvg-id="AXNLatinAmerica.us@South" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png" group-title="Películas",AXN Latin America South (1080p)
-http://181.78.12.119:16123/play/ch46/index.m3u8
+#EXTINF:-1 tvg-id="AXNLatinAmerica.us@South" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png" group-title="Películas",AXN Latin America South
+https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2JhbnRlbC1jZG4xLmlwdHZwZXJ1LnR2OjE5MzYiLCIiLCJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTU0LjAuMC4wIFNhZmFyaS81MzcuMzYgVkxDLzMuMC4xOCBMaWJWTEMvMy4wLjE4Il0.XIY4ZIKVYjPciWqQVTUErA/btnscrtn/axn.stream/chunks.m3u8
 #EXTINF:-1 tvg-id="AXNMovies.es@SD" tvg-logo="https://static.wikia.nocookie.net/logopedia/images/d/d2/AXN_Movies_logo.svg/revision/latest/scale-to-width-down/512" group-title="Películas",AXN Movies (Spain)
 https://cdn.stmify.com/zapitv/stream/AXN_MOVIES/axn_white.mpd
 #EXTINF:-1 tvg-id="CINDIETV.br@HD" tvg-logo="https://a.jsrdn.com/hls/23208/cindie-tv/logo_20250225_222520_68.png" group-title="Películas",CINDIE TV (1080p)
@@ -667,9 +671,11 @@ https://d2nq34q0i1r3la.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68
 http://15.204.246.24:8080/CinecanalHD/index.m3u8
 #EXTINF:-1 tvg-id="Cinecanal.us@Pacific" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png" group-title="Películas",Cinecanal Pacific (1080p)
 http://138.121.15.230:9002/CINECANAL/index.m3u8
+#EXTINF:-1 tvg-id="Cinecanal.us@South" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png" group-title="Películas",Cinecanal South
+https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2JhbnRlbC1jZG4xLmlwdHZwZXJ1LnR2OjE5MzYiLCIiLCJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTU0LjAuMC4wIFNhZmFyaS81MzcuMzYgVkxDLzMuMC4xOCBMaWJWTEMvMy4wLjE4Il0.XIY4ZIKVYjPciWqQVTUErA/btnscrtn/Cinecanal-key/chunks.m3u8
 #EXTINF:-1 tvg-id="CineLatino.mx@SD" tvg-logo="https://i.imgur.com/2V0R0xT.png" group-title="Películas",CineLatino (720p)
 http://206.135.11.174:8010/play/a0lq/index.m3u8
-#EXTINF:-1 tvg-id="Cinemax.us@West" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Cinemax_2016.svg/960px-Cinemax_2016.svg.png" group-title="Películas",Cinemax West (720p)
+#EXTINF:-1 tvg-id="Cinemax.us@West" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Cinemax_2016.svg/960px-Cinemax_2016.svg.png" group-title="Películas",Cinemax (United States) West (720p)
 http://23.237.104.106:8080/USA_CINEMAX_WEST/index.m3u8
 #EXTINF:-1 tvg-id="CinemaxHits.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/en/thumb/f/fb/Cinemax_Hits_Logo.png/960px-Cinemax_Hits_Logo.png" group-title="Películas",Cinemax Hits (1080p)
 http://23.237.104.106:8080/USA_MOREMAX/index.m3u8
@@ -701,6 +707,10 @@ http://200.229.147.210:9999/play/a00k/index.m3u8
 http://38.65.175.84:8000/play/a0ct/index.m3u8
 #EXTINF:-1 tvg-id="HBO2LatinAmerica.us@HD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png" group-title="Películas",HBO 2 Latin America HD (1080p)
 http://45.171.64.30:6060/play/a00i/index.m3u8
+#EXTINF:-1 tvg-id="HBO.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/960px-HBO_logo.svg.png" group-title="Películas",HBO (720p)
+http://tvsen7.aynascope.net/hbo/index.m3u8
+#EXTINF:-1 tvg-id="HBOHits.us@East" tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/HBO_Hits_Logo.svg/960px-HBO_Hits_Logo.svg.png" group-title="Películas",HBO Hits (720p)
+http://tvsen7.aynascope.net/hbo2/index.m3u8
 #EXTINF:-1 tvg-id="HBOMovies.us@East" tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/HBO_Movies_Logo.svg/960px-HBO_Movies_Logo.svg.png" group-title="Películas",HBO Movies (720p)
 http://23.237.104.106:8080/USA_HBO_ZONE/index.m3u8
 #EXTINF:-1 tvg-id="LifetimeMovies.us@East" tvg-logo="https://i.imgur.com/BWmqYTO.png" group-title="Películas",Lifetime Movies (1080p)
@@ -935,8 +945,16 @@ https://cdn.fast.jwp.services/v1/channel/1_jB6940Ei_TvhvIHDL/manifest.m3u8
 http://168.196.127.137:6001/play/a06j/index.m3u8
 #EXTINF:-1 tvg-id="BabyTV.uk@LatinAmerica" tvg-logo="https://i.imgur.com/4BDJ5FT.png" group-title="Infantiles",BabyTV Latin America (1080p)
 http://38.44.109.41:8003/play/a0eh
+#EXTINF:-1 tvg-id="Boomerang.us@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Boomerang_2014_logo.svg/960px-Boomerang_2014_logo.svg.png" group-title="Infantiles",Boomerang (720p)
+http://23.237.104.106:8080/USA_BOOMERANG/index.m3u8
 #EXTINF:-1 tvg-id="CanalInfantil.us@SD" tvg-logo="https://i.imgur.com/WGk7MJ3.png" group-title="Infantiles",Canal Infantil (1080p)
 http://bantel-cdn1.iptvperu.tv:1935/btnscrtn/canalinfantil/playlist.m3u8
+#EXTINF:-1 tvg-id="CartoonNetwork.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="Infantiles",Cartoon Network (United States) (720p)
+http://tvsen7.aynascope.net/cartoonnetwork/index.m3u8
+#EXTINF:-1 tvg-id="CartoonNetworkLatinAmerica.us@SouthAtlanticHD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="Infantiles",Cartoon Network Latin America
+https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2JhbnRlbC1jZG4xLmlwdHZwZXJ1LnR2OjE5MzYiLCIiLCJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTU0LjAuMC4wIFNhZmFyaS81MzcuMzYgVkxDLzMuMC4xOCBMaWJWTEMvMy4wLjE4Il0.XIY4ZIKVYjPciWqQVTUErA/btnscrtn/cartoonnetwork.stream/chunks.m3u8
+#EXTINF:-1 tvg-id="CartoonNetworkLatinAmerica.us@Mexico" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="Infantiles",Cartoon Network Latin America Mexico
+https://zg9mhld.s.gy/HD-CARTOON-MX.ts
 #EXTINF:-1 tvg-id="CartoonNetworkLatinAmerica.us@NorthAtlantic" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="Infantiles",Cartoon Network Latin America North Atlantic (1080p)
 http://38.252.238.18:8000/play/a053/index.m3u8
 #EXTINF:-1 tvg-id="CartoonNetworkLatinAmerica.us@SouthAtlantic" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="Infantiles",Cartoon Network Latin America South Atlantic (1080p)
@@ -951,11 +969,11 @@ https://lge-lgla2.otteravision.com/lge/lgcla/lgcla.m3u8
 http://168.228.44.241:9999/play/a04j/index.m3u8
 #EXTINF:-1 tvg-id="DiosTeVeKids.hn@SD" tvg-logo="https://i.imgur.com/GnZicVH.png" group-title="Infantiles",Dios Te Ve Kids (720p)
 https://s.emisoras.tv:8081/diostevekids/index.m3u8
-#EXTINF:-1 tvg-id="DiscoveryKidsLatinAmerica.us@Panregional" tvg-logo="" group-title="Infantiles",Discovery Kids Latin America (1080p)
+#EXTINF:-1 tvg-id="DiscoveryKidsLatinAmerica.us@Panregional" tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="Infantiles",Discovery Kids Latin America (1080p)
 http://181.224.200.5:2277/play/a00o/index.m3u8
-#EXTINF:-1 tvg-id="DiscoveryKidsLatinAmerica.us@Colombia" tvg-logo="" group-title="Infantiles",Discovery Kids Latin America Colombia (1080p)
+#EXTINF:-1 tvg-id="DiscoveryKidsLatinAmerica.us@Colombia" tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="Infantiles",Discovery Kids Latin America Colombia (1080p)
 http://38.134.250.110:8000/play/a003/index.m3u8
-#EXTINF:-1 tvg-id="DiscoveryKidsLatinAmerica.us@Mexico" tvg-logo="" group-title="Infantiles",Discovery Kids Latin America Mexico (1080p)
+#EXTINF:-1 tvg-id="DiscoveryKidsLatinAmerica.us@Mexico" tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="Infantiles",Discovery Kids Latin America Mexico (1080p)
 http://38.65.175.84:8000/play/a0an/index.m3u8
 #EXTINF:-1 tvg-id="DisneyChannel.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/2024_Disney_Channel_text_logo.svg/960px-2024_Disney_Channel_text_logo.svg.png" group-title="Infantiles",Disney Channel (United States) (720p) [Geo-blocked]
 http://212.5.144.156/disney/index.m3u8
@@ -1199,6 +1217,8 @@ https://stmv1.voxtvhd.com.br/latacungatv/latacungatv/playlist.m3u8
 https://amg00779-latv-amg00779c1-cineverse-us-1746.playouts.now.amagi.tv/playlist/amg00779-latvnetworkllc-latv-cineverseus/playlist.m3u8
 #EXTINF:-1 tvg-id="LifetimeLatinAmerica.us@Panregional" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png" group-title="Entretenimiento",Lifetime Latin America (1080p)
 http://138.121.15.230:9002/LIFETIME/index.m3u8
+#EXTINF:-1 tvg-id="LifetimeLatinAmerica.us@Mexico" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Logo_Lifetime_2020.svg/960px-Logo_Lifetime_2020.svg.png" group-title="Entretenimiento",Lifetime Latin America Mexico (1080p)
+https://streaming.onnethn.com/LIFETIME/index.m3u8
 #EXTINF:-1 tvg-id="MakroDigitalTelevision.ec@SD" tvg-logo="https://makrodigitaltelevision.com/logo.jpg" group-title="Entretenimiento",MakroDigital Television (1080p)
 https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL21ha3JvZGlnaXRhbHR2Lm1ha3JvZGlnaXRhbC5jb20iLCJodHRwczovL21ha3JvZGlnaXRhbHRlbGV2aXNpb24uY29tIl0.0-lDfBOAqcJ1flXon_hSSQ/makrodigitaltelevision/iptv/playlist.m3u8
 #EXTINF:-1 tvg-id="MasTalk.ve@SD" tvg-logo="https://i.imgur.com/unE2LGz.jpg" group-title="Entretenimiento",Mas Talk (1080p)
@@ -1607,6 +1627,8 @@ https://tvcosta.gleeze.com/memfs/4d48db09-0b1e-4803-8da7-22be388bdd7e.m3u8
 https://cdnbarinas.tvzamora.com/showven/index.m3u8
 #EXTINF:-1 tvg-id="SiembraTV.do@SD" tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/3226-294x165-FFFFFF.jpg" group-title="Música",Siembra TV (Dominican Republic) (720p)
 https://streamunoapp.com:3809/live/siembratvlive.m3u8
+#EXTINF:-1 tvg-id="SinLimites.co@SD" tvg-logo="https://i.imgur.com/wrFfgzC.png" group-title="Música",Sin Limites (1080p)
+http://170.244.209.30:8000/play/a1im/index.m3u8
 #EXTINF:-1 tvg-id="SolMusica.es@SD" tvg-logo="https://i.imgur.com/rbJrmPw.png" group-title="Música",Sol Musica (720p)
 https://d2glyu450vvghm.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-21u4g5cjglv02/sm.m3u8
 #EXTINF:-1 tvg-id="SoloBailalo.cl@SD" tvg-logo="https://i.imgur.com/SImJE7c.png" group-title="Música",Solo Bailalo (480p)
@@ -1617,12 +1639,14 @@ https://59ef525c24caa.streamlock.net/vmtv/soyplancha/playlist.m3u8
 https://cloudvideo.servers10.com:8081/8026/tracks-v1a1/index.m3u8
 #EXTINF:-1 tvg-id="StingrayClassica.ca@SD" tvg-logo="https://i.imgur.com/nh1k5RC.png" group-title="Música",Stingray Classica (1080p)
 https://lotus.stingray.com/manifest/classica-cla008-montreal/samsungtvplus/master.m3u8
-#EXTINF:-1 tvg-id="StingrayiConcerts.ca@HD" tvg-logo="https://i.imgur.com/GKc7RFz.png" group-title="Música",Stingray iConcerts HD (1080p)
-http://str2.iptvhd.ru:8080/iConcertsHD/index.m3u8
+#EXTINF:-1 tvg-id="StingrayiConcerts.ca@HD" tvg-logo="https://i.imgur.com/GKc7RFz.png" group-title="Música",Stingray iConcerts HD
+https://dash4.antik.sk/live/test_stingray_iconcerts_hd_hevc50/playlist.m3u8
 #EXTINF:-1 tvg-id="SuperQPanama.pa@SD" tvg-logo="https://i.imgur.com/ocTnqi7.png" group-title="Música",Super Q Panama (1080p)
 https://vcp8.myplaytv.com:1936/superq/superq/playlist.m3u8
 #EXTINF:-1 tvg-id="SupermusicaTV.co@SD" tvg-logo="https://i.imgur.com/MiVs42N.jpeg" group-title="Música",Supermusica TV (720p)
 https://backupmaxmedia.hvmultiplay.com/hls/stream4/supermusica.m3u8
+#EXTINF:-1 tvg-id="TarimaTV.do@HD" tvg-logo="https://vercanalesdominicanos.com/wp-content/uploads/2026/03/tarima.png" group-title="Música",Tarima TV (720p)
+http://190.122.104.210:5080/LiveApp/streams/tarima.m3u8
 #EXTINF:-1 tvg-id="TeleDominicanaTV.do@SD" tvg-logo="https://dominicanchannels.com/wp-content/uploads/teledominicana.png" group-title="Música",Tele Dominicana TV (720p) [Not 24/7]
 https://vdopanel.jlahozconsulting.com/p/3417/hybrid/play.m3u8
 #EXTINF:-1 tvg-id="TeleangolRadio.cl@SD" tvg-logo="https://i.imgur.com/nhPFGs8.png" group-title="Música",Teleangol Radio (720p)
@@ -2787,6 +2811,8 @@ https://videohd.live:19360/8008/8008.m3u8
 https://stmv1.voxtvhd.com.br/canal72tv2/canal72tv2/playlist.m3u8
 #EXTINF:-1 tvg-id="TVPublicaFueguina.ar@SD" tvg-logo="https://i.imgur.com/4dUvFqa.png" group-title="Generales - Argentina",TV Publica Fueguina (1080p)
 https://nd106.republicaservers.com/hls/c8094/index.m3u8
+#EXTINF:-1 tvg-id="TVPublicaMarcosPaz.ar@SD" tvg-logo="https://i.imgur.com/CRmY4Oi.png" group-title="Generales - Argentina",TV Publica Marcos Paz (720p)
+https://ca.centaurychile.com:2443/hls/mediospublicos.m3u8
 #EXTINF:-1 tvg-id="TVSolidaria.ar@SD" tvg-logo="https://i.imgur.com/M0fMypR.png" group-title="Generales - Argentina",TV Solidaria (576p)
 https://canadaremar2.todostreaming.es/live/argentina-web.m3u8
 #EXTINF:-1 tvg-id="Uniteve.ar@SD" tvg-logo="https://pbs.twimg.com/profile_images/720276300888453120/a_SDOmBc_400x400.jpg" group-title="Generales - Argentina",Uniteve (720p) [Not 24/7]
