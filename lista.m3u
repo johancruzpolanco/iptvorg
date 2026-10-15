@@ -6,7 +6,7 @@ https://stream.haislin.com/ahoratv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/004.png" group-title="DOMINICANOS",RTVD
 https://hls.tvabierta.net/hls/004.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/WhgySAk.png" group-title="DOMINICANOS",Telemicro 5
-https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2xpdmUyLnRlbGVtaWNyby5jb20uZG8iLCJodHRwczovL3RlbGVtaWNyby5jb20uZG8vcGxheWVycy81dHYvaW5kZXhfcGMucGhwIiwiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTAuMTU7IHJ2OjE1Mi4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzE1Mi4wIl0.tC_U11_4wiGRVRxS0EHsEg/live/55/playlist.m3u8
+https://tc13.johanecruzpolanco.workers.dev/live/55/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/007.png" group-title="DOMINICANOS",Antena 7
 https://ddycmnicl95kp.cloudfront.net/live/1odfmwd056bc/master.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/008.png" group-title="DOMINICANOS",Telemedios Canal 8
@@ -20,11 +20,11 @@ https://hls.tvabierta.net/hls/011.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
 https://hls.tvabierta.net/hls/012.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="DOMINICANOS",Telecentro 13
-https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2xpdmUyLnRlbGVtaWNyby5jb20uZG8iLCJodHRwczovL3RlbGVtaWNyby5jb20uZG8vcGxheWVycy8xM3R2L2luZGV4X3BjLnBocCIsIk1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwLjE1OyBydjoxNTIuMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC8xNTIuMCJd.smGWMnKF9BU-CS0JuGfLEg/live/telecentrocast_1080p/playlist.m3u8
+https://tc13.johanecruzpolanco.workers.dev/live/telecentrocast_1080p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/014.png" group-title="DOMINICANOS",Canal 14
 https://stream.haislin.com/14tv/index.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/v3mkmZa.png" group-title="DOMINICANOS",Digital 15
-https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2xpdmUyLnRlbGVtaWNyby5jb20uZG8iLCJodHRwczovL3RlbGVtaWNyby5jb20uZG8vcGxheWVycy8xNXR2L2luZGV4X3BjLnBocCIsIk1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwLjE1OyBydjoxNTIuMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC8xNTIuMCJd.-iXJNH_y6Jk1j65BS9UJYA/live/digital15cast_1080p/playlist.m3u8
+https://tc13.johanecruzpolanco.workers.dev/live/digital15cast_1080p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/017.png" group-title="DOMINICANOS",TV Luz
 https://hls.tvabierta.net/hls/tvluz.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/019.png" group-title="DOMINICANOS",Cinevisión Canal 19
@@ -56,7 +56,7 @@ https://hls.tvabierta.net/hls/052.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/a7tv.png" group-title="DOMINICANOS",A7 TV
 https://183.bozztv.com/ssh101/ssh101/a7tvjarabacoa/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/adoramtv.png" group-title="DOMINICANOS",Adoram TV
-https://live20.bozztv.com/giatv/giatv-adoram/adoram/chunks.m3u8
+https://live20.bozztv.com/giatv/giatv-adoram/adoram/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/altantotv.png" group-title="DOMINICANOS",Al Tanto TV
 https://stream.haislin.com/ls_j3BOKxBbUJ/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/alegretvrd.png" group-title="DOMINICANOS",Alegre TV
@@ -173,6 +173,8 @@ https://soportedvb.click:3891/live/visionndvlive.m3u8
 https://hls.tvabierta.net/hls/zol.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/zonavision.jpeg" group-title="DOMINICANOS",Zona Visión
 https://ds.tvabierta.net/memfs/b295f254-7af9-45e4-bfc6-7e0bba41929d.m3u8
+#EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/88889716/248x140.png?type=color_onBlack" tvg-country="US" group-title="Noticias",Telemundo Noticias Noreste
+https://d2kowtvrzzi7ps.cloudfront.net/11602/88889716/hls/master.m3u8?ads.xumo_channelId=88889716a&ads.xumo_streamId=88889716&ads.csid=nbc_us_PLATFORM_telemundonoticiasnoreste_ssai&ads.caid=TelemundoNoticiasNoreste&ads.appName=APP_NAME&ads.appVersion=APP_VERSION&ads._fw_app_bundle=APP_BUNDLE&ads._fw_content_category=IAB12&ads._fw_content_genre=news&ads._fw_content_language=es&ads._fw_content_rating=tv-g
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="Noticias",4Dmas Noticias TV (1080p) [Not 24/7]
 https://rds3.desdeparaguay.net/4dmasnoticiastv/4dmasnoticiastv/playlist.m3u8
 #EXTINF:-1 tvg-id="247CanaldeNoticias.ar@SD" tvg-logo="https://i.imgur.com/4hDCB1M.png" group-title="Noticias",24/7 Canal de Noticias
@@ -4713,8 +4715,6 @@ http://ott.streann.com:8080/loadbalancer/services/public/channels/59e60c4997381e
 https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tpr.png" group-title="Generales - Otros países",Telemundo PR
 https://ds.tvabierta.net/memfs/9e44e8e0-2162-4ad5-843c-9175a5edf483.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/t.png" group-title="Generales - Otros países",Telemundo Noreste
-https://ds.tvabierta.net/memfs/f423e722-97de-4156-b272-adf472b82f00.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/cn247.jpeg" group-title="Generales - Otros países",CN 24/7
 https://hls.tvabierta.net/hls/cn247.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/u.png" group-title="Generales - Otros países",Univision Chicago
