@@ -18,7 +18,7 @@ https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
 https://hls.tvabierta.net/hls/011.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
-https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwOi8vc2VydmVyMmdydXBvY2FtLmNvbToxOTQ1IiwiaHR0cHM6Ly90ZWxldW5pb250dnJkLmNvbS9wb3J0YWwvIl0.1SMrzomATJcKjAEg3Gxokw/teleunion/TU/playlist.m3u8
+https://hls.tvabierta.net/hls/012.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="DOMINICANOS",Telecentro 13
 https://tc13.johanecruzpolanco.workers.dev/live/telecentrocast_1080p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/014.png" group-title="DOMINICANOS",Canal 14
@@ -3851,6 +3851,8 @@ https://eu-a1-p-e-0b0e07cfe400b5ag3.cdn.mdstrm.com/live-stream-mp/d1hajab2w2oajq
 https://hls.tvabierta.net/hls/rtvce.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/startve.png" tvg-country="ES" group-title="Generales - España",Star TVE
 https://rtvelivestream-rtveplayplus.rtve.es/rtvesec/int/star_main_dvr_720.m3u8
+#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Logo_Univision_2019.svg/960px-Logo_Univision_2019.svg.png" tvg-country="US" group-title="Generales - Estados Unidos",Univision 41 (New York)
+https://tc13.johanecruzpolanco.workers.dev/univision/wxtv/wxtv.isml/hls/wxtv.m3u8
 #EXTINF:-1 tvg-id="AMP1.us@SD" tvg-logo="https://i.imgur.com/3ZhrthD.png" group-title="Generales - Estados Unidos",AMP 1 (720p)
 https://dlttx48mxf9m3.cloudfront.net/vod_clients/amp/live/ch1/video.m3u8
 #EXTINF:-1 tvg-id="CerritosTV3.us@SD" tvg-logo="https://i.imgur.com/huCBOIy.png" group-title="Generales - Estados Unidos",Cerritos TV3 (360p)
