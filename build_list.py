@@ -56,8 +56,9 @@ NOTAS DE MANTENIMIENTO
     Actions (30/09/2026; desde RD y desde otros servidores responde 200), asi
     que con --check el 403 no cuenta como caida ("ignorar_403") y se publica
     la senal oficial. Si falla de otra forma se pasa a tvabierta (007).
-  - Telemundo Noticias Noreste (CANALES_EXTRA, grupo Noticias) es la senal
-    FAST de Xumo que pone telemundo47.com/ver/ (MediaTailor tras CloudFront,
+  - Telemundo 47 (New York) (CANALES_EXTRA, grupo Noticias; nombre puesto por
+    peticion del usuario) es la senal FAST "Telemundo Noticias Noreste" de
+    Xumo que pone telemundo47.com/ver/ (MediaTailor tras CloudFront,
     hasta 1080p, sin cabeceras ni token). Sin la query da 400; los ads.* en
     mayusculas (APP_NAME...) son huecos que la pagina tampoco rellena. El
     enlace se relee de "m3u8_url" en la pagina en cada build. El "Telemundo
@@ -242,7 +243,8 @@ M3U8_URL_RX = re.compile(r'm3u8_url&quot;:&quot;(https?:[^\s"<>]+?\.m3u8[^\s"<>]
 # queda este. Por lo demas, mismas claves que CHANNELS.
 CANALES_EXTRA = [
     {
-        "name": "Telemundo Noticias Noreste",
+        # Por peticion del usuario; Xumo lo llama Telemundo Noticias Noreste.
+        "name": "Telemundo 47 (New York)",
         "category": "News",
         "country": "us",
         "url": "https://d2kowtvrzzi7ps.cloudfront.net/11602/88889716/hls/master.m3u8"
@@ -341,7 +343,8 @@ NOMBRES = {
 # (de tvabierta o de CANALES_EXTRA), para los duplicados que ni el nombre
 # (clave_canal) ni el enlace delatan.
 ALIAS = {"cdn": "cdn37", "elseis6": "elseis", "telesistema11": "telesistema",
-         "telemundonoreste": "telemundonoticiasnoreste"}
+         "telemundonoreste": "telemundo47",
+         "telemundonoticiasnoreste": "telemundo47"}
 
 # Cambios al nombre normalizado para comparar canales, en orden. Cada uno solo
 # se aplica si deja al menos 3 caracteres ("retv" no es "re"). "Canal 32" se
