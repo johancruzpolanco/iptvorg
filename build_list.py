@@ -6,10 +6,11 @@ Genera lista.m3u para IPTV Smarters:
      ordenados por numero de canal, mas los enlaces propios que sustituyen a
      los de la API cuando tenemos uno mejor (los de Telemicro, que van por
      nuestro proxy).
-  2. Detras, la lista en espanol de iptv-org, los canales hispanos de Free-TV
-     y otras categorias de tvabierta (HISPANOS, DEPORTES, MX, PE...), sin los
-     que ya salen antes para que no haya duplicados, repartidos en grupos en
-     espanol (Noticias, Deportes, Documentales... y Generales por pais).
+  2. Detras, los canales propios de fuera de RD (CANALES_EXTRA), la lista en
+     espanol de iptv-org, los canales hispanos de Free-TV y otras categorias
+     de tvabierta (HISPANOS, DEPORTES, MX, PE...), sin los que ya salen antes
+     para que no haya duplicados, repartidos en grupos en espanol (Noticias,
+     Deportes, Documentales... y Generales por pais).
   3. Al final, los grupos "Pluto TV" (Latinoamerica, por el Worker) y
      "Samsung TV Plus" (Espana).
 
@@ -27,7 +28,9 @@ NOTAS DE MANTENIMIENTO
     ignora los #EXTVLCOPT y no entiende el sufijo "|Referer=..." de la URL.
   - Usar live4.telemicro.com.do, NO live2: live2 reparte entre dos backends, la
     sesion (nimblesessionid) se crea en uno y el segmento se pide al otro, lo
-    que da 403/404 intermitentes.
+    que da 403/404 intermitentes. Por eso estos canales no toman como
+    alternativa los de iptv-org (van por /h/ a live2): cuando el --check
+    fallaba se publicaba ese enlace en vez del /live/ del Worker.
   - Teleantillas NO va por el Worker. Su pagina emite con un embed de
     Dailymotion, pero Dailymotion bloquea a Cloudflare (403 E030) y desde el
     Worker nunca sale la senal. Se usa tvabierta como principal (por peticion
@@ -53,6 +56,13 @@ NOTAS DE MANTENIMIENTO
     Actions (30/09/2026; desde RD y desde otros servidores responde 200), asi
     que con --check el 403 no cuenta como caida ("ignorar_403") y se publica
     la senal oficial. Si falla de otra forma se pasa a tvabierta (007).
+  - Telemundo Noticias Noreste (CANALES_EXTRA, grupo Noticias) es la senal
+    FAST de Xumo que pone telemundo47.com/ver/ (MediaTailor tras CloudFront,
+    hasta 1080p, sin cabeceras ni token). Sin la query da 400; los ads.* en
+    mayusculas (APP_NAME...) son huecos que la pagina tampoco rellena. El
+    enlace se relee de "m3u8_url" en la pagina en cada build. El "Telemundo
+    Noreste" de tvabierta es la misma senal retransmitida en 432p: se quita
+    (ALIAS).
   - "alternatives": enlaces de repuesto. Con --check, si el principal falla se
     publica el primero de ellos que funcione.
   - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
@@ -222,6 +232,46 @@ CHANNELS = [
 # configuracion (wpApp.appModel.schedule), con las barras escapadas.
 STREAM_URL_RX = re.compile(r'"streamUrl":"(https?:[^"]+?\.m3u8[^"]*)"')
 
+# "m3u8_url" del JSON que las paginas de NBC (Telemundo 47) meten en un
+# atributo HTML: comillas como &quot;, & como &amp; y barras escapadas.
+M3U8_URL_RX = re.compile(r'm3u8_url&quot;:&quot;(https?:[^\s"<>]+?\.m3u8[^\s"<>]*?)&quot;')
+
+# Canales propios de fuera de RD: van con los de iptv-org, en el grupo que les
+# toque por "category" (al estilo iptv-org) y nombre, ver clasificar(). Entran
+# antes que iptv-org, Free-TV y tvabierta: si alguna trae el mismo canal, se
+# queda este. Por lo demas, mismas claves que CHANNELS.
+CANALES_EXTRA = [
+    {
+        "name": "Telemundo Noticias Noreste",
+        "category": "News",
+        "country": "us",
+        "url": "https://d2kowtvrzzi7ps.cloudfront.net/11602/88889716/hls/master.m3u8"
+               "?ads.xumo_channelId=88889716a&ads.xumo_streamId=88889716"
+               "&ads.csid=nbc_us_PLATFORM_telemundonoticiasnoreste_ssai"
+               "&ads.caid=TelemundoNoticiasNoreste&ads.appName=APP_NAME"
+               "&ads.appVersion=APP_VERSION&ads._fw_app_bundle=APP_BUNDLE"
+               "&ads._fw_content_category=IAB12&ads._fw_content_genre=news"
+               "&ads._fw_content_language=es&ads._fw_content_rating=tv-g",
+        "stream_page": "https://www.telemundo47.com/ver/",
+        "stream_rx": M3U8_URL_RX,
+        # La pagina lo trae con mas huecos de anuncios en la query: mientras
+        # la ruta sea la misma se deja este, mas corto (ver NOTAS).
+        "solo_ruta": True,
+        # El otro enlace de la pagina (11603), con la misma query.
+        "alternatives": [
+            "https://d368vp0qqzvkid.cloudfront.net/11603/88889716/hls/master.m3u8"
+            "?ads.xumo_channelId=88889716a&ads.xumo_streamId=88889716"
+            "&ads.csid=nbc_us_PLATFORM_telemundonoticiasnoreste_ssai"
+            "&ads.caid=TelemundoNoticiasNoreste&ads.appName=APP_NAME"
+            "&ads.appVersion=APP_VERSION&ads._fw_app_bundle=APP_BUNDLE"
+            "&ads._fw_content_category=IAB12&ads._fw_content_genre=news"
+            "&ads._fw_content_language=es&ads._fw_content_rating=tv-g",
+        ],
+        "logo": "https://image.xumo.com/v1/channels/channel/88889716/248x140.png"
+                "?type=color_onBlack",
+    },
+]
+
 # Canales que se toman de la API. Aqui solo se fija el nombre con el que se
 # muestran y un enlace de respaldo que se usa SOLO si la API no trae el canal
 # (no esta, viene deshabilitado, sin stream, o la API no responde).
@@ -287,9 +337,11 @@ NOMBRES = {
     "monterrey": "Canal 6 Monterrey", "quierotv": "Quiero TV",
 }
 
-# Nombres de iptv-org/Free-TV -> clave del canal de tvabierta, para los
-# duplicados que ni el nombre (clave_canal) ni el enlace delatan.
-ALIAS = {"cdn": "cdn37", "elseis6": "elseis", "telesistema11": "telesistema"}
+# Nombres de iptv-org/Free-TV/tvabierta -> clave del canal que ya sale antes
+# (de tvabierta o de CANALES_EXTRA), para los duplicados que ni el nombre
+# (clave_canal) ni el enlace delatan.
+ALIAS = {"cdn": "cdn37", "elseis6": "elseis", "telesistema11": "telesistema",
+         "telemundonoreste": "telemundonoticiasnoreste"}
 
 # Cambios al nombre normalizado para comparar canales, en orden. Cada uno solo
 # se aplica si deja al menos 3 caracteres ("retv" no es "re"). "Canal 32" se
@@ -500,19 +552,27 @@ def ordenar(canales):
 
 
 def resolver_desde_pagina(canal):
-    """Cambia canal["url"] por el streamUrl de su pagina; si no, deja el fijo."""
+    """
+    Cambia canal["url"] por el enlace de su pagina ("stream_rx"; si no, el
+    streamUrl de Mediatique). Si no lo encuentra, deja el fijo. Con
+    "solo_ruta" tambien lo deja si solo cambia la query.
+    """
     try:
         html = http_get(canal["stream_page"], timeout=20, retries=2).decode("utf-8", "replace")
     except RuntimeError as e:
         warn("%s: no se pudo leer %s (%s); se usa el enlace fijo"
              % (canal["name"], canal["stream_page"], e))
         return
-    m = STREAM_URL_RX.search(html)
+    m = canal.get("stream_rx", STREAM_URL_RX).search(html)
     if not m:
-        warn("%s: la pagina no trae streamUrl; se usa el enlace fijo" % canal["name"])
+        warn("%s: la pagina no trae el enlace; se usa el fijo" % canal["name"])
         return
-    url = m.group(1).replace("\\/", "/")
-    if url != canal["url"]:
+    url = m.group(1).replace("\\/", "/").replace("&amp;", "&")
+    if canal.get("solo_ruta"):
+        distinto = url.split("?", 1)[0] != canal["url"].split("?", 1)[0]
+    else:
+        distinto = url != canal["url"]
+    if distinto:
         warn("%s: la pagina da otro enlace (%s); se usa ese" % (canal["name"], url))
         canal["alternatives"] = [canal["url"]] + canal.get("alternatives", [])
         canal["url"] = url
@@ -614,6 +674,22 @@ def bloque(nombre, url, grupo, logo="", tvg_id="", pais=""):
 def build_block(channel):
     """Bloque M3U. Ningun canal necesita cabeceras: la entrada queda limpia."""
     return bloque(channel["name"], channel["url"], GROUP, channel.get("logo", ""))
+
+
+def cargar_extra():
+    """Copia de CANALES_EXTRA, con el enlace releido de su pagina si la tiene."""
+    canales = [dict(c) for c in CANALES_EXTRA]
+    for c in canales:
+        if c.get("stream_page"):
+            resolver_desde_pagina(c)
+    return canales
+
+
+def bloque_extra(channel):
+    """Bloque M3U de CANALES_EXTRA, con su categoria para clasificar()."""
+    return bloque(channel["name"], channel["url"], channel["category"],
+                  channel.get("logo", ""), channel.get("tvg_id", ""),
+                  channel.get("country", ""))
 
 
 # ----------------------------------------------------------------------
@@ -1052,7 +1128,11 @@ def anadir_alternativa(ch, block, proxy, key):
     """
     Deja el enlace del bloque (un duplicado de otra fuente) como alternativa
     del canal ch, si es otro enlace. Si pide cabeceras, solo con el Worker.
+    Los de Telemicro (proxy_path) no toman ninguna: las de iptv-org van al
+    mismo servidor por /h/ y live2, que falla (ver NOTAS).
     """
+    if ch.get("proxy_path"):
+        return
     if necesita_cabeceras(block):
         if not key:
             return
@@ -1151,6 +1231,7 @@ def main():
     base, pluto, samsung, fuentes = [], [], [], []
     proxificados = 0
     grupos = {}
+    filas, fallos = [], 0
     if not args.no_base:
         log("Descargando lista base de iptv-org (espanol)...")
         try:
@@ -1160,8 +1241,17 @@ def main():
             return 1
         pluto = cargar_pluto(proxy)
 
+        # Se verifican ya: el bloque sale con el enlace que quede (principal
+        # o alternativa) y entra en la lista de duplicados con ese.
+        extras = cargar_extra()
+        if args.check and extras:
+            ok, filas, fallos = run_checks(extras)
+            if args.drop_broken:
+                extras = ok
+
         dup = Duplicados(canales)
-        for nombre, blocks in [("iptv-org", parse_blocks(text)[1]),
+        for nombre, blocks in [("Extra", [bloque_extra(c) for c in extras]),
+                               ("iptv-org", parse_blocks(text)[1]),
                                ("Free-TV", cargar_freetv()),
                                ("tvabierta", tvabierta_extra(data))]:
             n = {"total": len(blocks), "nuevos": 0, "rd": 0, "repetidos": 0, "pluto": 0}
@@ -1197,9 +1287,9 @@ def main():
         for grupo, cuantos in grupos.items():
             log("  %5d  %s" % (cuantos, grupo))
 
-    filas, fallos = [], 0
     if args.check:
-        ok, filas, fallos = run_checks(canales)
+        ok, filas_rd, fallos_rd = run_checks(canales)
+        filas, fallos = filas_rd + filas, fallos_rd + fallos
         if args.drop_broken:
             canales = ok
 
@@ -1242,7 +1332,7 @@ def main():
         resumen += ["", "### Grupos", "", "| Grupo | Canales |", "| --- | --- |"] + \
                    ["| %s | %d |" % (g, n) for g, n in grupos.items()]
     if filas:
-        resumen += ["", "### Verificacion del grupo %s" % GROUP, "",
+        resumen += ["", "### Verificacion de los canales propios", "",
                     "| Estado | Canal | Detalle |", "| --- | --- | --- |"] + filas
     summary(resumen)
 
