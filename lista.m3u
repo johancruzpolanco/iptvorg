@@ -18,7 +18,7 @@ https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
 https://hls.tvabierta.net/hls/011.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
-https://hls.tvabierta.net/hls/012.m3u8
+https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwOi8vc2VydmVyMmdydXBvY2FtLmNvbToxOTQ1IiwiaHR0cHM6Ly90ZWxldW5pb250dnJkLmNvbS9wb3J0YWwvIl0.1SMrzomATJcKjAEg3Gxokw/teleunion/TU/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="DOMINICANOS",Telecentro 13
 https://tc13.johanecruzpolanco.workers.dev/live/telecentrocast_1080p/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/014.png" group-title="DOMINICANOS",Canal 14
@@ -173,7 +173,7 @@ https://soportedvb.click:3891/live/visionndvlive.m3u8
 https://hls.tvabierta.net/hls/zol.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/zonavision.jpeg" group-title="DOMINICANOS",Zona Visión
 https://ds.tvabierta.net/memfs/b295f254-7af9-45e4-bfc6-7e0bba41929d.m3u8
-#EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/88889716/248x140.png?type=color_onBlack" tvg-country="US" group-title="Noticias",Telemundo Noticias Noreste
+#EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/88889716/248x140.png?type=color_onBlack" tvg-country="US" group-title="Noticias",Telemundo 47 (New York)
 https://d2kowtvrzzi7ps.cloudfront.net/11602/88889716/hls/master.m3u8?ads.xumo_channelId=88889716a&ads.xumo_streamId=88889716&ads.csid=nbc_us_PLATFORM_telemundonoticiasnoreste_ssai&ads.caid=TelemundoNoticiasNoreste&ads.appName=APP_NAME&ads.appVersion=APP_VERSION&ads._fw_app_bundle=APP_BUNDLE&ads._fw_content_category=IAB12&ads._fw_content_genre=news&ads._fw_content_language=es&ads._fw_content_rating=tv-g
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="Noticias",4Dmas Noticias TV (1080p) [Not 24/7]
 https://rds3.desdeparaguay.net/4dmasnoticiastv/4dmasnoticiastv/playlist.m3u8
