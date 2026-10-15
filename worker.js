@@ -14,10 +14,11 @@
  * reenvia a Telemicro. La URL que pones en la lista queda limpia y funciona
  * en cualquier reproductor.
  *
- * No hace falta reescribir el contenido de los .m3u8: las URLs que hay dentro
- * son relativas (chunks.m3u8?nimblesessionid=X, l_13_....ts?...), asi que el
- * reproductor las resuelve contra el propio Worker mientras respetemos la
- * misma estructura de rutas.
+ * El master trae la variante con URL absoluta a live4 (https://live4.../live/
+ * 13/chunks.m3u8?nimblesessionid=X; antes era relativa). Se cambia por la del
+ * Worker: si no, el reproductor la pide directo, sin Referer y desde otra IP
+ * que la de la sesion, y da 403. Los segmentos de chunks.m3u8 son relativos
+ * (l_13_....ts?...) y se resuelven solos contra el Worker.
  *
  * Uso:  https://<tu-worker>.workers.dev/live/13/playlist.m3u8
  *
@@ -309,12 +310,32 @@ export default {
       return new Response("Ruta no permitida", { status: 403, headers: CORS });
     }
 
-    // Conserva la query: el nimblesessionid viaja ahi y sin el da 404.
-    return proxy(request, ORIGIN + url.pathname + url.search, {
-      Referer: REFERER,
-    });
+    return telemicro(request, url);
   },
 };
+
+/**
+ * /live/...: pide la ruta a Telemicro con el Referer. En los .m3u8 cambia las
+ * URLs absolutas de ORIGIN por las del Worker (ver TELEMICRO arriba).
+ */
+async function telemicro(request, url) {
+  // Conserva la query: el nimblesessionid viaja ahi y sin el da 404.
+  const target = ORIGIN + url.pathname + url.search;
+  let upstream;
+  try {
+    upstream = await fetchUpstream(request, target, { Referer: REFERER });
+  } catch (err) {
+    return new Response("Error contactando el origen: " + err, {
+      status: 502,
+      headers: CORS,
+    });
+  }
+  if (request.method === "HEAD" || !upstream.ok || !url.pathname.endsWith(".m3u8")) {
+    return passThrough(upstream, target);
+  }
+  const text = await upstream.text();
+  return playlistResponse(text.split(ORIGIN + "/").join(url.origin + "/"));
+}
 
 /** Reenvia la peticion al origen con las cabeceras dadas y devuelve el cuerpo tal cual. */
 async function proxy(request, target, extraHeaders) {
