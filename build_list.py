@@ -64,6 +64,14 @@ NOTAS DE MANTENIMIENTO
     enlace se relee de "m3u8_url" en la pagina en cada build. El "Telemundo
     Noreste" de tvabierta es la misma senal retransmitida en 432p: se quita
     (ALIAS).
+  - Univision 41 (New York) (CANALES_EXTRA, grupo Generales - Estados Unidos;
+    nombre puesto por peticion del usuario) es la senal de WXTV en
+    UnivisionNow. Desde fuera de EE. UU. da 403 en master, variantes y .ts,
+    asi que todo va por /univision/ del Worker, que sale por Cloudflare en
+    EE. UU. (15/10/2026). La API del reproductor de univision.com
+    (usprauth.univision.com) no sirve: rechaza las IPs de Cloudflare. iptv-org
+    la tiene en la lista de EE. UU. como "UniMas WXTV-DT", pero no en la de
+    espanol.
   - "alternatives": enlaces de repuesto. Con --check, si el principal falla se
     publica el primero de ellos que funcione.
   - NO fijar enlaces de dmcdn.net (Dailymotion): llevan un token sec2(...) que
@@ -271,6 +279,20 @@ CANALES_EXTRA = [
         ],
         "logo": "https://image.xumo.com/v1/channels/channel/88889716/248x140.png"
                 "?type=color_onBlack",
+    },
+    {
+        # Por peticion del usuario: la emisora WXTV entera (no solo noticias),
+        # de UnivisionNow, hasta 1080p. Solo se ve desde EE. UU.: va por el
+        # Worker (ver NOTAS). Sin alternativas a proposito: el enlace directo
+        # pasaria el --check en GitHub (EE. UU.) y daria 403 en RD.
+        "name": "Univision 41 (New York)",
+        "category": "General",
+        "country": "us",
+        "url": "https://streaming-live-fcdn.api.prd.univisionnow.com"
+               "/wxtv/wxtv.isml/hls/wxtv.m3u8",
+        "proxy_path": "/univision/wxtv/wxtv.isml/hls/wxtv.m3u8",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/"
+                "Logo_Univision_2019.svg/960px-Logo_Univision_2019.svg.png",
     },
 ]
 
@@ -1210,13 +1232,14 @@ def main():
 
     proxy = (args.proxy or "").rstrip("/")
     if proxy:
-        n = sum(1 for ch in CHANNELS if ch.get("proxy_path"))
-        for ch in CHANNELS:
+        n = sum(1 for ch in CHANNELS + CANALES_EXTRA if ch.get("proxy_path"))
+        for ch in CHANNELS + CANALES_EXTRA:
             if ch.get("proxy_path"):
                 ch["url"] = proxy + ch["proxy_path"]
         log("Usando proxy para %d canal(es): %s" % (n, proxy))
     else:
-        warn("sin proxy: los canales de Telemicro no funcionaran en Smarters")
+        warn("sin proxy: los canales de Telemicro y Univision 41 no funcionaran "
+             "en Smarters")
 
     data = leer_tvabierta()
     canales = cargar_canales(data)
