@@ -34,21 +34,25 @@ https://hls.tvabierta.net/hls/020.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/021.png" group-title="DOMINICANOS",Antena 21
 https://hls.tvabierta.net/hls/021.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/022.png" group-title="DOMINICANOS",Multivisión
-https://lbgo.bozztv.com/ssh101/ssh101/canalmulti24/chunks.m3u8
+https://live20.bozztv.com/akamaissh101/ssh101/canalmulti24/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/023.png" group-title="DOMINICANOS",Telefuturo
 https://hls.tvabierta.net/hls/023.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/026.png" group-title="DOMINICANOS",Makao TV
 https://live.obslivestream.com/makaomux/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/027.png" group-title="DOMINICANOS",RNN
 https://2-fss-2.streamhoster.com/pl_138/206532-6829902-1/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/029.png" group-title="DOMINICANOS",Teleuniverso
+https://hls.tvabierta.net/hls/029.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Teleuniverso 29
 https://hls.tvabierta.net/hls/029.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/vtv32.png" group-title="DOMINICANOS",VTV 32
 https://hls.tvabierta.net/hls/032.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/037.png" group-title="DOMINICANOS",CDN 37
 https://hls.tvabierta.net/hls/037.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/038.png" group-title="DOMINICANOS",Acento TV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/038.png" group-title="DOMINICANOS",Acentotva
 https://hls.tvabierta.net/hls/038.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/039.png" group-title="DOMINICANOS",Coral
+https://hls.tvabierta.net/hls/039.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/042.png" group-title="DOMINICANOS",Romana TV Canal 42
 https://videoserver.tmcreativos.com:19360/cvmhbyrcat/cvmhbyrcat.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleimpacto.png" group-title="DOMINICANOS",Teleimpacto
@@ -71,8 +75,6 @@ https://tele-stream.telecasa.net/live/st2/bonaotv-hd/index.m3u8
 https://5790d294af2dc.streamlock.net/latinostv/latinostv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/boreal.png" group-title="DOMINICANOS",Boreal TV
 https://edge.essastream.com/borealtelevision/index.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/canaldelsol.png" group-title="DOMINICANOS",Canal del Sol
-https://stream.canaldelsol.com/sol26/master.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/dtv.png" group-title="DOMINICANOS",Canal DTV Latino
 https://s.emisoras.tv:8081/dtv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/canalda.png" group-title="DOMINICANOS",Canalda 26
@@ -128,7 +130,7 @@ https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/puntacanatv.png" group-title="DOMINICANOS",Punta Cana TV
 https://cdnfox.hostlagarto.com/puntacanatv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/retv.png" group-title="DOMINICANOS",R&E TV
-https://cloud2.streaminglivehd.com/8072/8072/playlist.m3u8
+https://cloud2.streaminglivehd.com:1936/8072/8072/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/radio67tv.jpg" group-title="DOMINICANOS",Radio 67 TV
 https://radio67tv.tvabierta.net/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/emanuel.png" group-title="DOMINICANOS",Radio Emanuel TV
@@ -169,6 +171,8 @@ https://streaming.telecablecentral.com.do/Vallevision/ValleHD/playlist.m3u8
 https://ds.tvabierta.net/memfs/f09eae46-9675-467a-99cf-8361c9b466ed.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/visionndv.png" group-title="DOMINICANOS",Visión NDV
 https://soportedvb.click:3891/live/visionndvlive.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/xtremochannel.png" group-title="DOMINICANOS",Xtremochannel
+https://ss2.tvrdomi.com:1936/xtremochannel/xtremochannel/.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/VgguXoM.png" group-title="DOMINICANOS",Zol TV
 https://hls.tvabierta.net/hls/zol.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/zonavision.jpeg" group-title="DOMINICANOS",Zona Visión
@@ -193,6 +197,8 @@ https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2xpdmVpbmdlc3RhMzE4LmN
 http://138.59.227.20:8000/play/a05u/index.m3u8
 #EXTINF:-1 tvg-id="ABCTVParaguay.py@SD" tvg-logo="https://i.imgur.com/OqfBMGy.png" group-title="Noticias",ABC-TV Paraguay (1080p)
 https://live2.eu-north-1a.cf.dmcdn.net/sec2(vig4KUMvzIpvL_0CGgNPG2QFE6DukpwGhRZzGj8aqOyedNaDjlOwv-qe03N1Bk5-7nB-V7Uv8gBwwy2h-0TCL_WRE6IWeUWiVcnYm587YcdKpnqvQZ3tYg9iGdqpySyX)/cloud/3/x9skr3m/d/live-720.m3u8#cell=lcf2-eu-north-1a
+#EXTINF:-1 tvg-id="AcentoTV.do@SD" tvg-logo="https://i.imgur.com/jhiZfHf.png" group-title="Noticias",Acento TV
+https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL2FjZW50b3R2MDEuc3RyZWFtcHJvbGl2ZS5jb20iLCJodHRwczovL2FjZW50b3R2MDEuc3RyZWFtcHJvbGl2ZS5jb20vaS9jcC9obHMvcGxheWVyLmh0bWwiXQ.MJDao4BhBMhFegJeFuTqDg/hls/live.m3u8
 #EXTINF:-1 tvg-id="AcustikTV.mx@SD" tvg-logo="https://i.imgur.com/dhiNIng.png" group-title="Noticias",Acustik TV
 https://s5.mexside.net:1936/clientetv/clientetv/playlist.m3u8
 #EXTINF:-1 tvg-id="ADN40.mx@SD" tvg-logo="https://i.imgur.com/Og17U9N.png" group-title="Noticias",ADN 40 (720p)
@@ -257,8 +263,6 @@ https://unlimited6-cl.dps.live/cm/cm.smil/playlist.m3u8
 https://tv.mediacp.eu:19360/cosmos/cosmos.m3u8
 #EXTINF:-1 tvg-id="CosmosTv.ar@SD" tvg-logo="https://i0.wp.com/fmcosmos.com/wp-content/uploads/2021/11/COSMOS-TV.png" group-title="Noticias",Cosmos Tv SD
 https://canaletaplus.com:3922/live/cosmoslive.m3u8
-#EXTINF:-1 tvg-id="CronicaTV.ar@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e8/Cr%C3%B3nica_TV_logotipo_%282008-2015%29.png" group-title="Noticias",Cronica TV (1080p)
-http://190.128.214.97:64333/play/a010/index.m3u8
 #EXTINF:-1 tvg-id="DeUltimoMinutoTV.do@SD" tvg-logo="https://i.imgur.com/6ML2z17.png" group-title="Noticias",De Ultimo Minuto TV
 https://soportedvb.click:3620/live/deultimominutomedialive.m3u8
 #EXTINF:-1 tvg-id="DNews.us@SD" tvg-logo="https://i.imgur.com/jF2BabI.png" group-title="Noticias",DNews (720p)
@@ -989,8 +993,6 @@ http://38.224.231.176:8000/play/a01j/index.m3u8
 http://38.134.250.110:8000/play/a003/index.m3u8
 #EXTINF:-1 tvg-id="DiscoveryKidsLatinAmerica.us@Mexico" tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Discovery_Kids_2021_2D_sin_wordmark.svg/960px-Discovery_Kids_2021_2D_sin_wordmark.svg.png" group-title="Infantiles",Discovery Kids Latin America Mexico (1080p)
 http://38.65.175.84:8000/play/a0an/index.m3u8
-#EXTINF:-1 tvg-id="DisneyChannel.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/2024_Disney_Channel_text_logo.svg/960px-2024_Disney_Channel_text_logo.svg.png" group-title="Infantiles",Disney Channel (United States) (720p) [Geo-blocked]
-http://212.5.144.156/disney/index.m3u8
 #EXTINF:-1 tvg-id="DisneyChannelLatinAmerica.ar@Panregional" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="Infantiles",Disney Channel Latin America (1080p)
 http://15.204.246.24:8080/DisneyHD/index.m3u8
 #EXTINF:-1 tvg-id="DisneyChannelLatinAmerica.ar@Center" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg" group-title="Infantiles",Disney Channel Latin America Center (1080p)
@@ -1059,8 +1061,6 @@ http://23.237.104.106:8080/USA_STARZ_FAMILY/index.m3u8
 https://ss2.tvrdomi.com:1936/tigueritostv/tigueritostv/playlist.m3u8
 #EXTINF:-1 tvg-id="Tooncast.us@SD" tvg-logo="https://i.imgur.com/3yXRbQy.png" group-title="Infantiles",Tooncast (1080p)
 http://38.134.250.110:8000/play/a01t/index.m3u8
-#EXTINF:-1 tvg-id="Tooncast.us@SouthAmerica" tvg-logo="https://i.imgur.com/3yXRbQy.png" group-title="Infantiles",Tooncast SouthAmerica (1080p)
-http://200.62.239.170:830/play/a07n/index.m3u8
 #EXTINF:-1 tvg-id="XtremaCartoons.ar@SD" tvg-logo="https://i.imgur.com/X2d8y4e.png" group-title="Infantiles",Xtrema Cartoons
 https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL3N0bXY2LnZveHR2aGQuY29tLmJyIiwiaHR0cHM6Ly94dHJlbWF0di5jb20vP3A9MTM5MCJd.2N-bUvWM6Y_jpZYm7GBVHA/xtremacartoons/xtremacartoons/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/bpskdis.png" group-title="Infantiles",BPS Kids
@@ -2119,6 +2119,8 @@ https://tv.frecuenciaf.com/live/envivo_1080p4000kbs/index.m3u8
 https://schurch1.bozztv.com/livecdn69/live/playlist.m3u8
 #EXTINF:-1 tvg-id="HopeChannelInterAmerica.us@SD" tvg-logo="https://i.imgur.com/wzvgAch.png" group-title="Religiosos",Hope Channel Inter-America
 https://jstre.am/live/jsl:EC0Mq0i6HJU.m3u8
+#EXTINF:-1 tvg-id="HopeChannelPROYECTOJA.cr@SD" tvg-logo="https://i.imgur.com/VDyf36C.png" group-title="Religiosos",Hope Channel PROYECTO JA (360p)
+https://edge1-us-miami.picarto.tv/stream/hls/golive%2bXSTUDIOCODE/0_1/index.m3u8
 #EXTINF:-1 tvg-id="HosannaVision.pa@SD" tvg-logo="https://i.imgur.com/v0tc51l.png" group-title="Religiosos",Hosanna Vision (720p) [Not 24/7]
 https://1206618505.rsc.cdn77.org/LS-ATL-59020-1/playlist.m3u8
 #EXTINF:-1 tvg-id="IeanJesusEcuador.ec@SD" tvg-logo="https://i.imgur.com/TyckDSV.png" group-title="Religiosos",IeanJesus Ecuador (720p)
@@ -2423,6 +2425,8 @@ https://stream.hostuis.com:19360/canatvdigital/canatvdigital.m3u8
 https://cdn.protvradiostream.com/canal4rd-1/ngrp:canal4rd-1_all/playlist.m3u8
 #EXTINF:-1 tvg-id="Canal70.do@HD" tvg-logo="https://imgur.com/LfcHA2d.jpg" group-title="Generales - República Dominicana",Canal 70 (720p)
 https://183.bozztv.com/giatv/giatv-cnal70tv/cnal70tv/playlist.m3u8
+#EXTINF:-1 tvg-id="CanaldelSol.do@SD" tvg-logo="https://i.imgur.com/gK0M1jB.png" group-title="Generales - República Dominicana",Canal del Sol (1080p) [Not 24/7]
+https://stream.canaldelsol.com/sol26/live_1080.m3u8
 #EXTINF:-1 tvg-id="CanangaTV.do@SD" tvg-logo="https://i.imgur.com/isXlMAh.png" group-title="Generales - República Dominicana",Cananga TV (720p)
 https://cdn.streamingcpanel.com:3545/live/canangatlive.m3u8
 #EXTINF:-1 tvg-id="CascaraTV.do@SD" tvg-logo="https://i.imgur.com/DEUR7mB.png" group-title="Generales - República Dominicana",Cascara TV (720p)
@@ -2437,8 +2441,6 @@ https://edge.essastream.com/codigotv/playlist.m3u8
 https://ss2.tvrdomi.com:1936/colometv/colometv/playlist.m3u8
 #EXTINF:-1 tvg-id="ConstanzaTV.do@SD" tvg-logo="https://i.imgur.com/4uV90gw.png" group-title="Generales - República Dominicana",ConstanzaTV (1080p) [Not 24/7]
 https://live20.bozztv.com/akamaissh101/ssh101/ctv8hd/playlist.m3u8
-#EXTINF:-1 tvg-id="Coral39.do@SD" tvg-logo="https://i.imgur.com/k6cv9A9.png" group-title="Generales - República Dominicana",Coral 39 (1080p) [Not 24/7]
-https://hls.tvabierta.net/hls/039.m3u8
 #EXTINF:-1 tvg-id="CromTV.do@SD" tvg-logo="https://i.imgur.com/jk1lkOV.png" group-title="Generales - República Dominicana",CromTV (1080p) [Not 24/7]
 https://fox.hostlagarto.com:8081/cromtv/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-id="CTTCanal49.do@SD" tvg-logo="https://i.imgur.com/jsi4qVb.jpg" group-title="Generales - República Dominicana",CTT Canal 49 (1080p) [Not 24/7]
@@ -2627,8 +2629,6 @@ https://stream.inliveserver.com:19360/8004/8004.m3u8
 https://ss2.tvrdomi.com:1936/vision3000/vision3000/playlist.m3u8
 #EXTINF:-1 tvg-id="XtraTv.do@HD" tvg-logo="https://xtratvrd.com/logo512.png" group-title="Generales - República Dominicana",Xtra Tv (720p) [Not 24/7]
 https://edge.essastream.com/xtratv/index.m3u8
-#EXTINF:-1 tvg-id="XtremoChannel.do@SD" tvg-logo="https://i.imgur.com/bvPh0Uq.png" group-title="Generales - República Dominicana",Xtremo Channel (720p) [Geo-blocked]
-https://ss2.tvrdomi.com:1936/xtremochannel/xtremochannel/playlist.m3u8
 #EXTINF:-1 tvg-id="ZASTV.do@HD" tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/4058-294x165-FFFFFF.jpg" group-title="Generales - República Dominicana",ZAS TV
 https://cloud5.zastv.net/hls/zastv.m3u8
 #EXTINF:-1 tvg-id="ZincNombreTV.do@HD" tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/3751-294x165-FFFFFF.jpg" group-title="Generales - República Dominicana",Zinc Nombre TV (720p) [Not 24/7]
