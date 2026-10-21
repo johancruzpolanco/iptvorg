@@ -97,6 +97,8 @@ https://eu1.servers10.com:8081/8128/index.m3u8
 https://5bf8041cb3fed.streamlock.net/PuertoTV/PuertoTV/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/elseis.png" group-title="DOMINICANOS",El Seis
 https://stream.elseis.do/canal6/live_480.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/end.png" group-title="DOMINICANOS",Elnuevodiario
+https://hls.tvabierta.net/hls/end.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/entelevision.png" group-title="DOMINICANOS",En Televisión
 https://stream.haislin.com/entelevision/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/extra86.png" group-title="DOMINICANOS",Extra 86 TV
@@ -165,8 +167,6 @@ https://ds.tvabierta.net/memfs/f09eae46-9675-467a-99cf-8361c9b466ed.m3u8
 https://soportedvb.click:3891/live/visionndvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/xtremochannel.png" group-title="DOMINICANOS",Xtremochannel
 https://ss2.tvrdomi.com:1936/xtremochannel/xtremochannel/.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/zonavision.jpeg" group-title="DOMINICANOS",Zona Visión
-https://ds.tvabierta.net/memfs/b295f254-7af9-45e4-bfc6-7e0bba41929d.m3u8
 #EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/88889716/248x140.png?type=color_onBlack" tvg-country="US" group-title="Noticias",Telemundo 47 (New York)
 https://d2kowtvrzzi7ps.cloudfront.net/11602/88889716/hls/master.m3u8?ads.xumo_channelId=88889716a&ads.xumo_streamId=88889716&ads.csid=nbc_us_PLATFORM_telemundonoticiasnoreste_ssai&ads.caid=TelemundoNoticiasNoreste&ads.appName=APP_NAME&ads.appVersion=APP_VERSION&ads._fw_app_bundle=APP_BUNDLE&ads._fw_content_category=IAB12&ads._fw_content_genre=news&ads._fw_content_language=es&ads._fw_content_rating=tv-g
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="Noticias",4Dmas Noticias TV (1080p) [Not 24/7]
@@ -267,8 +267,6 @@ http://72.1.184.5:8089/play/a05d/index.m3u8
 https://ecoteltv.streamseguro.com:5443/LiveApp/streams/streaming.m3u8
 #EXTINF:-1 tvg-id="ElCentroTV.cl@SD" tvg-logo="https://i.imgur.com/2KqGHvA.png" group-title="Noticias",El Centro TV (720p)
 https://v1.tustreaming.cl/diarioelcentrotv/index.m3u8
-#EXTINF:-1 tvg-id="ElNuevoDiarioTV.do@SD" tvg-logo="https://i.imgur.com/yjuTl6N.png" group-title="Noticias",El Nuevo Diario TV (480p)
-https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL251ZXZvZGlhcmlvMDEuc3RyZWFtcHJvbGl2ZS5jb20iLCJodHRwczovL251ZXZvZGlhcmlvMDEuc3RyZWFtcHJvbGl2ZS5jb20vaS9jcC9obHMvcGxheWVyLmh0bWwiXQ.SGWABypLLxxKIuzQqCQbWQ/hls/live.m3u8
 #EXTINF:-1 tvg-id="ElPinguinoTV.cl@SD" tvg-logo="https://i.imgur.com/ikEs9b8.png" group-title="Noticias",El Pinguino TV (720p)
 https://redirector.dps.live/hls/pinguinotv/playlist.m3u8
 #EXTINF:-1 tvg-id="EstrellaNews.us@SD" tvg-logo="https://i.imgur.com/HRrkhLq.png" group-title="Noticias",Estrella News (1080p)
@@ -2637,6 +2635,8 @@ https://edge.essastream.com/xtratv/index.m3u8
 https://cloud5.zastv.net/hls/zastv.m3u8
 #EXTINF:-1 tvg-id="ZincNombreTV.do@HD" tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/3751-294x165-FFFFFF.jpg" group-title="Generales - República Dominicana",Zinc Nombre TV (720p) [Not 24/7]
 https://5790d294af2dc.streamlock.net/zincnombretv/live/playlist.m3u8
+#EXTINF:-1 tvg-id="ZonavisionTV.do@SD" tvg-logo="https://imgur.com/B3PrrMH.png" group-title="Generales - República Dominicana",Zonavision TV [Not 24/7]
+https://ds.tvabierta.net/memfs/b295f254-7af9-45e4-bfc6-7e0bba41929d.m3u8
 #EXTINF:-1 tvg-id="5tv.ar@SD" tvg-logo="https://i.imgur.com/mSn7ACs.png" group-title="Generales - Argentina",5tv
 https://617c5175c970b.streamlock.net:4444/tvcinco/live1/playlist.m3u8
 #EXTINF:-1 tvg-id="ABTVBariloche.ar@SD" tvg-logo="https://i.imgur.com/l4TSfDr.png" group-title="Generales - Argentina",ABTV Bariloche
@@ -5279,6 +5279,8 @@ https://jmp2.uk/stvp-ES300033TI
 https://jmp2.uk/stvp-ESBC27000040I
 #EXTINF:-1 tvg-id="ES33000079W" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES33000079W_20260721T035618SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",RTVE Cocina
 https://jmp2.uk/stvp-ES33000079W
+#EXTINF:-1 tvg-id="ES1800003JN" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1800003JN_20261020T053446SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",BBC Food
+https://jmp2.uk/stvp-ES1800003JN
 #EXTINF:-1 tvg-id="ES300034BT" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES300034BT_20260818T050609SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Actualidad 360
 https://jmp2.uk/stvp-ES300034BT
 #EXTINF:-1 tvg-id="ES260000968" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES260000968_20260707T050947SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Euronews EN DIRECTO
