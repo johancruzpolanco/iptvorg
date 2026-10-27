@@ -10,9 +10,9 @@ https://tc13.johanecruzpolanco.workers.dev/live/55/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/007.png" group-title="DOMINICANOS",Antena 7
 https://ddycmnicl95kp.cloudfront.net/live/1odfmwd056bc/master.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/008.png" group-title="DOMINICANOS",Telemedios Canal 8
-https://ds.tvabierta.net/memfs/c64099fa-9b8a-4544-b0b1-40c7c0af49d2.m3u8
+https://hls.tvabierta.net/hls/008.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/009.png" group-title="DOMINICANOS",Color Visión
-https://cdn4.wind.do/streams/colorvision/colorvision_master.m3u8
+https://ds.tvabierta.net/memfs/2493e646-b24d-489b-8603-0879abb93123.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/010.png" group-title="DOMINICANOS",Teleantillas
 https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
