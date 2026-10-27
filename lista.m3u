@@ -5175,10 +5175,8 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/699763787cfe0ffadadd106f.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/63c6e37e636b7e0007ccb635.m3u8
 #EXTINF:-1 tvg-id="67a3b45a21af380008133aa4" tvg-logo="https://images.pluto.tv/channels/67a3b45a21af380008133aa4/colorLogoPNG.png" group-title="Pluto TV",Realmadrid TV
 https://tc13.johanecruzpolanco.workers.dev/pluto/67a3b45a21af380008133aa4.m3u8
-#EXTINF:-1 tvg-id="ES3300006QL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES3300006QL_20261026T043207SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",RTVE La Promesa
-https://jmp2.uk/stvp-ES3300006QL
-#EXTINF:-1 tvg-id="ES12000024R" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES12000024R_20261026T043153SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Historia y Vida
-https://jmp2.uk/stvp-ES12000024R
+#EXTINF:-1 tvg-id="ES2200003DA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2200003DA_20261026T043217SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Runtime Clásicos
+https://jmp2.uk/stvp-ES2200003DA
 #EXTINF:-1 tvg-id="ES400002P5" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES400002P5_20260707T050933SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Cuéntame cómo pasó
 https://jmp2.uk/stvp-ES400002P5
 #EXTINF:-1 tvg-id="ESAJ3800006TT" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESAJ3800006TT_20241106T142236SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",MTV Cribs
@@ -5239,6 +5237,8 @@ https://jmp2.uk/stvp-ES4300006I4
 https://jmp2.uk/stvp-ES4400002LI
 #EXTINF:-1 tvg-id="ES1700003C6" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1700003C6_20260915T035734SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",CJ ENM K-Novela en Español
 https://jmp2.uk/stvp-ES1700003C6
+#EXTINF:-1 tvg-id="ES3300006QL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES3300006QL_20261026T043207SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",RTVE La Promesa
+https://jmp2.uk/stvp-ES3300006QL
 #EXTINF:-1 tvg-id="ES33000036Q" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES33000036Q_20260901T054134SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",RTVE La Moderna
 https://jmp2.uk/stvp-ES33000036Q
 #EXTINF:-1 tvg-id="ES500005BP" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES500005BP_20250610T010520SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Águila Roja
@@ -5291,6 +5291,8 @@ https://jmp2.uk/stvp-ES2700002YP
 https://jmp2.uk/stvp-ES2800002MM
 #EXTINF:-1 tvg-id="ES1400002CJ" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1400002CJ_20250527T014616SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",CURIOSITY Now
 https://jmp2.uk/stvp-ES1400002CJ
+#EXTINF:-1 tvg-id="ES12000024R" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES12000024R_20261026T043153SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Historia y Vida
+https://jmp2.uk/stvp-ES12000024R
 #EXTINF:-1 tvg-id="ES1800005H2" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1800005H2_20261006T033919SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",BBC Historia
 https://jmp2.uk/stvp-ES1800005H2
 #EXTINF:-1 tvg-id="ESBD1400003QN" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD1400003QN_20260210T035856SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Royalworld - Nobleza y Dinastias
@@ -5305,6 +5307,8 @@ https://jmp2.uk/stvp-ESBA330004121
 https://jmp2.uk/stvp-ES1600003FF
 #EXTINF:-1 tvg-id="ESBC4700002TD" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4700002TD_20250722T005644SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Love the Planet
 https://jmp2.uk/stvp-ESBC4700002TD
+#EXTINF:-1 tvg-id="ES3100002GL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES3100002GL_20261026T043232SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Terra Mater Wild
+https://jmp2.uk/stvp-ES3100002GL
 #EXTINF:-1 tvg-id="ESBC170000388" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC170000388_20241022T051159SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",WaterBear
 https://jmp2.uk/stvp-ESBC170000388
 #EXTINF:-1 tvg-id="ES7000088K" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES7000088K_20260901T054146SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Space Live
@@ -5471,8 +5475,6 @@ https://jmp2.uk/stvp-ES260000700
 https://jmp2.uk/stvp-ESBC2700002LO
 #EXTINF:-1 tvg-id="ESBC2700003T8" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC2700003T8_20241022T050457SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Bigtime - Películas Gratis
 https://jmp2.uk/stvp-ESBC2700003T8
-#EXTINF:-1 tvg-id="ES2200003DA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2200003DA_20261026T043217SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Runtime Clásicos
-https://jmp2.uk/stvp-ES2200003DA
 #EXTINF:-1 tvg-id="ES500008IU" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES500008IU_20260901T054052SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",FreeTV Clásico
 https://jmp2.uk/stvp-ES500008IU
 #EXTINF:-1 tvg-id="ES2800001G7" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2800001G7_20250624T022314SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Planeta de Cine
