@@ -119,6 +119,8 @@ https://tv.wracanal10.com:3671/live/lunatvcanal53live.m3u8
 https://5790d294af2dc.streamlock.net/manaclar/manaclar/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/microvision.png" group-title="DOMINICANOS",Microvisión 10
 https://streaming.telecablecentral.com.do/live/MicroHD/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/noticiassin.jpg" group-title="DOMINICANOS",Noticiassin
+https://hls.tvabierta.net/hls/noticiassin.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/oepm.jpeg" group-title="DOMINICANOS",OEPM TV
 https://cnn.hostlagarto.com/oepmtelevision/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/palmartv.png" group-title="DOMINICANOS",Palmar TV
@@ -463,6 +465,8 @@ https://rtvelivestream.rtve.es/rtvesec/24h/24h_main_dvr.m3u8
 https://euronews-live-spa-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6571/bitok/eyJzdGlkIjoiMDA0YjY0NTMtYjY2MC00ZTZkLTlkNzEtMTk3YTM3ZDZhZWIxIiwibWt0IjoiZXMiLCJjaCI6NjU3MSwicHRmIjoxfQ==/26034/euronews-es.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/bloomberg.png" group-title="Noticias",Bloomberg
 https://liveprodusphoenixeast.akamaized.net/USPhx-HD/Channel-TX-USPhx-AWS-virginia-1/Source-USPhx-16k-1-s6lk2-BP-07-02-81ykIWnsMsg_live.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/t.png" group-title="Noticias",Noticiasahora
+https://us.tvabierta.net/memfs/1861d707-0f17-4d63-bb04-2fb60d1a2a86.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/f24.png" group-title="Noticias",France 24 Español
 https://live.france24.com/hls/live/2037220-b/F24_ES_HI_HLS/master_2300.m3u8
 #EXTINF:-1 tvg-id="AS3SportTV.ve@SD" tvg-logo="https://i.ibb.co/bRmGbsyV/A3-SPORTTV.jpg" group-title="Deportes",AS3 Sport TV (1080p)
@@ -639,7 +643,7 @@ https://d3d85c7qkywguj.cloudfront.net/scheduler/scheduleMaster/263.m3u8
 https://d3p1dbb9xrkmd5.cloudfront.net/scheduler/scheduleMaster/276.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/sports-first.jpg" group-title="Deportes",Sports First
 https://d4ddgdmj1cvnm.cloudfront.net/scheduler/scheduleMaster/409.m3u8
-#EXTINF:-1 tvg-logo="https://iptv-org.github.io/iptv/logos/SurfingPlus.us.png" group-title="Deportes",Surfing +
+#EXTINF:-1 tvg-logo="https://iptv-org.github.io/iptv/logos/SurfingPlus.us.png" group-title="Deportes",Surfing
 https://dr4jwhk0sty71.cloudfront.net/scheduler/scheduleMaster/444.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/bein-sports-xtra.png" group-title="Deportes",BeIN Sports XTRA
 https://hls.tvabierta.net/hls/bein.m3u8
@@ -647,7 +651,7 @@ https://hls.tvabierta.net/hls/bein.m3u8
 https://hls.tvabierta.net/hls/fueltv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/swerve-combat.png" group-title="Deportes",Swerve Combat
 https://linear-253.frequency.stream/dist/xumo/253/hls/master/playlist.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/speed-sport-1.jpg" group-title="Deportes",Speed Sport 1
+#EXTINF:-1 tvg-logo="https://tvabierta.net/speed-sport-1.jpg" group-title="Deportes",Speed Sport
 https://linear-599.frequency.stream/dist/stirr/599/hls/master/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/outdoor-america.png" group-title="Deportes",Outdoor America
 https://linear-600.frequency.stream/dist/xumo/600/hls/master/playlist.m3u8
