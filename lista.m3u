@@ -39,7 +39,7 @@ https://hls.tvabierta.net/hls/021.m3u8
 https://lbgo.bozztv.com/ssh101/ssh101/canalmulti24/chunks.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/023.png" group-title="DOMINICANOS",Telefuturo
 https://hls.tvabierta.net/hls/023.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/026.png" group-title="DOMINICANOS",Makao TV
+#EXTINF:-1 tvg-logo="https://tvabierta.net/026.png" group-title="DOMINICANOS",Makaoradio
 https://live.obslivestream.com/makaomux/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/027.png" group-title="DOMINICANOS",RNN
 https://2-fss-2.streamhoster.com/pl_138/206532-6829902-1/playlist.m3u8
@@ -109,6 +109,8 @@ https://stream.haislin.com/entelevision/index.m3u8
 https://video.streamerr.co/hls/sc23910f2cd/live.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/hainavision.png" group-title="DOMINICANOS",Haina Visión
 https://cdn.streamingcpanel.com:3447/live/hainavisionlive.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/hilandofino.png" group-title="DOMINICANOS",Hilandofino
+https://stream1.28tv.online/HilandoFinoTvcanal77/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/toratv.png" group-title="DOMINICANOS",La Tora TV
 https://tv.wracanal10.com:3012/live/latoratvlive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/latinostvny.jpg" group-title="DOMINICANOS",Latinos TV NY
@@ -139,6 +141,8 @@ https://radio67tv.tvabierta.net/hls/stream.m3u8
 https://livetv.305streamhd.com:3868/live/bagogeublive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/readyhd.png" group-title="DOMINICANOS",Ready TV Canal 6
 https://streaming.telecablecentral.com.do/ReadyTV/ReadyHD/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/rumba.png" group-title="DOMINICANOS",Rumba
+https://hls.tvabierta.net/hls/rumba.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/santacruztv.png" group-title="DOMINICANOS",Santa Cruz TV
 https://host.streamingnation.live/p/3345/hybrid/play.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/senaldigitaltv.png" group-title="DOMINICANOS",Señal Digital TV
@@ -2533,8 +2537,6 @@ https://fox.hostlagarto.com:8081/ghtelevision/tracks-v1a1/mono.m3u8
 https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwczovL3N0cmVhbS5jYXN0ci5jb20iLCJodHRwczovL3BsYXllci5jYXN0ci5jb20vIiwiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTVfNykgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzExMy4wLjAuMCBTYWZhcmkvNTM3LjM2Il0.hVlw5_JXyDGKmypzWx036Q/6809124f3f3e7e594c63cf15/live_8e5d0b50206a11f08690576446b3c082/index.fmp4.m3u8
 #EXTINF:-1 tvg-id="GlobalTV.do@SD" tvg-logo="https://i.imgur.com/1rQaROm.png" group-title="Generales - República Dominicana",Global TV (Dominican Republic) (720p) [Not 24/7]
 https://vtm1.msinteractiva.com./globaltv/globaltv/playlist.m3u8
-#EXTINF:-1 tvg-id="HilandoFinoTV.do@SD" tvg-logo="https://i.imgur.com/E7ta6g8.png" group-title="Generales - República Dominicana",Hilando Fino TV (1080p)
-https://hilandofinotv.essastream.com:3606/live/canalhilandofinotvlive.m3u8
 #EXTINF:-1 tvg-id="ImagenUniversalTV.do@SD" tvg-logo="https://i.imgur.com/DP6HmDV.png" group-title="Generales - República Dominicana",Imagen Universal TV
 https://imagenuniversaltv.net:3771/live/iutvlive.m3u8
 #EXTINF:-1 tvg-id="InformeTV.do@HD" tvg-logo="https://imgur.com/TmJaXrO.jpg" group-title="Generales - República Dominicana",Informe TV (1080p) [Not 24/7]
@@ -4097,6 +4099,8 @@ https://live-utv.unah.edu.hn/web/salida.m3u8
 https://d3q93l5bumjyoq.cloudfront.net/index.m3u8
 #EXTINF:-1 tvg-id="WaldivisionInternacional.hn@SD" tvg-logo="https://i.imgur.com/NB8pfpb.png" group-title="Generales - Honduras",Waldivision Internacional
 https://media.streambrothers.com:19360/8308/8308.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/tentv.png" tvg-country="HN" group-title="Generales - Honduras",Tentv
+https://amixtv.com/ten10/index.fmp4.m3u8
 #EXTINF:-1 tvg-id="8NTV.mx@SD" tvg-logo="https://i.imgur.com/7ecgGIG.png" group-title="Generales - México",8NTV (1080p)
 https://60417ddeaf0d9.streamlock.net/ntv/videontv/playlist.m3u8
 #EXTINF:-1 tvg-id="15TV.mx@SD" tvg-logo="https://i.imgur.com/CZ8LKmA.png" group-title="Generales - México",15TV
