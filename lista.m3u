@@ -14,7 +14,7 @@ https://hls.tvabierta.net/hls/008.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/009.png" group-title="DOMINICANOS",Color Visión
 https://ds.tvabierta.net/memfs/2493e646-b24d-489b-8603-0879abb93123.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/010.png" group-title="DOMINICANOS",Teleantillas
-http://45.171.108.253:8888/TELEANTILLAS/index.m3u8
+https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
 https://hls.tvabierta.net/hls/011.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
@@ -136,7 +136,7 @@ https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/puntacanatv.png" group-title="DOMINICANOS",Punta Cana TV
 https://cdnfox.hostlagarto.com/puntacanatv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/retv.png" group-title="DOMINICANOS",R&E TV
-https://cloud2.streaminglivehd.com:1936/8072/8072/playlist.m3u8
+https://tv2.bitstreaming.net:8443/hls/r-e-tv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/radio67tv.jpg" group-title="DOMINICANOS",Radio 67 TV
 https://radio67tv.tvabierta.net/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/emanuel.png" group-title="DOMINICANOS",Radio Emanuel TV
@@ -5009,6 +5009,8 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/63d2c140c111bc0008cb890b.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/652e922db4b047000825f975.m3u8
 #EXTINF:-1 tvg-id="673f7446030a2c0008231bc3" tvg-logo="https://images.pluto.tv/channels/673f7446030a2c0008231bc3/colorLogoPNG.png" group-title="Pluto TV",C4 en Alerta
 https://tc13.johanecruzpolanco.workers.dev/pluto/673f7446030a2c0008231bc3.m3u8
+#EXTINF:-1 tvg-id="63c6e37e636b7e0007ccb635" tvg-logo="https://images.pluto.tv/channels/63c6e37e636b7e0007ccb635/colorLogoPNG_1777492822828.png" group-title="Pluto TV",Pluto TV Fútbol
+https://tc13.johanecruzpolanco.workers.dev/pluto/63c6e37e636b7e0007ccb635.m3u8
 #EXTINF:-1 tvg-id="5dcde07af1c85b0009b18651" tvg-logo="https://images.pluto.tv/channels/5dcde07af1c85b0009b18651/colorLogoPNG_1766080575034.png" group-title="Pluto TV",Pluto TV Deportes
 https://tc13.johanecruzpolanco.workers.dev/pluto/5dcde07af1c85b0009b18651.m3u8
 #EXTINF:-1 tvg-id="65cf60d166eec80008724e6f" tvg-logo="https://images.pluto.tv/channels/65cf60d166eec80008724e6f/colorLogoPNG.png" group-title="Pluto TV",Azteca Deportes Premium
@@ -5167,8 +5169,6 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/6868152657543d1f8be4ece3.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/5f85ca40eda1b10007b967cd.m3u8
 #EXTINF:-1 tvg-id="699763787cfe0ffadadd106f" tvg-logo="https://images.pluto.tv/channels/699763787cfe0ffadadd106f/colorLogoPNG_1774993772357.png" group-title="Pluto TV",Mi Gorda Bella
 https://tc13.johanecruzpolanco.workers.dev/pluto/699763787cfe0ffadadd106f.m3u8
-#EXTINF:-1 tvg-id="63c6e37e636b7e0007ccb635" tvg-logo="https://images.pluto.tv/channels/63c6e37e636b7e0007ccb635/colorLogoPNG_1777492822828.png" group-title="Pluto TV",Pluto TV Fútbol
-https://tc13.johanecruzpolanco.workers.dev/pluto/63c6e37e636b7e0007ccb635.m3u8
 #EXTINF:-1 tvg-id="67a3b45a21af380008133aa4" tvg-logo="https://images.pluto.tv/channels/67a3b45a21af380008133aa4/colorLogoPNG.png" group-title="Pluto TV",Realmadrid TV
 https://tc13.johanecruzpolanco.workers.dev/pluto/67a3b45a21af380008133aa4.m3u8
 #EXTINF:-1 tvg-id="ES2200003DA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2200003DA_20261026T043217SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Runtime Clásicos
