@@ -136,7 +136,7 @@ https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/puntacanatv.png" group-title="DOMINICANOS",Punta Cana TV
 https://cdnfox.hostlagarto.com/puntacanatv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/retv.png" group-title="DOMINICANOS",R&E TV
-https://cloud2.streaminglivehd.com:1936/8072/8072/playlist.m3u8
+https://tv2.bitstreaming.net:8443/hls/r-e-tv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/radio67tv.jpg" group-title="DOMINICANOS",Radio 67 TV
 https://radio67tv.tvabierta.net/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/emanuel.png" group-title="DOMINICANOS",Radio Emanuel TV
@@ -5069,7 +5069,7 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/652e91fd6208700008dcaf7b.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/68224482c5d53e1351aaf2f2.m3u8
 #EXTINF:-1 tvg-id="68ba0910e1d03fec7d5c084f" tvg-logo="https://images.pluto.tv/channels/68ba0910e1d03fec7d5c084f/colorLogoPNG_1760471497704.png" group-title="Pluto TV",Al Ritmo del Jaripeo
 https://tc13.johanecruzpolanco.workers.dev/pluto/68ba0910e1d03fec7d5c084f.m3u8
-#EXTINF:-1 tvg-id="68b88712e777774982269ce9" tvg-logo="https://images.pluto.tv/channels/68b88712e777774982269ce9/colorLogoPNG_1759784097851.png" group-title="Pluto TV",Tastemade Viajes
+#EXTINF:-1 tvg-id="68b88712e777774982269ce9" tvg-logo="https://images.pluto.tv/channels/68b88712e777774982269ce9/colorLogoPNG_1793803234766.png" group-title="Pluto TV",Tastemade Home & Travel
 https://tc13.johanecruzpolanco.workers.dev/pluto/68b88712e777774982269ce9.m3u8
 #EXTINF:-1 tvg-id="69fcdc73488e575cff213adc" tvg-logo="https://images.pluto.tv/channels/69fcdc73488e575cff213adc/colorLogoPNG_1778601459828.png" group-title="Pluto TV",Hermanos a la Obra
 https://tc13.johanecruzpolanco.workers.dev/pluto/69fcdc73488e575cff213adc.m3u8
@@ -5077,7 +5077,7 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/69fcdc73488e575cff213adc.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/64fb1f6e6625510008c00848.m3u8
 #EXTINF:-1 tvg-id="5dcde0657444a40009cd2422" tvg-logo="https://images.pluto.tv/channels/5dcde0657444a40009cd2422/colorLogoPNG_1778796418782.png" group-title="Pluto TV",Pluto TV Estilo de Vida
 https://tc13.johanecruzpolanco.workers.dev/pluto/5dcde0657444a40009cd2422.m3u8
-#EXTINF:-1 tvg-id="5f998c1fc54853000797bacd" tvg-logo="https://images.pluto.tv/channels/5f998c1fc54853000797bacd/colorLogoPNG_1730999716441.png" group-title="Pluto TV",Tastemade
+#EXTINF:-1 tvg-id="5f998c1fc54853000797bacd" tvg-logo="https://images.pluto.tv/channels/5f998c1fc54853000797bacd/colorLogoPNG_1793802456063.png" group-title="Pluto TV",Tastemade Food
 https://tc13.johanecruzpolanco.workers.dev/pluto/5f998c1fc54853000797bacd.m3u8
 #EXTINF:-1 tvg-id="6894fc3f66f164e402f4fd14" tvg-logo="https://images.pluto.tv/channels/6894fc3f66f164e402f4fd14/colorLogoPNG_1756447016242.png" group-title="Pluto TV",Dulce by elGourmet
 https://tc13.johanecruzpolanco.workers.dev/pluto/6894fc3f66f164e402f4fd14.m3u8
@@ -5347,7 +5347,7 @@ https://jmp2.uk/stvp-ES20000065W
 https://jmp2.uk/stvp-ES4300004JP
 #EXTINF:-1 tvg-id="ES3200003OC" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES3200003OC_20251230T030907SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",DFB Play TV
 https://jmp2.uk/stvp-ES3200003OC
-#EXTINF:-1 tvg-id="ES1100001MT" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1100001MT_20261102T070306SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Top Barça
+#EXTINF:-1 tvg-id="ES1100001MT" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1100001MT_20261102T070306SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Barça 24H
 https://jmp2.uk/stvp-ES1100001MT
 #EXTINF:-1 tvg-id="ESBC2700009B4" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC2700009B4_20251028T011349SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",FIFA+
 https://jmp2.uk/stvp-ESBC2700009B4
@@ -5435,7 +5435,7 @@ https://jmp2.uk/stvp-ESAJ38000046O
 https://jmp2.uk/stvp-ESBA3300028OE
 #EXTINF:-1 tvg-id="ES700004C8" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES700004C8_20260127T040120SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Runtime Familia
 https://jmp2.uk/stvp-ES700004C8
-#EXTINF:-1 tvg-id="ES260001081" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES260001081_20261102T070254SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",En Familia - Rakuten TV
+#EXTINF:-1 tvg-id="ES260001081" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES260001081_20261102T070254SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",100% Navidad - Rakuten TV
 https://jmp2.uk/stvp-ES260001081
 #EXTINF:-1 tvg-id="ESBC1700004PX" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC1700004PX_20250715T004332SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Trailers
 https://jmp2.uk/stvp-ESBC1700004PX
@@ -5481,7 +5481,7 @@ https://jmp2.uk/stvp-ESBC40000248
 https://jmp2.uk/stvp-ES500004NO
 #EXTINF:-1 tvg-id="ES2600004BD" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2600004BD_20260707T050928SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Acción - Rakuten TV
 https://jmp2.uk/stvp-ES2600004BD
-#EXTINF:-1 tvg-id="ES4100002WB" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES4100002WB_20261102T070300SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Halloween - Rakuten TV
+#EXTINF:-1 tvg-id="ES4100002WB" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES4100002WB_20261102T070300SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Thrillers - Rakuten TV
 https://jmp2.uk/stvp-ES4100002WB
 #EXTINF:-1 tvg-id="ESBD80000288" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD80000288_20260915T035850SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Runtime Acción
 https://jmp2.uk/stvp-ESBD80000288
