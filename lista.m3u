@@ -58,7 +58,7 @@ https://hls.tvabierta.net/hls/039.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/042.png" group-title="DOMINICANOS",Romana TV Canal 42
 https://videoserver.tmcreativos.com:19360/cvmhbyrcat/cvmhbyrcat.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/teleimpacto.png" group-title="DOMINICANOS",Teleimpacto
-https://hls.tvabierta.net/hls/052.m3u8
+https://vpss2003.streamprolive.com/hls/live.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/a7tv.png" group-title="DOMINICANOS",A7 TV
 https://183.bozztv.com/ssh101/ssh101/a7tvjarabacoa/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/adoramtv.png" group-title="DOMINICANOS",Adoram TV
@@ -136,7 +136,7 @@ https://5790d294af2dc.streamlock.net/pulsovision/pulsovision/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/puntacanatv.png" group-title="DOMINICANOS",Punta Cana TV
 https://cdnfox.hostlagarto.com/puntacanatv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/retv.png" group-title="DOMINICANOS",R&E TV
-https://cloud2.streaminglivehd.com:1936/8072/8072/playlist.m3u8
+https://tv2.bitstreaming.net:8443/hls/r-e-tv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/radio67tv.jpg" group-title="DOMINICANOS",Radio 67 TV
 https://radio67tv.tvabierta.net/hls/stream.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/emanuel.png" group-title="DOMINICANOS",Radio Emanuel TV
@@ -173,6 +173,8 @@ https://cdnfox.hostlagarto.com/telenonisa43/tracks-v1a1/mono.m3u8
 https://edge.essastream.com/televisiondeleste/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tvm.png" group-title="DOMINICANOS",TV Montaña Canal 10
 https://lbgo.bozztv.com/ssh101/ssh101/tvmontana10tv/chunks.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/televiaducto.png" group-title="DOMINICANOS",Tv3
+https://stream.televiaducto.com.do/secure-hls/canal3.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tvo.png" group-title="DOMINICANOS",TVO
 https://videoserver.tmcreativos.com:19360/gkemzxrrmr/gkemzxrrmr.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tvplata.jpg" group-title="DOMINICANOS",Tvplata
