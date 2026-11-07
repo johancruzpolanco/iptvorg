@@ -17,8 +17,6 @@ https://hls.tvabierta.net/hls/009.m3u8
 https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
 https://hls.tvabierta.net/hls/011.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
-https://hls.tvabierta.net/hls/012.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/012.png" group-title="DOMINICANOS",Ztv
 https://hls.tvabierta.net/hls/ztv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="DOMINICANOS",Telecentro 13
@@ -90,7 +88,7 @@ https://us.tvabierta.net/memfs/dd8e18b9-deca-4480-8c94-31e63296f593.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/ctnmas.jpg" group-title="DOMINICANOS",CNT Más TV
 https://hls.tvabierta.net/hls/ctnmas.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/cocotv.png" group-title="DOMINICANOS",Coco TV
-https://edge.essastream.com/canalcocotv/playlist.m3u8
+https://us.tvabierta.net/memfs/d583800b-7949-4b65-9709-44f4d66cf593.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/cotubanamatv.png" group-title="DOMINICANOS",Cotubanamá TV
 https://hls.tvabierta.net/hls/cotubanamatv.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/ctt.png" group-title="DOMINICANOS",Ctt49
@@ -169,6 +167,10 @@ https://cdnfox.hostlagarto.com/telenord12/index.m3u8
 https://cdnfox.hostlagarto.com/telenord8/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telenovisa.png" group-title="DOMINICANOS",Telenovisa
 https://cdnfox.hostlagarto.com/telenonisa43/tracks-v1a1/mono.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
+https://us.tvabierta.net/memfs/c652f360-0eae-4e5f-afe0-277e6d5e2f16.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/ENw9wgk.png" group-title="DOMINICANOS",Televidard
+https://cdnfox.hostlagarto.com/televida/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/televisiondeleste.png" group-title="DOMINICANOS",Televisión del Este
 https://hls.tvabierta.net/hls/televisiondeleste.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tvm.png" group-title="DOMINICANOS",TV Montaña Canal 10
@@ -192,7 +194,7 @@ https://ds.tvabierta.net/memfs/c8e72669-4249-4195-a8a0-3adfca56df46.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/xtremochannel.png" group-title="DOMINICANOS",Xtremochannel
 https://ss2.tvrdomi.com:1936/xtremochannel/xtremochannel/.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/zol.png" group-title="DOMINICANOS",Zol TV
-https://hls.tvabierta.net/hls/zol.m3u8
+https://us.tvabierta.net/memfs/0ba2eba3-9f49-4940-92aa-635085797e47.m3u8
 #EXTINF:-1 tvg-logo="https://image.xumo.com/v1/channels/channel/88889716/248x140.png?type=color_onBlack" tvg-country="US" group-title="Noticias",Telemundo 47 (New York)
 https://d2kowtvrzzi7ps.cloudfront.net/11602/88889716/hls/master.m3u8?ads.xumo_channelId=88889716a&ads.xumo_streamId=88889716&ads.csid=nbc_us_PLATFORM_telemundonoticiasnoreste_ssai&ads.caid=TelemundoNoticiasNoreste&ads.appName=APP_NAME&ads.appVersion=APP_VERSION&ads._fw_app_bundle=APP_BUNDLE&ads._fw_content_category=IAB12&ads._fw_content_genre=news&ads._fw_content_language=es&ads._fw_content_rating=tv-g
 #EXTINF:-1 tvg-id="4DmasNoticiasTV.py@SD" tvg-logo="https://i.ibb.co/1fb5BtN/unnamed.png" group-title="Noticias",4Dmas Noticias TV (1080p) [Not 24/7]
@@ -2369,8 +2371,6 @@ http://200.122.223.13:55000/play/a01n/index.m3u8
 https://ss2.tvrdomi.com:1936/telebendicion/telebendicion/playlist.m3u8
 #EXTINF:-1 tvg-id="Televida.cl@SD" tvg-logo="https://i.imgur.com/bmNA8hq.png" group-title="Religiosos",Televida (Chile) (1080p)
 https://tls-cl.cdnz.cl/televida/live/playlist.m3u8
-#EXTINF:-1 tvg-id="Televida.do@SD" tvg-logo="https://i.imgur.com/S8Zdn41.png" group-title="Religiosos",Televida (Dominican Republic) (1080p) [Not 24/7]
-https://cnn.hostlagarto.com/televida/playlist.m3u8
 #EXTINF:-1 tvg-id="TelevisionConsciente.es@SD" tvg-logo="https://i.imgur.com/6QVHKPw.png" group-title="Religiosos",Television Consciente (1080p)
 https://cdn318.fractalmedia.es/318/live/hls/tvc/master.m3u8
 #EXTINF:-1 tvg-id="TeveVidaNetwork.us@SD" tvg-logo="https://i.imgur.com/lCpf5P1.png" group-title="Religiosos",Teve Vida Network (480p) [Not 24/7]
@@ -4057,6 +4057,8 @@ https://cdn.streamhispanatv.net:3670/live/lunavisionlive.m3u8
 https://cdn.streamhispanatv.net:3989/live/tvolive.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/regional3.png" tvg-country="GT" group-title="Generales - Guatemala",Regional3
 https://cdn.streamhispanatv.net:3833/live/canal3regionallive.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/ccdtv.png" tvg-country="GT" group-title="Generales - Guatemala",Ccdtv
+https://cdn.oktvus.com/ConectadoConDios/index.m3u8
 #EXTINF:-1 tvg-id="AlfaOmegaVision.hn@SD" tvg-logo="https://i.imgur.com/4BSKCQT.png" group-title="Generales - Honduras",Alfa & Omega Vision (480p) [Not 24/7]
 https://srv.panelcast.net/dorian/dorian/playlist.m3u8
 #EXTINF:-1 tvg-id="AlsaciasTelevision.hn@SD" tvg-logo="https://i.imgur.com/SbuD1UW.png" group-title="Generales - Honduras",Alsacias Television (720p)
