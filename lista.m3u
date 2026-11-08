@@ -10,7 +10,7 @@ https://tc13.johanecruzpolanco.workers.dev/live/55/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/007.png" group-title="DOMINICANOS",Antena 7
 https://ddycmnicl95kp.cloudfront.net/live/1odfmwd056bc/master.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/008.png" group-title="DOMINICANOS",Telemedios Canal 8
-https://hls.tvabierta.net/hls/008.m3u8
+https://us.tvabierta.net/memfs/8c8c6f31-9a29-431e-b3c3-d4675498e53e.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/009.png" group-title="DOMINICANOS",Color Visión
 https://hls.tvabierta.net/hls/009.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/010.png" group-title="DOMINICANOS",Teleantillas
@@ -469,6 +469,8 @@ https://rtvelivestream.rtve.es/rtvesec/24h/24h_main_dvr.m3u8
 https://euronews-live-spa-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6571/bitok/eyJzdGlkIjoiMDA0YjY0NTMtYjY2MC00ZTZkLTlkNzEtMTk3YTM3ZDZhZWIxIiwibWt0IjoiZXMiLCJjaCI6NjU3MSwicHRmIjoxfQ==/26034/euronews-es.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/bloomberg.png" group-title="Noticias",Bloomberg
 https://liveprodusphoenixeast.akamaized.net/USPhx-HD/Channel-TX-USPhx-AWS-virginia-1/Source-USPhx-16k-1-s6lk2-BP-07-02-81ykIWnsMsg_live.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/meganoticias.jpg" tvg-country="CL" group-title="Noticias",Meganoticias
+https://hls.tvabierta.net/hls/meganoticias.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/t.png" group-title="Noticias",Noticiasahora
 https://hls.tvabierta.net/hls/noticiasahora.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/f24.png" group-title="Noticias",France 24 Español
@@ -1899,6 +1901,8 @@ https://lotus.stingray.com/manifest/ose-317ads-montreal/samsungtvplus/master.m3u
 https://qwest-jazz-lg.amagi.tv/hls/amagi_hls_data_qwestAAAA-qwest-jazz-lg/CDN/master.m3u8?ads.deviceid=[DEVICE_ID]&ads.ifa=[IFA]&ads.ifatype=[IFA_TYPE]&ads.lat=[LMT]&ads.donotsell=[DNS]&ads.ua=[UA]&ads.ip=[IP]&ads.gdpr=[GDPR]&ads.gdprconsent=[GDPR_CONSENT]&ads.country=[COUNTRY]&ads.usprivacy=[US_PRIVACY]&ads.appstoreurl=[APP_STOREURL]&ads.bundleid=[APP_BUNDLE]&ads.appname=[APP_NAME]&ads.appversion=[APP_VERSION]&ads.devicetype=[DEVICE_TYPE]&ads.devicemake=[DEVICE_MAKE]&ads.devicemodel=[DEVICE_MODEL]&ads.coppa=0&ads.targetad=[TARGETAD_ALLOWED]&fck=[FCK]&viewsize=[VIEWSIZE]&givn=[NONCE]
 #EXTINF:-1 tvg-logo="https://tvabierta.net/solmusica.png" group-title="Música",979 SOL MÚSICA
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=12865&avod=1&coppa=0&td=6&is_lat=[LMT]&dnt=[DNS]&us_privacy=[US_PRIVACY]&did=[DEVICE_ID]&ip=[IP]&ua=[UA]&ifa_type=[IFA_TYPE]&app_bundle=[APP_BUNDLE]&app_store_url=[APP_STOREURL]&app_name=[APP_NAME]&custom_targeting=html5&custom_4=lg_channels_sp&player_height=720&player_width=1280&content_channel=lg_channels&content_dist_name=lg_channels&device_make=[DEVICE_MAKE]&device_model=[DEVICE_MODEL]&device_os=html5&consent=[GDPR_CONSENT]&gdpr=[GDPR]&gender=not_specified&yob=0&livestream=1&custom_param_0=[DEVICE_MODEL]&custom_param_1=tv&custom_param_2=[DEVICE_MAKE]&custom_param_3=[DEVICE_ID]&custom_param_4=lg_channels&custom_param_5=html5&fck=[FCK]&viewsize=[VIEWSIZE]&nonce=[NONCE]
+#EXTINF:-1 tvg-logo="https://tvabierta.net/telemedellin.png" group-title="Música",Telemedellin2
+https://live20.bozztv.com/akamaissh101/ssh101/telemed2/playlist.m3u8
 #EXTINF:-1 tvg-id="13C.cl@SD" tvg-logo="https://i.imgur.com/Zfe2f5j.png" group-title="Cultura y educación",13C (1080p)
 https://origin.dpsgo.com/ssai/event/GI-9cp_bT8KcerLpZwkuhw/master.m3u8
 #EXTINF:-1 tvg-id="AMP2.us@SD" tvg-logo="https://i.imgur.com/nfur3FR.png" group-title="Cultura y educación",AMP 2 (720p)
@@ -4807,6 +4811,8 @@ https://5bf8041cb3fed.streamlock.net/mastvpr/mastvpr/playlist.m3u8
 https://channel01-onlymex.akamaized.net/hls/live/2022749/event01/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/kanald.png" group-title="Generales - Otros países",Kanal D
 https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-samsungspain/playlist.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/ntn24.png" group-title="Generales - Otros países",Ntn24yt
+https://hls.tvabierta.net/hls/ntn24yt.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tpr.png" group-title="Generales - Otros países",Telemundo PR
 https://ds.tvabierta.net/memfs/9e44e8e0-2162-4ad5-843c-9175a5edf483.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/u.png" group-title="Generales - Otros países",Univision Chicago
