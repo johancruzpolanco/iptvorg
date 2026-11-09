@@ -17,6 +17,8 @@ https://hls.tvabierta.net/hls/009.m3u8
 https://hls.tvabierta.net/hls/010.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/011.png" group-title="DOMINICANOS",Telesistema 11
 https://hls.tvabierta.net/hls/011.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
+https://hls.tvabierta.net/hls/012.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/012.png" group-title="DOMINICANOS",Ztv
 https://hls.tvabierta.net/hls/ztv.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/F17zNXh.png" group-title="DOMINICANOS",Telecentro 13
@@ -169,8 +171,6 @@ https://cdnfox.hostlagarto.com/telenord12/index.m3u8
 https://cdnfox.hostlagarto.com/telenord8/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telenovisa.png" group-title="DOMINICANOS",Telenovisa
 https://cdnfox.hostlagarto.com/telenonisa43/tracks-v1a1/mono.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/teleunion.png" group-title="DOMINICANOS",Teleunión
-https://tc13.johanecruzpolanco.workers.dev/h/WyJodHRwOi8vc2VydmVyMmdydXBvY2FtLmNvbToxOTQ1IiwiaHR0cHM6Ly90ZWxldW5pb250dnJkLmNvbS9wb3J0YWwvIl0.1SMrzomATJcKjAEg3Gxokw/teleunion/TU/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/ENw9wgk.png" group-title="DOMINICANOS",Televidard
 https://cdnfox.hostlagarto.com/televida/tracks-v1a1/mono.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/televisiondeleste.png" group-title="DOMINICANOS",Televisión del Este
@@ -1168,7 +1168,9 @@ https://svs.itworkscdn.net/sat7kidslive/sat7kids.smil/playlist_dvr.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/zoomoo.png" group-title="Infantiles",Zoomoo
 https://zoomoo-samsungau.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/toongoodles.png" group-title="Infantiles",Toongoodles
-https://us.tvabierta.net/memfs/aec972e6-8f46-4687-9101-5e59c96d57f6.m3u8
+https://hls.tvabierta.net/hls/toongoodles.m3u8
+#EXTINF:-1 tvg-logo="https://tvabierta.net/toongoodles.png" group-title="Infantiles",Toongoodles2
+https://stream-us-east-1.getpublica.com/playlist.m3u8?network_id=514
 #EXTINF:-1 tvg-id="6WiseTv.us@SD" tvg-logo="" group-title="Entretenimiento",6 Wise Tv (720p)
 https://edge.enhdtv.com/8150/index.m3u8
 #EXTINF:-1 tvg-id="13E.cl@SD" tvg-logo="https://i.imgur.com/utI1tJV.png" group-title="Entretenimiento",13E (720p)
@@ -3478,7 +3480,7 @@ http://tvn.obix.tv:1935/TVN/CH14.stream_720p/playlist.m3u8
 #EXTINF:-1 tvg-id="ZurquiTV.cr@SD" tvg-logo="https://i.imgur.com/XvktUBB.jpg" group-title="Generales - Costa Rica",Zurqui TV (720p)
 https://videoserver.tmcreativos.com:19360/gesfnvpamn/gesfnvpamn.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/sinart.jpeg" tvg-country="CR" group-title="Generales - Costa Rica",Sinart
-https://us.tvabierta.net/memfs/01f1d395-6010-4537-8f32-194c2a22e200.m3u8
+https://hls.tvabierta.net/hls/sinart.m3u8
 #EXTINF:-1 tvg-id="AmericaEstereoGuayaquil.ec@SD" tvg-logo="https://i.imgur.com/gUqKymM.png" group-title="Generales - Ecuador",America Estereo Guayaquil (360p)
 https://video.makrodigital.com/americaestereoguayaquil/americaestereoguayaquil/playlist.m3u8
 #EXTINF:-1 tvg-id="AmericaEstereoIbarra.ec@SD" tvg-logo="https://i.imgur.com/gUqKymM.png" group-title="Generales - Ecuador",America Estereo Ibarra (720p)
@@ -4817,6 +4819,8 @@ https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01602-themahqfrance-vivekanald-sams
 https://hls.tvabierta.net/hls/ntn24yt.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/tpr.png" group-title="Generales - Otros países",Telemundo PR
 https://ds.tvabierta.net/memfs/9e44e8e0-2162-4ad5-843c-9175a5edf483.m3u8
+#EXTINF:-1 tvg-logo="https://i.imgur.com/wHOlbJl.png" group-title="Generales - Otros países",Univisión
+https://hls.tvabierta.net/hls/univision.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/u.png" group-title="Generales - Otros países",Univision Chicago
 https://linear-254.frequency.stream/mt/studio/254/hls/master/playlist_1280x720.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/ejtv.png" group-title="Generales - Otros países",EJTV
@@ -4891,10 +4895,16 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/65662f8a2c46f300088a84cc.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/66b3af1c3a4ad200081c7d03.m3u8
 #EXTINF:-1 tvg-id="6a904349f9b764ea89e9a92a" tvg-logo="https://images.pluto.tv/channels/6a904349f9b764ea89e9a92a/colorLogoPNG_1790171616604.png" group-title="Pluto TV",Pluto TV Series de Terror y Suspenso
 https://tc13.johanecruzpolanco.workers.dev/pluto/6a904349f9b764ea89e9a92a.m3u8
+#EXTINF:-1 tvg-id="65662c1357fe4a00086b3eb1" tvg-logo="https://images.pluto.tv/channels/65662c1357fe4a00086b3eb1/colorLogoPNG_1790011926686.png" group-title="Pluto TV",Pluto TV Series de Aventura y Fantasía
+https://tc13.johanecruzpolanco.workers.dev/pluto/65662c1357fe4a00086b3eb1.m3u8
 #EXTINF:-1 tvg-id="5dcde1317578340009b751d0" tvg-logo="https://images.pluto.tv/channels/5dcde1317578340009b751d0/colorLogoPNG.png" group-title="Pluto TV",Pluto TV Series
 https://tc13.johanecruzpolanco.workers.dev/pluto/5dcde1317578340009b751d0.m3u8
+#EXTINF:-1 tvg-id="6aa7f3a7af45eb18db141eee" tvg-logo="https://images.pluto.tv/channels/6aa7f3a7af45eb18db141eee/colorLogoPNG_1789392312820.png" group-title="Pluto TV",Medium
+https://tc13.johanecruzpolanco.workers.dev/pluto/6aa7f3a7af45eb18db141eee.m3u8
 #EXTINF:-1 tvg-id="655f626d57fe4a00085c7c3e" tvg-logo="https://images.pluto.tv/channels/655f626d57fe4a00085c7c3e/colorLogoPNG.png" group-title="Pluto TV",Pluto TV Series de Comedia
 https://tc13.johanecruzpolanco.workers.dev/pluto/655f626d57fe4a00085c7c3e.m3u8
+#EXTINF:-1 tvg-id="6aa2faa150694e8e54750880" tvg-logo="https://images.pluto.tv/channels/6aa2faa150694e8e54750880/colorLogoPNG_1789066693028.png" group-title="Pluto TV",The King of Queens
+https://tc13.johanecruzpolanco.workers.dev/pluto/6aa2faa150694e8e54750880.m3u8
 #EXTINF:-1 tvg-id="655f636d954b020008c93299" tvg-logo="https://images.pluto.tv/channels/655f636d954b020008c93299/colorLogoPNG_1765466171343.png" group-title="Pluto TV",Pluto TV Series de Drama
 https://tc13.johanecruzpolanco.workers.dev/pluto/655f636d954b020008c93299.m3u8
 #EXTINF:-1 tvg-id="6806d570c178637410ae4962" tvg-logo="https://images.pluto.tv/channels/6806d570c178637410ae4962/colorLogoPNG_1765466496602.png" group-title="Pluto TV",Pluto TV Series de Otros Continentes
@@ -4913,6 +4923,8 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/6a7b453df5f14c2045f5f00b.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/5dd837642c6e9300098ad484.m3u8
 #EXTINF:-1 tvg-id="5de802659167b10009e7deba" tvg-logo="https://images.pluto.tv/channels/5de802659167b10009e7deba/colorLogoPNG.png" group-title="Pluto TV",Pluto TV Series Retro
 https://tc13.johanecruzpolanco.workers.dev/pluto/5de802659167b10009e7deba.m3u8
+#EXTINF:-1 tvg-id="6aa960fa5532ad57085cf7e4" tvg-logo="https://images.pluto.tv/channels/6aa960fa5532ad57085cf7e4/colorLogoPNG_1790087436804.png" group-title="Pluto TV",La Niñera
+https://tc13.johanecruzpolanco.workers.dev/pluto/6aa960fa5532ad57085cf7e4.m3u8
 #EXTINF:-1 tvg-id="67f95fa76b11614ab0caaef3" tvg-logo="https://images.pluto.tv/channels/67f95fa76b11614ab0caaef3/colorLogoPNG_1747414259619.png" group-title="Pluto TV",Hechiceras
 https://tc13.johanecruzpolanco.workers.dev/pluto/67f95fa76b11614ab0caaef3.m3u8
 #EXTINF:-1 tvg-id="631fb6be21b7440007b9f606" tvg-logo="https://images.pluto.tv/channels/631fb6be21b7440007b9f606/colorLogoPNG.png" group-title="Pluto TV",Hechizada
@@ -5071,6 +5083,8 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/63c6e37e636b7e0007ccb635.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/5dcde07af1c85b0009b18651.m3u8
 #EXTINF:-1 tvg-id="65cf60d166eec80008724e6f" tvg-logo="https://images.pluto.tv/channels/65cf60d166eec80008724e6f/colorLogoPNG.png" group-title="Pluto TV",Azteca Deportes Premium
 https://tc13.johanecruzpolanco.workers.dev/pluto/65cf60d166eec80008724e6f.m3u8
+#EXTINF:-1 tvg-id="6320d2755e54db000783fd87" tvg-logo="https://images.pluto.tv/channels/6320d2755e54db000783fd87/colorLogoPNG_1791496367503.png" group-title="Pluto TV",Claro Sports FAST
+https://tc13.johanecruzpolanco.workers.dev/pluto/6320d2755e54db000783fd87.m3u8
 #EXTINF:-1 tvg-id="63f7e3f9dff38e00082a57af" tvg-logo="https://images.pluto.tv/channels/63f7e3f9dff38e00082a57af/colorLogoPNG_1787686705454.png" group-title="Pluto TV",AYM Sports 3
 https://tc13.johanecruzpolanco.workers.dev/pluto/63f7e3f9dff38e00082a57af.m3u8
 #EXTINF:-1 tvg-id="5e98b0447665f200078caded" tvg-logo="https://images.pluto.tv/channels/5e98b0447665f200078caded/colorLogoPNG.png" group-title="Pluto TV",Pluto TV Peleas
@@ -5125,8 +5139,6 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/646cce4d1593940008a33f09.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/64e35aff6b1fdb0008ea8441.m3u8
 #EXTINF:-1 tvg-id="652e91fd6208700008dcaf7b" tvg-logo="https://images.pluto.tv/channels/652e91fd6208700008dcaf7b/colorLogoPNG_1785346412851.png" group-title="Pluto TV",Canal 6 CdMX
 https://tc13.johanecruzpolanco.workers.dev/pluto/652e91fd6208700008dcaf7b.m3u8
-#EXTINF:-1 tvg-id="68224482c5d53e1351aaf2f2" tvg-logo="https://images.pluto.tv/channels/68224482c5d53e1351aaf2f2/colorLogoPNG_1751655767455.png" group-title="Pluto TV",Canal Claro
-https://tc13.johanecruzpolanco.workers.dev/pluto/68224482c5d53e1351aaf2f2.m3u8
 #EXTINF:-1 tvg-id="68ba0910e1d03fec7d5c084f" tvg-logo="https://images.pluto.tv/channels/68ba0910e1d03fec7d5c084f/colorLogoPNG_1760471497704.png" group-title="Pluto TV",Al Ritmo del Jaripeo
 https://tc13.johanecruzpolanco.workers.dev/pluto/68ba0910e1d03fec7d5c084f.m3u8
 #EXTINF:-1 tvg-id="68b88712e777774982269ce9" tvg-logo="https://images.pluto.tv/channels/68b88712e777774982269ce9/colorLogoPNG_1793803234766.png" group-title="Pluto TV",Tastemade Home & Travel
@@ -5219,8 +5231,6 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/6a73b9032cf3064bdf7d3b4e.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/6a73b8f1744143378ce88eae.m3u8
 #EXTINF:-1 tvg-id="6a739fb3c1842722eaf5eb1f" tvg-logo="https://images.pluto.tv/channels/6a739fb3c1842722eaf5eb1f/colorLogoPNG_1788376112882.png" group-title="Pluto TV",Stingray Época Dorada del Cine Mexicano
 https://tc13.johanecruzpolanco.workers.dev/pluto/6a739fb3c1842722eaf5eb1f.m3u8
-#EXTINF:-1 tvg-id="6868152657543d1f8be4ece3" tvg-logo="https://images.pluto.tv/channels/6868152657543d1f8be4ece3/colorLogoPNG_1751652184592.png" group-title="Pluto TV",Concert Channel
-https://tc13.johanecruzpolanco.workers.dev/pluto/6868152657543d1f8be4ece3.m3u8
 #EXTINF:-1 tvg-id="5f85ca40eda1b10007b967cd" tvg-logo="https://images.pluto.tv/channels/5f85ca40eda1b10007b967cd/colorLogoPNG.png" group-title="Pluto TV",Conciertos por Stingray
 https://tc13.johanecruzpolanco.workers.dev/pluto/5f85ca40eda1b10007b967cd.m3u8
 #EXTINF:-1 tvg-id="699763787cfe0ffadadd106f" tvg-logo="https://images.pluto.tv/channels/699763787cfe0ffadadd106f/colorLogoPNG_1774993772357.png" group-title="Pluto TV",Mi Gorda Bella
