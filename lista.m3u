@@ -49,8 +49,6 @@ https://2-fss-2.streamhoster.com/pl_138/206532-6829902-1/playlist.m3u8
 https://hls.tvabierta.net/hls/029.m3u8
 #EXTINF:-1 group-title="DOMINICANOS",Teleuniverso 29
 https://hls.tvabierta.net/hls/029.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/vtv32.png" group-title="DOMINICANOS",VTV 32
-https://hls.tvabierta.net/hls/032.m3u8
 #EXTINF:-1 tvg-logo="https://i.imgur.com/edOXXr0.png" group-title="DOMINICANOS",Cdndeportes
 https://hls.tvabierta.net/hls/036.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/037.png" group-title="DOMINICANOS",CDN 37
@@ -122,7 +120,7 @@ https://tv.wracanal10.com:3671/live/lunatvcanal53live.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/manaclartv.png" group-title="DOMINICANOS",Manaclar TV
 https://5790d294af2dc.streamlock.net/manaclar/manaclar/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/miavision.png" group-title="DOMINICANOS",Miavision
-https://hls.tvabierta.net/hls/miavision.m3u8
+https://edge.essastream.com/miavisiontv/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/microvision.png" group-title="DOMINICANOS",Microvisión 10
 https://streaming.telecablecentral.com.do/live/MicroHD/playlist.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/nexxotv.png" group-title="DOMINICANOS",Nexxotv
@@ -162,7 +160,7 @@ https://edge.essastream.com/telecibaotv/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telecontacto.png" group-title="DOMINICANOS",Telecontacto
 https://streaming.grupomediosdelnorte.com:19360/telecontacto/telecontacto.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telemicrointernacional.png" group-title="DOMINICANOS",Telemicrointernacional
-https://ds.tvabierta.net/memfs/d0fdcba5-609d-41fd-a8c5-9e6e0a348684.m3u8
+https://hls.tvabierta.net/hls/telemicrointernacional.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telenord10.png" group-title="DOMINICANOS",Telenord 10
 https://cdnfox.hostlagarto.com/telenord10/index.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/telenord12.png" group-title="DOMINICANOS",Telenord 12
@@ -469,8 +467,6 @@ http://dcunilive21-lh.akamaihd.net/i/dclive_1@59479/index_1_av-p.m3u8
 https://rtvelivestream.rtve.es/rtvesec/24h/24h_main_dvr.m3u8
 #EXTINF:-1 tvg-name="euronews" tvg-logo="https://raw.githubusercontent.com/tv-logo/tv-logos/refs/heads/main/countries/international/euro-news-int.png" tvg-id="Euronews.es" tvg-chno="22" tvg-country="ES" group-title="Noticias",euronews
 https://euronews-live-spa-es.fast.rakuten.tv/v1/master/0547f18649bd788bec7b67b746e47670f558b6b2/production-LiveChannel-6571/bitok/eyJzdGlkIjoiMDA0YjY0NTMtYjY2MC00ZTZkLTlkNzEtMTk3YTM3ZDZhZWIxIiwibWt0IjoiZXMiLCJjaCI6NjU3MSwicHRmIjoxfQ==/26034/euronews-es.m3u8
-#EXTINF:-1 tvg-logo="https://tvabierta.net/bloomberg.png" group-title="Noticias",Bloomberg
-https://liveprodusphoenixeast.akamaized.net/USPhx-HD/Channel-TX-USPhx-AWS-virginia-1/Source-USPhx-16k-1-s6lk2-BP-07-02-81ykIWnsMsg_live.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/meganoticias.jpg" tvg-country="CL" group-title="Noticias",Meganoticias
 https://hls.tvabierta.net/hls/meganoticias.m3u8
 #EXTINF:-1 tvg-logo="https://tvabierta.net/t.png" group-title="Noticias",Noticiasahora
@@ -2737,6 +2733,8 @@ https://fox.hostlagarto.com:8081/canal26/tracks-v1a1/mono.m3u8
 https://stream.inliveserver.com:19360/8004/8004.m3u8
 #EXTINF:-1 tvg-id="Vision3000.do@SD" tvg-logo="https://i.imgur.com/mogsnzp.png" group-title="Generales - República Dominicana",Vision 3000 (720p) [Geo-blocked]
 https://ss2.tvrdomi.com:1936/vision3000/vision3000/playlist.m3u8
+#EXTINF:-1 tvg-id="VTVCanal32.do@SD" tvg-logo="https://i.imgur.com/qjm4B0J.png" group-title="Generales - República Dominicana",VTV Canal 32 (1080p)
+https://cnn.livestreaminggroup.info:3507/live/vtv32live.m3u8
 #EXTINF:-1 tvg-id="XtraTv.do@HD" tvg-logo="https://xtratvrd.com/logo512.png" group-title="Generales - República Dominicana",Xtra Tv (720p) [Not 24/7]
 https://edge.essastream.com/xtratv/index.m3u8
 #EXTINF:-1 tvg-id="ZASTV.do@HD" tvg-logo="https://www.vivalivetv.com/public/files/shows/0/1/4058-294x165-FFFFFF.jpg" group-title="Generales - República Dominicana",ZAS TV
@@ -5249,9 +5247,9 @@ https://tc13.johanecruzpolanco.workers.dev/pluto/5f85ca40eda1b10007b967cd.m3u8
 https://tc13.johanecruzpolanco.workers.dev/pluto/699763787cfe0ffadadd106f.m3u8
 #EXTINF:-1 tvg-id="67a3b45a21af380008133aa4" tvg-logo="https://images.pluto.tv/channels/67a3b45a21af380008133aa4/colorLogoPNG.png" group-title="Pluto TV",Realmadrid TV
 https://tc13.johanecruzpolanco.workers.dev/pluto/67a3b45a21af380008133aa4.m3u8
-#EXTINF:-1 tvg-id="ES2200003DA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2200003DA_20261026T043217SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Runtime Clásicos
+#EXTINF:-1 tvg-id="ES2200003DA" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES2200003DA_20261110T043528SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Runtime Clásicos
 https://jmp2.uk/stvp-ES2200003DA
-#EXTINF:-1 tvg-id="ES400002P5" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES400002P5_20260707T050933SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Cuéntame cómo pasó
+#EXTINF:-1 tvg-id="ES400002P5" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES400002P5_20261110T043458SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Cuéntame cómo pasó
 https://jmp2.uk/stvp-ES400002P5
 #EXTINF:-1 tvg-id="ESAJ3800006TT" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESAJ3800006TT_20241106T142236SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",MTV Cribs
 https://jmp2.uk/stvp-ESAJ3800006TT
@@ -5295,7 +5293,7 @@ https://jmp2.uk/stvp-ES18000040D
 https://jmp2.uk/stvp-ESBD1300004IG
 #EXTINF:-1 tvg-id="ESBA3300033PL" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBA3300033PL_20241022T050532SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Encantador de Perros
 https://jmp2.uk/stvp-ESBA3300033PL
-#EXTINF:-1 tvg-id="ES120000498" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES120000498_20260707T051019SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Quantum Makers
+#EXTINF:-1 tvg-id="ES120000498" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES120000498_20261110T043514SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Quantum Makers
 https://jmp2.uk/stvp-ES120000498
 #EXTINF:-1 tvg-id="ESBC4700003RJ" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBC4700003RJ_20241106T142207SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Teen Vee
 https://jmp2.uk/stvp-ESBC4700003RJ
@@ -5419,6 +5417,8 @@ https://jmp2.uk/stvp-ES3400004SS
 https://jmp2.uk/stvp-ESBD1100001PQ
 #EXTINF:-1 tvg-id="ES1300001QC" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES1300001QC_20250902T003627SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",DW
 https://jmp2.uk/stvp-ES1300001QC
+#EXTINF:-1 tvg-id="ESBA3300024AJ" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBA3300024AJ_20260421T123714SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Bloomberg TV+
+https://jmp2.uk/stvp-ESBA3300024AJ
 #EXTINF:-1 tvg-id="ESBD2600001ME" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ESBD2600001ME_20250923T011606SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",Tennis Channel
 https://jmp2.uk/stvp-ESBD2600001ME
 #EXTINF:-1 tvg-id="ES30000091V" tvg-logo="https://tvpnlogopeu.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/ES30000091V_20241022T050555SQUARE.png" tvg-country="ES" group-title="Samsung TV Plus",MyPadel TV
