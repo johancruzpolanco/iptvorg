@@ -80,6 +80,11 @@ NOTAS DE MANTENIMIENTO
   - Verificar solo el playlist no sirve: devuelve 200 aunque los segmentos
     fallen. Y hay que pedir el ULTIMO segmento, no el primero: la playlist de
     un directo es una ventana deslizante y el mas antiguo puede haber expirado.
+  - Cada descarga del --check lleva tope de bytes y de tiempo (leer()). La
+    API de tvabierta mete radios en RD (Cdnradio, 13/11/2026): un audio/mpeg
+    de Icecast que no termina nunca y que, sin tope, dejaba el --check
+    colgado hasta el timeout del workflow (cancelado, sin lista nueva, desde
+    el 18/11/2026). Esos flujos directos cuentan como OK si llega audio.
   - Duplicados: un canal de iptv-org/Free-TV/tvabierta se descarta si ya esta
     antes con el mismo tvg-id, el mismo enlace (host + ruta) o el mismo nombre
     normalizado (clave_canal: "CV Vision TV (288p)" y "cvvision" -> "cvvision").
@@ -479,10 +484,36 @@ def summary(lines):
         warn("no se pudo escribir el summary: %s" % e)
 
 
-def http_get(url, timeout=30, retries=3, con_url=False):
+def leer(resp, tope=None, plazo=None):
     """
-    GET con User-Agent de navegador y reintentos con backoff. Con con_url
-    devuelve (cuerpo, URL final tras las redirecciones).
+    Lee el cuerpo de la respuesta: entero, o con tope (bytes) y plazo
+    (segundos), lo que llegue antes, devolviendo lo leido hasta ahi.
+    El timeout de urlopen es por operacion de red, no total: un servidor que
+    no para de mandar datos (una radio Icecast, un MPEG-TS continuo) no lo
+    dispara nunca y resp.read() no vuelve. Asi se colgo el --check con
+    Cdnradio (audio/mpeg de Icecast, 11/2026) hasta el timeout del workflow.
+    """
+    if tope is None and plazo is None:
+        return resp.read()
+    fin = time.monotonic() + plazo if plazo else None
+    partes, total = [], 0
+    while tope is None or total < tope:
+        if fin and time.monotonic() >= fin:
+            break
+        # read1 vuelve con lo que haya; read(n) espera a juntar n bytes.
+        trozo = resp.read1(64 * 1024 if tope is None else min(64 * 1024, tope - total))
+        if not trozo:
+            break
+        partes.append(trozo)
+        total += len(trozo)
+    return b"".join(partes)
+
+
+def http_pedir(url, timeout=30, retries=3, tope=None, plazo=None):
+    """
+    GET con User-Agent de navegador y reintentos con backoff. Devuelve
+    (cuerpo, URL final tras las redirecciones, Content-Type). tope y plazo:
+    ver leer().
     """
     last = None
     for intento in range(retries):
@@ -491,7 +522,8 @@ def http_get(url, timeout=30, retries=3, con_url=False):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": BROWSER_UA})
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                return (resp.read(), resp.geturl()) if con_url else resp.read()
+                cuerpo = leer(resp, tope, plazo)
+                return cuerpo, resp.geturl(), resp.headers.get("Content-Type", "")
         except urllib.error.HTTPError as e:
             last = "HTTP %s" % e.code
             if e.code in (401, 403, 404, 410):
@@ -499,6 +531,12 @@ def http_get(url, timeout=30, retries=3, con_url=False):
         except Exception as e:  # noqa: BLE001 - red: timeouts, DNS, TLS...
             last = str(e)
     raise RuntimeError(last or "fallo desconocido")
+
+
+def http_get(url, timeout=30, retries=3, con_url=False):
+    """http_pedir sin tope. Con con_url devuelve (cuerpo, URL final)."""
+    cuerpo, final, _ = http_pedir(url, timeout, retries)
+    return (cuerpo, final) if con_url else cuerpo
 
 
 # ----------------------------------------------------------------------
@@ -1104,15 +1142,31 @@ def proxificar_bloque(block, proxy, key):
 # ----------------------------------------------------------------------
 
 
+# Topes de cada descarga del --check (ver leer()). Un segmento normal pesa
+# 0.5-3 MB; para saber que llega video basta con los primeros 10 KB.
+TOPE_PLAYLIST = 2 * 1024 * 1024
+TOPE_SEGMENTO = 8 * 1024 * 1024
+PLAZO_CHECK = 20  # segundos leyendo cada respuesta
+
+
 def check_stream(channel):
     """master playlist -> variante -> segmento .ts. Devuelve (ok, mensaje)."""
     try:
-        master, base = http_get(channel["url"], timeout=15, retries=2, con_url=True)
-        master = master.decode("utf-8", "replace")
+        crudo, base, tipo = http_pedir(channel["url"], timeout=15, retries=2,
+                                       tope=TOPE_PLAYLIST, plazo=PLAZO_CHECK)
+        master = crudo.decode("utf-8", "replace")
     except RuntimeError as e:
         return False, "playlist: %s" % e
 
     if "#EXTM3U" not in master:
+        # Flujo directo, no HLS (las radios de la API de tvabierta, como
+        # Cdnradio): si llega audio o video, el enlace funciona.
+        tipo = tipo.split(";")[0].strip().lower()
+        if tipo.startswith(("audio/", "video/")) and "mpegurl" not in tipo:
+            if len(crudo) < 10000:
+                return False, "flujo directo %s sospechosamente pequeno (%d bytes)" % (
+                    tipo, len(crudo))
+            return True, "flujo directo %s, %.1f KB" % (tipo, len(crudo) / 1024.0)
         return False, "la respuesta no es un M3U8"
 
     lines = [l.strip() for l in master.splitlines() if l.strip() and not l.startswith("#")]
@@ -1128,7 +1182,8 @@ def check_stream(channel):
 
     if ".m3u8" in target:
         try:
-            media, base = http_get(target, timeout=15, retries=2, con_url=True)
+            media, base, _ = http_pedir(target, timeout=15, retries=2,
+                                        tope=TOPE_PLAYLIST, plazo=PLAZO_CHECK)
             media = media.decode("utf-8", "replace")
         except RuntimeError as e:
             return False, "variante: %s" % e
@@ -1139,7 +1194,8 @@ def check_stream(channel):
         target = urllib.parse.urljoin(base, segs[-1])
 
     try:
-        data = http_get(target, timeout=25, retries=2)
+        data, _, _ = http_pedir(target, timeout=25, retries=2,
+                                tope=TOPE_SEGMENTO, plazo=PLAZO_CHECK)
     except RuntimeError as e:
         return False, "segmento: %s" % e
 
